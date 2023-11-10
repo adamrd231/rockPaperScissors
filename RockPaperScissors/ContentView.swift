@@ -1,0 +1,96 @@
+//
+//  ContentView.swift
+//  RockPaperScissors
+//
+//  Created by Adam Reed on 11/10/23.
+//
+
+import SwiftUI
+
+enum GameResult: CustomStringConvertible {
+    case win
+    case lose
+    case tie
+    
+    var description: String {
+        switch self {
+        case .win: return "win"
+        case .lose: return "lose"
+        case .tie: return "tie"
+        }
+    }
+}
+
+enum ChoiceOfWeapon: CustomStringConvertible {
+    case rock
+    case scissors
+    case paper
+    var description: String {
+        switch self {
+        case .rock: return "rock"
+        case .paper: return "paper"
+        case .scissors: return "scissors"
+        }
+    }
+}
+
+struct ContentView: View {
+    let choices:[ChoiceOfWeapon] = [.rock, .scissors, .paper]
+    @State var gameResult: String? = nil
+    @State var computerChoice: String? = nil
+    
+    func playGame(playerChoice: ChoiceOfWeapon) {
+
+        let randomIndex = Int.random(in: 0..<3)
+        let randomChoice = choices[randomIndex]
+        computerChoice = computerChoice?.description
+        
+        switch playerChoice {
+        case .rock:
+            switch randomChoice {
+            case .rock: gameResult = GameResult.tie.description
+            case .paper: gameResult = GameResult.lose.description
+            case .scissors: gameResult = GameResult.win.description
+            }
+        case .scissors:
+            switch randomChoice {
+            case .rock: gameResult = GameResult.lose.description
+            case .paper: gameResult = GameResult.win.description
+            case .scissors: gameResult = GameResult.tie.description
+            }
+        case .paper:
+            switch randomChoice {
+            case .rock: gameResult = GameResult.win.description
+            case .paper: gameResult = GameResult.tie.description
+            case .scissors: gameResult = GameResult.lose.description
+            }
+        }
+    }
+    
+    var body: some View {
+        VStack {
+            Text("Choose")
+            HStack {
+                Button("Rock") {playGame(playerChoice: .rock) }
+                Button("Paper") { playGame(playerChoice: .paper) }
+                Button("Scissors") { playGame(playerChoice: .scissors) }
+            }
+            if let choice = computerChoice {
+                HStack {
+                    Text("Computer chose:")
+                    Text(choice)
+                }
+            }
+            if let result = gameResult {
+                Text(result)
+            }
+        }
+        .padding()
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
