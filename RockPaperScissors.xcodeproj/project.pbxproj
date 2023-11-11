@@ -14,6 +14,7 @@
 		660982FC2AFFCB0800A7D0D0 /* WeaponOfChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660982FB2AFFCB0800A7D0D0 /* WeaponOfChoice.swift */; };
 		660982FE2AFFCB3000A7D0D0 /* GameResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660982FD2AFFCB3000A7D0D0 /* GameResults.swift */; };
 		660983012AFFCB6A00A7D0D0 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983002AFFCB6A00A7D0D0 /* ViewModel.swift */; };
+		660983042AFFCCC500A7D0D0 /* RockPaperScissorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		660982FB2AFFCB0800A7D0D0 /* WeaponOfChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponOfChoice.swift; sourceTree = "<group>"; };
 		660982FD2AFFCB3000A7D0D0 /* GameResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResults.swift; sourceTree = "<group>"; };
 		660983002AFFCB6A00A7D0D0 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockPaperScissorsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		660982EA2AFEC98000A7D0D0 /* RockPaperScissors */ = {
 			isa = PBXGroup;
 			children = (
+				660983022AFFCCB800A7D0D0 /* Views */,
 				660982FA2AFFCAFB00A7D0D0 /* States */,
 				660982EB2AFEC98000A7D0D0 /* RockPaperScissorsApp.swift */,
 				660982ED2AFEC98000A7D0D0 /* ContentView.swift */,
@@ -84,6 +87,14 @@
 				660982FD2AFFCB3000A7D0D0 /* GameResults.swift */,
 			);
 			path = States;
+			sourceTree = "<group>";
+		};
+		660983022AFFCCB800A7D0D0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				660983012AFFCB6A00A7D0D0 /* ViewModel.swift in Sources */,
+				660983042AFFCCC500A7D0D0 /* RockPaperScissorsView.swift in Sources */,
 				660982FE2AFFCB3000A7D0D0 /* GameResults.swift in Sources */,
 				660982FC2AFFCB0800A7D0D0 /* WeaponOfChoice.swift in Sources */,
 				660982EE2AFEC98000A7D0D0 /* ContentView.swift in Sources */,
