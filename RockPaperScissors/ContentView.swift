@@ -16,46 +16,11 @@ enum PlayerAuthState: String {
     case restricted = "You're not allowed to play multiplayer games."
 }
 
-enum GameResult: CustomStringConvertible {
-    case win
-    case lose
-    case tie
-    
-    var description: String {
-        switch self {
-        case .win: return "win"
-        case .lose: return "lose"
-        case .tie: return "tie"
-        }
-    }
-}
-
-enum ChoiceOfWeapon: CustomStringConvertible, Comparable {
-    case rock
-    case scissors
-    case paper
-    var description: String {
-        switch self {
-        case .rock: return "rock"
-        case .paper: return "paper"
-        case .scissors: return "scissors"
-        }
-    }
-    
-    var emoji: String {
-        switch self {
-        case .rock: return "🪨"
-        case .paper: return "📄"
-        case .scissors: return "✂"
-        }
-    }
-}
-
 struct ContentView: View {
-    let choices:[ChoiceOfWeapon] = [.rock, .scissors, .paper]
+    let choices:[WeaponOfChoice] = [.rock, .scissors, .paper]
     @State var gameResult: GameResult? = nil
-    @State var computerChoice: ChoiceOfWeapon? = nil
-    @State var userChoice: ChoiceOfWeapon? = nil
+    @State var computerChoice: WeaponOfChoice? = nil
+    @State var userChoice: WeaponOfChoice? = nil
     @AppStorage("bestStreak") var streak: Int = 0
     
     func playerWon() {
@@ -78,8 +43,7 @@ struct ContentView: View {
     }
  
     
-    func rockPaperScissors(_ playerChoice: ChoiceOfWeapon, _ computerChoice: ChoiceOfWeapon) {
-    
+    func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) {
         switch (playerChoice, computerChoice) {
         case (.rock, .rock): playerTie()
         case (.rock, .scissors): playerWon()
@@ -95,7 +59,7 @@ struct ContentView: View {
         }
     }
     
-    func playGame(playerChoice: ChoiceOfWeapon) {
+    func playGame(playerChoice: WeaponOfChoice) {
 
         let randomIndex = Int.random(in: 0..<3)
         computerChoice = choices[randomIndex]
