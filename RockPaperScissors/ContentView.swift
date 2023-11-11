@@ -21,7 +21,7 @@ enum GameResult: CustomStringConvertible {
     }
 }
 
-enum ChoiceOfWeapon: CustomStringConvertible {
+enum ChoiceOfWeapon: CustomStringConvertible, Comparable {
     case rock
     case scissors
     case paper
@@ -32,51 +32,68 @@ enum ChoiceOfWeapon: CustomStringConvertible {
         case .scissors: return "scissors"
         }
     }
+    
+    var emoji: String {
+        switch self {
+        case .rock: return "🪨"
+        case .paper: return "📄"
+        case .scissors: return "✂"
+        }
+    }
 }
 
 struct ContentView: View {
     let choices:[ChoiceOfWeapon] = [.rock, .scissors, .paper]
-    @State var gameResult: String? = nil
-    @State var computerChoice: String? = nil
+    @State var gameResult: GameResult? = nil
+    @State var computerChoice: ChoiceOfWeapon? = nil
+    @State var userChoice: ChoiceOfWeapon? = nil
     @AppStorage("bestStreak") var streak: Int = 0
+    
+    func playerWon() {
+        streak += 1
+        gameResult = .win
+    }
+    
+    func playerLost() {
+        if streak <= 0 {
+            streak -= 1
+        } else {
+            streak = 0
+        }
+        gameResult = .lose
+    }
+    
+    func playerTie() {
+        print("Tied")
+        gameResult = .tie
+    }
+ 
+    
+    func rockPaperScissors(_ playerChoice: ChoiceOfWeapon, _ computerChoice: ChoiceOfWeapon) {
+    
+        switch (playerChoice, computerChoice) {
+        case (.rock, .rock): playerTie()
+        case (.rock, .scissors): playerWon()
+        case (.rock, .paper): playerLost()
+            
+        case (.paper, .rock): playerWon()
+        case (.paper, .scissors): playerLost()
+        case (.paper, .paper): playerTie()
+            
+        case (.scissors, .scissors): playerTie()
+        case (.scissors, .rock): playerLost()
+        case (.scissors, .paper): playerWon()
+        }
+    }
     
     func playGame(playerChoice: ChoiceOfWeapon) {
 
         let randomIndex = Int.random(in: 0..<3)
-        let randomChoice = choices[randomIndex]
-        computerChoice = randomChoice.description
-        
-        switch playerChoice {
-        case .rock:
-            switch randomChoice {
-            case .rock: gameResult = GameResult.tie.description
-            case .paper:
-                gameResult = GameResult.lose.description
-                streak = 0
-            case .scissors:
-                gameResult = GameResult.win.description
-                streak += 1
-            }
-        case .scissors:
-            switch randomChoice {
-            case .rock:
-                gameResult = GameResult.lose.description
-                streak = 0
-            case .paper:
-                gameResult = GameResult.win.description
-                streak += 1
-            case .scissors: gameResult = GameResult.tie.description
-            }
-        case .paper:
-            switch randomChoice {
-            case .rock:
-                gameResult = GameResult.win.description
-                streak += 1
-            case .paper: gameResult = GameResult.tie.description
-            case .scissors:
-                gameResult = GameResult.lose.description
-                streak = 0
-            }
+        computerChoice = choices[randomIndex]
+        userChoice = playerChoice
+
+        if let choice = computerChoice {
+            rockPaperScissors(playerChoice, choice)
         }
     }
     
@@ -85,18 +102,35 @@ struct ContentView: View {
             Text(streak, format: .number)
             Text("Choose")
             HStack {
-                Button("Rock") {playGame(playerChoice: .rock) }
-                Button("Paper") { playGame(playerChoice: .paper) }
-                Button("Scissors") { playGame(playerChoice: .scissors) }
-            }
-            if let choice = computerChoice {
-                HStack {
-                    Text("Computer chose:")
-                    Text(choice)
+                ForEach(choices, id: \.self) { choice in
+                    Button {
+                        playGame(playerChoice: choice)
+                    } label: {
+                        HStack {
+                            Text(choice.description)
+                            Text(choice.emoji)
+                        }
+                    }
                 }
             }
+            HStack {
+                if let choice = userChoice {
+                    VStack {
+                        Text("You chose:")
+                        Text(choice.description)
+                        Text(choice.emoji)
+                    }
+                }
+                if let choice = computerChoice {
+                    VStack {
+                        Text("Computer chose:")
+                        Text(choice.description)
+                    }
+                }
+            }
+    
             if let result = gameResult {
-                Text(result)
+                Text(result.description)
             }
         }
         .padding()
