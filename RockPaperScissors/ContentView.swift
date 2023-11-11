@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  RockPaperScissors
-//
-//  Created by Adam Reed on 11/10/23.
-//
-
 import SwiftUI
 
 enum PlayerAuthState: String {
@@ -17,23 +10,16 @@ enum PlayerAuthState: String {
 }
 
 struct ContentView: View {
-    @ObservedObject var vm = ViewModel()
-    
-    
-    
+    @StateObject var vm = ViewModel()
     
     var body: some View {
-        VStack {
-            Text("Rock, Paper, Scissors")
-            Button("Play person") {
-                // bring to game
-            }
-            .disabled(vm.authenticationState != .authenticated || vm.inGame)
-            Text(vm.authenticationState.rawValue)
-                .font(.headline)
-            
-            Button("Play robot") {
-                
+        ZStack {
+            if vm.isGameOver {
+                Text("Game Over")
+            } else if vm.inGame {
+                RockPaperScissorsView(vm: vm)
+            } else {
+                LaunchView(vm: vm)
             }
         }
     }

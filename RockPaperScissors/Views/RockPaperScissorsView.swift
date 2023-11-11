@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RockPaperScissorsView: View {
-    @EnvironmentObject var vm: ViewModel
+    @ObservedObject var vm: ViewModel
     
     var body: some View {
         VStack {
@@ -53,6 +53,6 @@ struct RockPaperScissorsView: View {
 
 struct RockPaperScissorsView_Previews: PreviewProvider {
     static var previews: some View {
-        RockPaperScissorsView()
+        RockPaperScissorsView(vm: ViewModel())
     }
 }

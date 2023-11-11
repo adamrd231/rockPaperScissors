@@ -15,6 +15,7 @@
 		660982FE2AFFCB3000A7D0D0 /* GameResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660982FD2AFFCB3000A7D0D0 /* GameResults.swift */; };
 		660983012AFFCB6A00A7D0D0 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983002AFFCB6A00A7D0D0 /* ViewModel.swift */; };
 		660983042AFFCCC500A7D0D0 /* RockPaperScissorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */; };
+		660983062AFFE30F00A7D0D0 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983052AFFE30F00A7D0D0 /* LaunchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		660982FD2AFFCB3000A7D0D0 /* GameResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResults.swift; sourceTree = "<group>"; };
 		660983002AFFCB6A00A7D0D0 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockPaperScissorsView.swift; sourceTree = "<group>"; };
+		660983052AFFE30F00A7D0D0 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */,
+				660983052AFFE30F00A7D0D0 /* LaunchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 				660983012AFFCB6A00A7D0D0 /* ViewModel.swift in Sources */,
 				660983042AFFCCC500A7D0D0 /* RockPaperScissorsView.swift in Sources */,
 				660982FE2AFFCB3000A7D0D0 /* GameResults.swift in Sources */,
+				660983062AFFE30F00A7D0D0 /* LaunchView.swift in Sources */,
 				660982FC2AFFCB0800A7D0D0 /* WeaponOfChoice.swift in Sources */,
 				660982EE2AFEC98000A7D0D0 /* ContentView.swift in Sources */,
 				660982EC2AFEC98000A7D0D0 /* RockPaperScissorsApp.swift in Sources */,
