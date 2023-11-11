@@ -3,6 +3,7 @@ import SwiftUI
 import GameKit
 
 class ViewModel: ObservableObject {
+    
     // Game Center
     @Published var inGame = false
     @Published var isGameOver = false
@@ -48,6 +49,22 @@ class ViewModel: ObservableObject {
                 authenticationState = .unauthenticated
             }
         }
+    }
+    
+    func startMatchmaking() {
+        let request = GKMatchRequest()
+        request.minPlayers = 2
+        request.maxPlayers = 2
+        
+        let matchmakingVC = GKMatchmakerViewController(matchRequest: request)
+        matchmakingVC?.matchmakerDelegate = self
+        if let matchmaker = matchmakingVC {
+            rootViewController?.present(matchmaker, animated: true)
+        }
+    }
+    
+    func startMatch(match: GKMatch) {
+        
     }
     
     // Functions

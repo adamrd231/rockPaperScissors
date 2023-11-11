@@ -22,6 +22,9 @@ struct ContentView: View {
                 LaunchView(vm: vm)
             }
         }
+        .onAppear {
+            vm.authenticateUser()
+        }
     }
 }
 

@@ -16,6 +16,7 @@
 		660983012AFFCB6A00A7D0D0 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983002AFFCB6A00A7D0D0 /* ViewModel.swift */; };
 		660983042AFFCCC500A7D0D0 /* RockPaperScissorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */; };
 		660983062AFFE30F00A7D0D0 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983052AFFE30F00A7D0D0 /* LaunchView.swift */; };
+		660983082AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983072AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		660983002AFFCB6A00A7D0D0 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockPaperScissorsView.swift; sourceTree = "<group>"; };
 		660983052AFFE30F00A7D0D0 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
+		660983072AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Matchmanager+GKMatchMakerViewController.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				660982F12AFEC98900A7D0D0 /* RockPaperScissors.entitlements */,
 				660982F22AFEC98900A7D0D0 /* Preview Content */,
 				660983002AFFCB6A00A7D0D0 /* ViewModel.swift */,
+				660983072AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift */,
 			);
 			path = RockPaperScissors;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				660983012AFFCB6A00A7D0D0 /* ViewModel.swift in Sources */,
+				660983082AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift in Sources */,
 				660983042AFFCCC500A7D0D0 /* RockPaperScissorsView.swift in Sources */,
 				660982FE2AFFCB3000A7D0D0 /* GameResults.swift in Sources */,
 				660983062AFFE30F00A7D0D0 /* LaunchView.swift in Sources */,
