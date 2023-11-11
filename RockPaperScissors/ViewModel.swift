@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import GameKit
 
 class ViewModel: ObservableObject {
     // Game Center
@@ -14,6 +15,40 @@ class ViewModel: ObservableObject {
     @Published var userChoice: WeaponOfChoice? = nil
     @AppStorage("bestStreak") var streak: Int = 0
     
+    // GameKit
+    var match: GKMatch?
+    var otherPlayer: GKPlayer?
+    var localPlayer = GKLocalPlayer.local
+    
+    var playerUUIDKey = UUID().uuidString
+    
+    var rootViewController: UIViewController? {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        return windowScene?.windows.first?.rootViewController
+    }
+    
+    func authenticateUser() {
+        GKLocalPlayer.local.authenticateHandler = { [self] vc, e in
+            if let viewController = vc {
+                rootViewController?.present(viewController, animated: true)
+                return
+            }
+            if let error = e {
+                authenticationState = .error
+                print("Error authenticating user:" + error.localizedDescription)
+                return
+            }
+            if localPlayer.isAuthenticated {
+                if localPlayer.isMultiplayerGamingRestricted {
+                    authenticationState = .restricted
+                } else {
+                    authenticationState = .authenticated
+                }
+            } else {
+                authenticationState = .unauthenticated
+            }
+        }
+    }
     
     // Functions
     func playerWon() {
