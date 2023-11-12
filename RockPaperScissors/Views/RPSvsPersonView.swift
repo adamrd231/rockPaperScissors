@@ -36,19 +36,16 @@ struct RPSvsPersonView: View {
                         }
                     }
                 }
-            }
-           
-            .onChange(of: vm.userChoice) { newValue in
-                if let user = vm.userChoice,
-                   let computer = vm.computerChoice {
-                    print("Lets figger it out")
-                    vm.rockPaperScissors(user, computer)
+                .onChange(of: vm.userChoice) { newValue in
+                    if let user = vm.userChoice,
+                       let computer = vm.computerChoice {
+                        vm.rockPaperScissors(user, computer)
+                    }
                 }
             }
             .onChange(of: vm.computerChoice) { newValue in
                 if let user = vm.userChoice,
                    let computer = vm.computerChoice {
-                    print("Lets figger it out")
                     vm.rockPaperScissors(user, computer)
                 }
             }
