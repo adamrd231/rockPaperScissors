@@ -15,24 +15,37 @@ struct RPSvsPersonView: View {
             HStack {
                 VStack {
                     Text("Time:")
+                        .bold()
                     Text(vm.remainingTime, format: .number)
                 }
+                Spacer()
                 VStack {
                     Text("Current score")
+                        .bold()
                     Text(vm.streak, format: .number)
                 }
             }
-           
+            .padding()
+           Spacer()
             VStack {
                 VStack(spacing: 10) {
                     ForEach(vm.choices, id: \.self) { choice in
                         Button {
                             vm.playGame(playerChoice: choice)
                         } label: {
-                            HStack {
-                                Text(choice.description)
-                                Text(choice.emoji)
+                            ZStack {
+                                Capsule()
+                                    .foregroundColor(Color(.systemGray))
+             
+                                VStack {
+                                    Text(choice.emoji)
+                                        .font(.largeTitle)
+                                    Text(choice.description)
+                                }
+                                .frame(minWidth: 150, minHeight: 90)
+                                .foregroundColor(Color(.systemGray6))
                             }
+                            .fixedSize()
                         }
                     }
                 }
@@ -49,7 +62,7 @@ struct RPSvsPersonView: View {
                     vm.rockPaperScissors(user, computer)
                 }
             }
-            
+            Spacer()
             if let choice = vm.userChoice,
                let theirChoice = vm.computerChoice {
                 HStack {

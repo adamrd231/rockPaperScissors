@@ -12,7 +12,7 @@ class ViewModel: NSObject, ObservableObject {
     @Published var authenticationState = PlayerAuthState.authenticating
 
     // Game
-    let choices:[WeaponOfChoice] = [.rock, .scissors, .paper]
+    let choices:[WeaponOfChoice] = [.rock, .paper, .scissors]
     @Published var gameResult: GameResult? = nil
     @Published var computerChoice: WeaponOfChoice? = nil
     @Published var userChoice: WeaponOfChoice? = nil
