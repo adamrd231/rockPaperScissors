@@ -21,7 +21,7 @@ extension ViewModel: GKMatchDelegate {
     }
     
     func sendString(_ message: String) {
-        print("sending string")
+        print("sending string \(message)")
         guard let encoded = "strData:\(message)".data(using: .utf8) else { return }
         sendData(encoded, mode: .reliable)
                 

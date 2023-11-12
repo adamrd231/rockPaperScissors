@@ -74,7 +74,7 @@ class ViewModel: NSObject, ObservableObject {
         match?.delegate = self
         otherPlayer = match?.players.first
         
-        sendString("Began: \(playerUUIDKey)")
+        sendString("began: \(playerUUIDKey)")
     }
     
     // Functions
