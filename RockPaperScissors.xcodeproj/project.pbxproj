@@ -14,11 +14,11 @@
 		660982FC2AFFCB0800A7D0D0 /* WeaponOfChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660982FB2AFFCB0800A7D0D0 /* WeaponOfChoice.swift */; };
 		660982FE2AFFCB3000A7D0D0 /* GameResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660982FD2AFFCB3000A7D0D0 /* GameResults.swift */; };
 		660983012AFFCB6A00A7D0D0 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983002AFFCB6A00A7D0D0 /* ViewModel.swift */; };
-		660983042AFFCCC500A7D0D0 /* RockPaperScissorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */; };
+		660983042AFFCCC500A7D0D0 /* RPSvsComputerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983032AFFCCC500A7D0D0 /* RPSvsComputerView.swift */; };
 		660983062AFFE30F00A7D0D0 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983052AFFE30F00A7D0D0 /* LaunchView.swift */; };
 		660983082AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983072AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift */; };
 		6609830A2AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983092AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift */; };
-		6609830C2B0087C100A7D0D0 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609830B2B0087C100A7D0D0 /* MenuView.swift */; };
+		6609830E2B008D2500A7D0D0 /* RPSvsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,11 +31,11 @@
 		660982FB2AFFCB0800A7D0D0 /* WeaponOfChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponOfChoice.swift; sourceTree = "<group>"; };
 		660982FD2AFFCB3000A7D0D0 /* GameResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResults.swift; sourceTree = "<group>"; };
 		660983002AFFCB6A00A7D0D0 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockPaperScissorsView.swift; sourceTree = "<group>"; };
+		660983032AFFCCC500A7D0D0 /* RPSvsComputerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPSvsComputerView.swift; sourceTree = "<group>"; };
 		660983052AFFE30F00A7D0D0 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		660983072AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Matchmanager+GKMatchMakerViewController.swift"; sourceTree = "<group>"; };
 		660983092AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+GKMatchDelegate.swift"; sourceTree = "<group>"; };
-		6609830B2B0087C100A7D0D0 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPSvsPersonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,9 +102,9 @@
 		660983022AFFCCB800A7D0D0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				660983032AFFCCC500A7D0D0 /* RockPaperScissorsView.swift */,
+				660983032AFFCCC500A7D0D0 /* RPSvsComputerView.swift */,
 				660983052AFFE30F00A7D0D0 /* LaunchView.swift */,
-				6609830B2B0087C100A7D0D0 /* MenuView.swift */,
+				6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -181,10 +181,10 @@
 			files = (
 				660983012AFFCB6A00A7D0D0 /* ViewModel.swift in Sources */,
 				660983082AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift in Sources */,
-				660983042AFFCCC500A7D0D0 /* RockPaperScissorsView.swift in Sources */,
+				660983042AFFCCC500A7D0D0 /* RPSvsComputerView.swift in Sources */,
+				6609830E2B008D2500A7D0D0 /* RPSvsPersonView.swift in Sources */,
 				660982FE2AFFCB3000A7D0D0 /* GameResults.swift in Sources */,
 				660983062AFFE30F00A7D0D0 /* LaunchView.swift in Sources */,
-				6609830C2B0087C100A7D0D0 /* MenuView.swift in Sources */,
 				6609830A2AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift in Sources */,
 				660982FC2AFFCB0800A7D0D0 /* WeaponOfChoice.swift in Sources */,
 				660982EE2AFEC98000A7D0D0 /* ContentView.swift in Sources */,

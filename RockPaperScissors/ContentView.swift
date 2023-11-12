@@ -19,7 +19,7 @@ struct ContentView: View {
             if vm.isGameOver {
                 Text("Game Over")
             } else if vm.inGame {
-                RockPaperScissorsView(vm: vm)
+                RPSvsPersonView(vm: vm)
             } else {
                 LaunchView(vm: vm)
             }

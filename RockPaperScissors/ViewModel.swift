@@ -7,6 +7,7 @@ class ViewModel: NSObject, ObservableObject {
     // Game Center
     @Published var inGame = false
     @Published var isGameOver = false
+    @Published var isRoundOver = false
     @Published var authenticationState = PlayerAuthState.authenticating
 
     // Game
@@ -69,7 +70,6 @@ class ViewModel: NSObject, ObservableObject {
     
     func startMatch(newMatch: GKMatch) {
         print("Starting new match")
-        inGame = true
         match = newMatch
         match?.delegate = self
         otherPlayer = match?.players.first
@@ -115,16 +115,12 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     func playGame(playerChoice: WeaponOfChoice) {
-        let randomIndex = Int.random(in: 0..<3)
-        computerChoice = choices[randomIndex]
+        sendString(playerChoice.description)
         userChoice = playerChoice
-
-        if let choice = computerChoice {
-            rockPaperScissors(playerChoice, choice)
-        }
     }
     
     func receivedString(_ message: String) {
+        print("received string: \(message)")
         let messageSplit = message.split(separator: ":")
         guard let messagePrefix = messageSplit.first else { return }
         
@@ -142,6 +138,12 @@ class ViewModel: NSObject, ObservableObject {
             if isTimeKeeper {
                 countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
             }
+        case WeaponOfChoice.scissors.description:
+            computerChoice = .scissors
+        case WeaponOfChoice.rock.description:
+            computerChoice = .rock
+        case WeaponOfChoice.paper.description:
+            computerChoice = .paper
         case "strData:":
             break
             

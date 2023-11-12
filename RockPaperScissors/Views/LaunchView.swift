@@ -13,10 +13,6 @@ struct LaunchView: View {
             .disabled(vm.authenticationState != .authenticated || vm.inGame)
             Text(vm.authenticationState.rawValue)
                 .font(.headline)
-            
-            Button("Play robot") {
-                
-            }
         }
     }
 }

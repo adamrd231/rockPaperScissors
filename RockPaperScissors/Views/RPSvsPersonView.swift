@@ -1,5 +1,5 @@
 //
-//  RockPaperScissorsView.swift
+//  RPSvsPersonView.swift
 //  RockPaperScissors
 //
 //  Created by Adam Reed on 11/11/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RockPaperScissorsView: View {
+struct RPSvsPersonView: View {
     @ObservedObject var vm: ViewModel
     
     var body: some View {
@@ -26,22 +26,25 @@ struct RockPaperScissorsView: View {
                     }
                 }
             }
-            HStack {
-                if let choice = vm.userChoice {
+            if let choice = vm.userChoice,
+               let theirChoice = vm.computerChoice {
+                HStack {
                     VStack {
                         Text("You chose:")
                         Text(choice.description)
                         Text(choice.emoji)
                     }
-                }
-                if let choice = vm.computerChoice {
                     VStack {
-                        Text("Computer chose:")
-                        Text(choice.description)
-                        Text(choice.emoji)
+                        Text("they chose:")
+                        Text(theirChoice.description)
+                        Text(theirChoice.emoji)
                     }
                 }
             }
+            
+            
+            
+            
     
             if let result = vm.gameResult {
                 Text(result.description)
@@ -51,8 +54,8 @@ struct RockPaperScissorsView: View {
     }
 }
 
-struct RockPaperScissorsView_Previews: PreviewProvider {
+struct RPSvsPersonView_Previews: PreviewProvider {
     static var previews: some View {
-        RockPaperScissorsView(vm: ViewModel())
+        RPSvsPersonView(vm: ViewModel())
     }
 }
