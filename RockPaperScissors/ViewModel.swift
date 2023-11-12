@@ -147,12 +147,9 @@ class ViewModel: NSObject, ObservableObject {
                 break
             }
             inGame = true
-            print("PlayerYYUDIKEY \(playerUUIDKey)")
-            print("Parameter: \(parameter)")
             print(playerUUIDKey > parameter)
-            isTimeKeeper = playerUUIDKey > parameter
+            isTimeKeeper = playerUUIDKey < parameter
             if isTimeKeeper {
-
                 countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
             }
             
@@ -168,7 +165,7 @@ class ViewModel: NSObject, ObservableObject {
             
         case "timer":
             print("SHould be updating time")
-//            remainingTime = Int(parameter) ?? 0
+            remainingTime = Int(parameter) ?? 0
             
         default:
             break

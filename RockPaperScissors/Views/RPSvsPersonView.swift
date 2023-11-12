@@ -47,6 +47,7 @@ struct RPSvsPersonView: View {
                             }
                             .fixedSize()
                         }
+                        .disabled(vm.remainingTime <= 0)
                     }
                 }
                 .onChange(of: vm.userChoice) { newValue in
@@ -87,7 +88,6 @@ struct RPSvsPersonView: View {
         }
         .padding()
         .onReceive(vm.countdownTimer) { _ in
-            print("isTimerKeeper: \(vm.isTimeKeeper)")
             guard vm.isTimeKeeper else { return }
             vm.remainingTime -= 1
         }
