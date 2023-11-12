@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import GameKit
+import Combine
 
 class ViewModel: NSObject, ObservableObject {
     
@@ -17,9 +18,17 @@ class ViewModel: NSObject, ObservableObject {
     @Published var userChoice: WeaponOfChoice? = nil
     @AppStorage("bestStreak") var streak: Int = 0
     @Published var lastReceivedData: WeaponOfChoice? = nil
+    private var cancellable = Set<AnyCancellable>()
+    var countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @Published var isTimeKeeper: Bool = false
-    @Published var remainingTime = 30
+    @Published var remainingTime = 30 {
+        willSet {
+            print("NewValue \(newValue)")
+            if isTimeKeeper { sendString("timer:\(newValue)") }
+            if newValue <= 0 { gameOver() }
+        }
+    }
     
     // GameKit
     var match: GKMatch?
@@ -96,6 +105,10 @@ class ViewModel: NSObject, ObservableObject {
         print("Tied")
         gameResult = .tie
     }
+    
+    func gameOver() {
+        countdownTimer.upstream.connect().cancel()
+    }
  
     
     func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) {
@@ -134,10 +147,16 @@ class ViewModel: NSObject, ObservableObject {
                 break
             }
             inGame = true
-            isTimeKeeper = true
+            print("PlayerYYUDIKEY \(playerUUIDKey)")
+            print("Parameter: \(parameter)")
+            print(playerUUIDKey > parameter)
+            isTimeKeeper = playerUUIDKey > parameter
             if isTimeKeeper {
+
                 countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
             }
+            
+        // Handle guesses from the other player
         case WeaponOfChoice.scissors.description:
             computerChoice = .scissors
         case WeaponOfChoice.rock.description:
@@ -146,6 +165,10 @@ class ViewModel: NSObject, ObservableObject {
             computerChoice = .paper
         case "strData:":
             break
+            
+        case "timer":
+            print("SHould be updating time")
+//            remainingTime = Int(parameter) ?? 0
             
         default:
             break
