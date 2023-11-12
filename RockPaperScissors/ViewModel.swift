@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import GameKit
 
-class ViewModel: ObservableObject {
+class ViewModel: NSObject, ObservableObject {
     
     // Game Center
     @Published var inGame = false
@@ -15,6 +15,10 @@ class ViewModel: ObservableObject {
     @Published var computerChoice: WeaponOfChoice? = nil
     @Published var userChoice: WeaponOfChoice? = nil
     @AppStorage("bestStreak") var streak: Int = 0
+    @Published var lastReceivedData: WeaponOfChoice? = nil
+    
+    @Published var isTimeKeeper: Bool = false
+    @Published var remainingTime = 30
     
     // GameKit
     var match: GKMatch?
@@ -63,8 +67,12 @@ class ViewModel: ObservableObject {
         }
     }
     
-    func startMatch(match: GKMatch) {
+    func startMatch(newMatch: GKMatch) {
+        match = newMatch
+        match?.delegate = self
+        otherPlayer = match?.players.first
         
+        sendString("Began: \(playerUUIDKey)")
     }
     
     // Functions
@@ -112,5 +120,32 @@ class ViewModel: ObservableObject {
         if let choice = computerChoice {
             rockPaperScissors(playerChoice, choice)
         }
+    }
+    
+    func receivedString(_ message: String) {
+        let messageSplit = message.split(separator: ":")
+        guard let messagePrefix = messageSplit.first else { return }
+        
+        let parameter = String(messageSplit.last ?? "")
+        
+        switch messagePrefix {
+        case "began":
+            if playerUUIDKey == parameter {
+                playerUUIDKey = UUID().uuidString
+                sendString("began:\(playerUUIDKey)")
+                break
+            }
+            inGame = true
+            isTimeKeeper = true
+            if isTimeKeeper {
+                countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+            }
+        case "strData:":
+            break
+            
+        default:
+            break
+        }
+        
     }
 }

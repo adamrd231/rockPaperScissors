@@ -8,6 +8,7 @@ struct LaunchView: View {
             Text("Rock, Paper, Scissors")
             Button("Play person") {
                 // bring to game
+                vm.startMatchmaking()
             }
             .disabled(vm.authenticationState != .authenticated || vm.inGame)
             Text(vm.authenticationState.rawValue)

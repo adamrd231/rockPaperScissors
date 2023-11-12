@@ -9,6 +9,8 @@ enum PlayerAuthState: String {
     case restricted = "You're not allowed to play multiplayer games."
 }
 
+var countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
 struct ContentView: View {
     @StateObject var vm = ViewModel()
     
@@ -24,6 +26,10 @@ struct ContentView: View {
         }
         .onAppear {
             vm.authenticateUser()
+        }
+        .onReceive(countdownTimer) { _ in
+            guard vm.isTimeKeeper else { return }
+            vm.remainingTime -= 1
         }
     }
 }
