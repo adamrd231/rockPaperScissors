@@ -68,6 +68,8 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     func startMatch(newMatch: GKMatch) {
+        print("Starting new match")
+        inGame = true
         match = newMatch
         match?.delegate = self
         otherPlayer = match?.players.first
