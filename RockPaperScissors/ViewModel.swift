@@ -64,21 +64,6 @@ class ViewModel: NSObject, ObservableObject {
                 }
             }
             .store(in: &cancellable)
-        
-        $playAgain
-            .combineLatest($playerWantsToPlayAgain)
-            .sink { [weak self] returnedPlayAgain, returnedPlayerWantsToPlayAgain in
-            
-                if returnedPlayAgain && returnedPlayerWantsToPlayAgain {
-                    self?.userChoice = nil
-                    self?.computerChoice = nil
-                    self?.playAgain = false
-                    self?.playerWantsToPlayAgain = false
-                    self?.gameResult = nil
-                }
-                
-            }
-            .store(in: &cancellable)
     }
     
     func authenticateUser() {
@@ -150,8 +135,9 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     func resetGame() {
-        playAgain = true
+        print("reset game")
         sendString("restart:")
+        playAgain = true
     }
  
     
@@ -198,9 +184,8 @@ class ViewModel: NSObject, ObservableObject {
             }
         case "restart":
             // Received request from user to re-start the game
-            print("Restarting")
             playerWantsToPlayAgain = true
-            //
+
         // Handle guesses from the other player
         case WeaponOfChoice.scissors.description:
             computerChoice = .scissors

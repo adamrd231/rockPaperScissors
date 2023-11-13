@@ -3,7 +3,6 @@ import GameKit
 
 extension ViewModel: GKMatchDelegate {
     func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        print("Received data")
         let content = String(decoding: data, as: UTF8.self)
         
         if content.starts(with: "strData:") {
@@ -28,7 +27,6 @@ extension ViewModel: GKMatchDelegate {
     }
     
     func sendData(_ data: Data, mode: GKMatch.SendDataMode) {
-        print("sending data")
         do {
             try match?.sendData(toAllPlayers: data, with: mode)
         } catch {

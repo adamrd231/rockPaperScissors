@@ -8,7 +8,7 @@ enum WeaponOfChoice: CustomStringConvertible, Equatable {
         switch self {
         case .rock: return "rock"
         case .paper: return "paper"
-        case .scissors: return "scissors"
+        case .scissors: return "scissor"
         }
     }
     

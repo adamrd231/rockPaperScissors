@@ -11,82 +11,140 @@ struct RPSvsPersonView: View {
     @ObservedObject var vm: ViewModel
     
     var body: some View {
-        VStack {
-            HStack {
-                VStack {
-                    Text("Time:")
-                        .bold()
-                    Text(vm.remainingTime, format: .number)
+        ZStack {
+            Image("rockPaperScissorsBackground")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                HStack {
+                    VStack {
+                        Text("Time:")
+                            .bold()
+                        Text(vm.remainingTime, format: .number)
+                    }
+                    Spacer()
+                    VStack {
+                        Text("Current score")
+                            .bold()
+                        Text(vm.streak, format: .number)
+                    }
                 }
-                Spacer()
+                .padding()
+               Spacer()
                 VStack {
-                    Text("Current score")
-                        .bold()
-                    Text(vm.streak, format: .number)
+                    VStack() {
+                        ForEach(vm.choices, id: \.self) { choice in
+                            Button {
+                                vm.playGame(playerChoice: choice)
+                                print("self: \(vm.playAgain)")
+                                print("Other player: \(vm.playerWantsToPlayAgain)")
+                            } label: {
+                                ZStack {
+                                    Capsule()
+                                        .foregroundColor(choice == vm.userChoice ? Color(.systemGray4) : Color(.systemGray6))
+                                    
+                                    VStack(spacing: 0) {
+                                        
+                                        Image(choice.description)
+                                            .resizable()
+                                            .frame(width: 100, height: 100)
+                                            .font(.largeTitle)
+                                        Text(choice.description)
+                                    }
+                                    .padding()
+                                    .frame(minWidth: 250, minHeight: 90)
+                                    .foregroundColor(Color(.systemGray))
+                                }
+                                .fixedSize()
+                            }
+                            .disabled(vm.remainingTime <= 0)
+                        }
+                    }
+                    .onChange(of: vm.playAgain) { newValue in
+                        if vm.playAgain && vm.playerWantsToPlayAgain {
+                            vm.userChoice = nil
+                            vm.computerChoice = nil
+                            vm.playAgain = false
+                            vm.playerWantsToPlayAgain = false
+                            vm.gameResult = nil
+                        }
+                    }
+                    .onChange(of: vm.playerWantsToPlayAgain) { newValue in
+                        if vm.playAgain && vm.playerWantsToPlayAgain {
+                            vm.userChoice = nil
+                            vm.computerChoice = nil
+                            vm.playAgain = false
+                            vm.playerWantsToPlayAgain = false
+                            vm.gameResult = nil
+                        }
+                    }
+                }
+             
+                Spacer()
+           
+                HStack {
+                    if let choice = vm.userChoice {
+                        VStack {
+                            Text("You chose:")
+                            Image(choice.description)
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                        
+                        }
+                    }
+                    if let _ = vm.userChoice,
+                       let theirChoice = vm.computerChoice {
+                        Text("VS")
+                            .bold()
+                        VStack {
+                            Text("They chose:")
+                            Image(theirChoice.description)
+                                .resizable()
+                                .frame(width: 100, height: 100)
+                        }
+                    }
                 }
             }
             .padding()
-           Spacer()
-            VStack {
-                VStack(spacing: 10) {
-                    ForEach(vm.choices, id: \.self) { choice in
-                        Button {
-                            vm.playGame(playerChoice: choice)
-                        } label: {
-                            ZStack {
-                                Capsule()
-                                    .foregroundColor(Color(.systemGray))
-                                
-                                VStack {
-                                    Text(choice.emoji)
-                                        .font(.largeTitle)
-                                    Text(choice.description)
-                                }
-                                .frame(minWidth: 150, minHeight: 90)
-                                .foregroundColor(Color(.systemGray6))
-                            }
-                            .fixedSize()
-                        }
-                        .disabled(vm.remainingTime <= 0)
-                    }
-                }
-            }
-            Spacer()
-       
-            HStack {
-                if let choice = vm.userChoice {
-                    VStack {
-                        Text("You chose:")
-                        Text(choice.description)
-                        Text(choice.emoji)
-                    
-                    }
-                }
-                if let choice = vm.userChoice,
-                   let theirChoice = vm.computerChoice {
-                    VStack {
-                        Text("they chose:")
-                        Text(theirChoice.description)
-                        Text(theirChoice.emoji)
-                    }
-                }
+            .onReceive(vm.countdownTimer) { _ in
+                guard vm.isTimeKeeper else { return }
+                vm.remainingTime -= 1
             }
             
-            if let result = vm.gameResult {
-                Text("You" + result.description)
-                Button("Play another game") {
-                    vm.resetGame()
+        }
+        if let result = vm.gameResult {
+            ZStack {
+                Capsule()
+                    .foregroundColor(Color(.black))
+                VStack(spacing: 5) {
+                    Text("RESULT")
+                        .font(.caption)
+                        .bold()
+                    Text(result.description)
+                        .font(.title)
+                        .fontWeight(.heavy)
+                    Button("Rematch?") {
+                        vm.resetGame()
+                    }
+                    .buttonStyle(.bordered)
+                    if vm.playAgain == true {
+                        Text("Waiting for other player")
+                            .font(.caption)
+                    } else if vm.playerWantsToPlayAgain == true {
+                        Text("Other player is ready")
+                            .font(.caption)
+                    }
                 }
+                .foregroundColor(.white)
+                .frame(minWidth: 200)
+                .padding()
             }
+            .fixedSize()
+            
+            
         }
-        .padding()
-        .onReceive(vm.countdownTimer) { _ in
-            guard vm.isTimeKeeper else { return }
-            vm.remainingTime -= 1
-        }
-        
     }
-        
 }
 
 struct RPSvsPersonView_Previews: PreviewProvider {
