@@ -10,7 +10,6 @@ extension ViewModel: GKMatchDelegate {
             receivedString(message)
         } else {
             do {
-                print("data: \(data)")
                 // TODO: Setup lastReceivedData to be updated with user choice instead of hardcoding
                 try lastReceivedData = .rock
             } catch {
@@ -20,7 +19,6 @@ extension ViewModel: GKMatchDelegate {
     }
     
     func sendString(_ message: String) {
-        print("sending string \(message)")
         guard let encoded = "strData:\(message)".data(using: .utf8) else { return }
         sendData(encoded, mode: .reliable)
                 
@@ -34,8 +32,7 @@ extension ViewModel: GKMatchDelegate {
         }
     }
     
-    func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
-        print("Player exited")
+    func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) { 
         DispatchQueue.main.async {
             self.inGame = false
             self.isShowingAlert = true

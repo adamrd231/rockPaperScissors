@@ -32,8 +32,6 @@ struct RPSvsPersonView: View {
                         ForEach(vm.choices, id: \.self) { choice in
                             Button {
                                 vm.playGame(playerChoice: choice)
-                                print("self: \(vm.playAgain)")
-                                print("Other player: \(vm.playerWantsToPlayAgain)")
                             } label: {
                                 ZStack {
                                     Capsule()

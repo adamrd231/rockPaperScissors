@@ -49,10 +49,8 @@ class ViewModel: NSObject, ObservableObject {
         $userChoice
             .combineLatest($computerChoice)
             .sink { [weak self] user, computer in
-                print("Updated choices")
                 if let u = user,
                    let c = computer {
-                    print("Rock paper scrissors")
                     self?.rockPaperScissors(u, c)
                 
                 }
@@ -96,11 +94,9 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     func startMatch(newMatch: GKMatch) {
-        print("Starting new match")
         match = newMatch
         match?.delegate = self
         otherPlayer = match?.players.first
-        
         sendString("began: \(playerUUIDKey)")
     }
     
@@ -116,12 +112,10 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     func playerTie() {
-        print("Tied")
         gameResult = .tie
     }
     
     func resetGame() {
-        print("reset game")
         sendString("restart:")
         playAgain = true
     }
@@ -149,7 +143,6 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     func receivedString(_ message: String) {
-        print("received string: \(message)")
         let messageSplit = message.split(separator: ":")
         guard let messagePrefix = messageSplit.first else { return }
         
@@ -179,7 +172,7 @@ class ViewModel: NSObject, ObservableObject {
             break
             
         case "timer":
-            print("SHould be updating time")
+            print("Placeholder")
             
         default:
             break
