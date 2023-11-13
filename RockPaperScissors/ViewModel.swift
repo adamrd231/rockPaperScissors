@@ -16,7 +16,7 @@ class ViewModel: NSObject, ObservableObject {
     @Published var gameResult: GameResult? = nil
     @Published var computerChoice: WeaponOfChoice? = nil
     @Published var userChoice: WeaponOfChoice? = nil
-    @AppStorage("bestStreak") var streak: Int = 0
+    @Published var streak: Int = 0
     @Published var lastReceivedData: WeaponOfChoice? = nil
     
     @Published var playAgain: Bool = false

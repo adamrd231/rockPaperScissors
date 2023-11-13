@@ -52,14 +52,18 @@ struct RPSvsPersonView: View {
                 }
             }
             Spacer()
-            if let choice = vm.userChoice,
-               let theirChoice = vm.computerChoice {
-                HStack {
+       
+            HStack {
+                if let choice = vm.userChoice {
                     VStack {
                         Text("You chose:")
                         Text(choice.description)
                         Text(choice.emoji)
+                    
                     }
+                }
+                if let choice = vm.userChoice,
+                   let theirChoice = vm.computerChoice {
                     VStack {
                         Text("they chose:")
                         Text(theirChoice.description)
@@ -67,6 +71,7 @@ struct RPSvsPersonView: View {
                     }
                 }
             }
+            
             if let result = vm.gameResult {
                 Text("You" + result.description)
                 Button("Play another game") {
