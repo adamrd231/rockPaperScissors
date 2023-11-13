@@ -18,11 +18,15 @@ class ViewModel: NSObject, ObservableObject {
     @Published var userChoice: WeaponOfChoice? = nil
     @AppStorage("bestStreak") var streak: Int = 0
     @Published var lastReceivedData: WeaponOfChoice? = nil
+    
+    @Published var playAgain: Bool = false
+    @Published var playerWantsToPlayAgain: Bool = false
+    
     private var cancellable = Set<AnyCancellable>()
     var countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @Published var isTimeKeeper: Bool = false
-    @Published var remainingTime = 30 {
+    @Published var remainingTime = 90 {
         willSet {
             print("NewValue \(newValue)")
             if isTimeKeeper { sendString("timer:\(newValue)") }
@@ -40,6 +44,41 @@ class ViewModel: NSObject, ObservableObject {
     var rootViewController: UIViewController? {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         return windowScene?.windows.first?.rootViewController
+    }
+    
+    override init() {
+        super.init()
+        addSubscribers()
+    }
+    
+    func addSubscribers() {
+        $userChoice
+            .combineLatest($computerChoice)
+            .sink { [weak self] user, computer in
+                print("Updated choices")
+                if let u = user,
+                   let c = computer {
+                    print("Rock paper scrissors")
+                    self?.rockPaperScissors(u, c)
+                
+                }
+            }
+            .store(in: &cancellable)
+        
+        $playAgain
+            .combineLatest($playerWantsToPlayAgain)
+            .sink { [weak self] returnedPlayAgain, returnedPlayerWantsToPlayAgain in
+            
+                if returnedPlayAgain && returnedPlayerWantsToPlayAgain {
+                    self?.userChoice = nil
+                    self?.computerChoice = nil
+                    self?.playAgain = false
+                    self?.playerWantsToPlayAgain = false
+                    self?.gameResult = nil
+                }
+                
+            }
+            .store(in: &cancellable)
     }
     
     func authenticateUser() {
@@ -109,6 +148,11 @@ class ViewModel: NSObject, ObservableObject {
     func gameOver() {
         countdownTimer.upstream.connect().cancel()
     }
+    
+    func resetGame() {
+        playAgain = true
+        sendString("restart:")
+    }
  
     
     func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) {
@@ -152,7 +196,11 @@ class ViewModel: NSObject, ObservableObject {
             if isTimeKeeper {
                 countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
             }
-            
+        case "restart":
+            // Received request from user to re-start the game
+            print("Restarting")
+            playerWantsToPlayAgain = true
+            //
         // Handle guesses from the other player
         case WeaponOfChoice.scissors.description:
             computerChoice = .scissors

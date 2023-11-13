@@ -36,7 +36,7 @@ struct RPSvsPersonView: View {
                             ZStack {
                                 Capsule()
                                     .foregroundColor(Color(.systemGray))
-             
+                                
                                 VStack {
                                     Text(choice.emoji)
                                         .font(.largeTitle)
@@ -49,18 +49,6 @@ struct RPSvsPersonView: View {
                         }
                         .disabled(vm.remainingTime <= 0)
                     }
-                }
-                .onChange(of: vm.userChoice) { newValue in
-                    if let user = vm.userChoice,
-                       let computer = vm.computerChoice {
-                        vm.rockPaperScissors(user, computer)
-                    }
-                }
-            }
-            .onChange(of: vm.computerChoice) { newValue in
-                if let user = vm.userChoice,
-                   let computer = vm.computerChoice {
-                    vm.rockPaperScissors(user, computer)
                 }
             }
             Spacer()
@@ -82,7 +70,7 @@ struct RPSvsPersonView: View {
             if let result = vm.gameResult {
                 Text("You" + result.description)
                 Button("Play another game") {
-         
+                    vm.resetGame()
                 }
             }
         }
