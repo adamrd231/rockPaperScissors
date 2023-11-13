@@ -40,6 +40,9 @@ struct LaunchView: View {
             }
             .padding(.bottom, 50)
         }
+        .alert("Opponent left game", isPresented: $vm.isShowingAlert) {
+            Button("OK", role: .cancel) { }
+        }
 
         
     }

@@ -10,6 +10,8 @@ class ViewModel: NSObject, ObservableObject {
     @Published var isGameOver = false
     @Published var isRoundOver = false
     @Published var authenticationState = PlayerAuthState.authenticating
+    
+    @Published var isShowingAlert = false
 
     // Game
     let choices:[WeaponOfChoice] = [.rock, .paper, .scissors]

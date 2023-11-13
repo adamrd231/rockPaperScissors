@@ -36,5 +36,9 @@ extension ViewModel: GKMatchDelegate {
     
     func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
         print("Player exited")
+        DispatchQueue.main.async {
+            self.inGame = false
+            self.isShowingAlert = true
+        }
     }
 }
