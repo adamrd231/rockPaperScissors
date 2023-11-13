@@ -18,11 +18,6 @@ struct RPSvsPersonView: View {
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 HStack {
-                    VStack {
-                        Text("Time:")
-                            .bold()
-                        Text(vm.remainingTime, format: .number)
-                    }
                     Spacer()
                     VStack {
                         Text("Current score")
@@ -58,7 +53,7 @@ struct RPSvsPersonView: View {
                                 }
                                 .fixedSize()
                             }
-                            .disabled(vm.remainingTime <= 0)
+                            .disabled(vm.userChoice != nil && vm.computerChoice != nil)
                         }
                     }
                     .onChange(of: vm.playAgain) { newValue in
@@ -107,10 +102,6 @@ struct RPSvsPersonView: View {
                 }
             }
             .padding()
-            .onReceive(vm.countdownTimer) { _ in
-                guard vm.isTimeKeeper else { return }
-                vm.remainingTime -= 1
-            }
             
         }
         if let result = vm.gameResult {

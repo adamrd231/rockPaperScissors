@@ -23,16 +23,8 @@ class ViewModel: NSObject, ObservableObject {
     @Published var playerWantsToPlayAgain: Bool = false
     
     private var cancellable = Set<AnyCancellable>()
-    var countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @Published var isTimeKeeper: Bool = false
-    @Published var remainingTime = 90 {
-        willSet {
-            print("NewValue \(newValue)")
-            if isTimeKeeper { sendString("timer:\(newValue)") }
-            if newValue <= 0 { gameOver() }
-        }
-    }
     
     // GameKit
     var match: GKMatch?
@@ -117,21 +109,13 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     func playerLost() {
-        if streak <= 0 {
-            streak -= 1
-        } else {
-            streak = 0
-        }
+        streak -= 1
         gameResult = .lose
     }
     
     func playerTie() {
         print("Tied")
         gameResult = .tie
-    }
-    
-    func gameOver() {
-        countdownTimer.upstream.connect().cancel()
     }
     
     func resetGame() {
@@ -177,11 +161,7 @@ class ViewModel: NSObject, ObservableObject {
                 break
             }
             inGame = true
-            print(playerUUIDKey > parameter)
-            isTimeKeeper = playerUUIDKey < parameter
-            if isTimeKeeper {
-                countdownTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-            }
+   
         case "restart":
             // Received request from user to re-start the game
             playerWantsToPlayAgain = true
@@ -198,7 +178,6 @@ class ViewModel: NSObject, ObservableObject {
             
         case "timer":
             print("SHould be updating time")
-            remainingTime = Int(parameter) ?? 0
             
         default:
             break
