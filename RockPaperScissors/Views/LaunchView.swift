@@ -45,7 +45,7 @@ struct LaunchView: View {
            
             VStack {
                 Spacer()
-                LaunchButtonView(title: "Play Computer", function: { computerVM.inGame = true })
+                LaunchButtonView(title: computerVM.streak > -1 ? "Play Computer +\(computerVM.streak)" : "Play Computer -\(computerVM.streak)", function: { computerVM.inGame = true })
                 LaunchButtonView(title: "Matchmaking", function: {
                     vm.startMatchmaking()
                     
