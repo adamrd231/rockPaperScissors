@@ -14,7 +14,7 @@ struct LaunchButtonView: View {
             ZStack {
                 Capsule()
                     .foregroundColor(Color(.systemGray))
-                    .frame(minWidth: 200)
+                    .frame(minWidth: 230)
                 Text(title)
                     .foregroundColor(Color(.systemGray6))
                     .padding()
@@ -51,6 +51,7 @@ struct LaunchView: View {
                     
                 })
                 .disabled(vm.authenticationState != .authenticated || vm.inGame)
+                .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
                 LaunchButtonView(title: "Leaderboard", function: {
                     // Go to leaderboard
                     
@@ -63,7 +64,7 @@ struct LaunchView: View {
                     Button("Log into Game Center") {
                         vm.authenticateUser()
                     }
-                    .buttonStyle(.bordered)
+                    .buttonStyle(.borderedProminent)
                 }
                
                 Text(vm.authenticationState.rawValue)
