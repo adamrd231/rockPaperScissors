@@ -32,9 +32,9 @@ struct ContentView: View {
                 )
             }
         }
-        .onAppear {
-            vm.authenticateUser()
-        }
+//        .onAppear {
+//            vm.authenticateUser()
+//        }
     }
 }
 

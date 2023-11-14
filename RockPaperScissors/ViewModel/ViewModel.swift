@@ -9,7 +9,7 @@ class ViewModel: NSObject, ObservableObject {
     @Published var inGame = false
     @Published var isGameOver = false
     @Published var isRoundOver = false
-    @Published var authenticationState = PlayerAuthState.authenticating
+    @Published var authenticationState = PlayerAuthState.unauthenticated
     
     @Published var isShowingAlert = false
 

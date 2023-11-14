@@ -59,10 +59,17 @@ struct LaunchView: View {
                     // Go to in app purchases
                     
                 })
-                
+                if vm.authenticationState == .unauthenticated || vm.authenticationState == .authenticating || vm.authenticationState == .error {
+                    Button("Log into Game Center") {
+                        vm.authenticateUser()
+                    }
+                    .buttonStyle(.bordered)
+                }
+               
                 Text(vm.authenticationState.rawValue)
                     .font(.headline)
                     .padding()
+                    .multilineTextAlignment(.center)
             }
             .padding(.bottom, 50)
         }
