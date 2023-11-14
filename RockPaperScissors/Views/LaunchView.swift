@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LaunchView: View {
     @ObservedObject var vm: ViewModel
+    @ObservedObject var computerVM: VsComputerViewModel
     
     var body: some View {
         ZStack {
@@ -20,6 +21,19 @@ struct LaunchView: View {
            
             VStack {
                 Spacer()
+                Button {
+                    // bring to game
+                    computerVM.inGame = true
+                } label: {
+                    ZStack {
+                        Capsule()
+                            .foregroundColor(Color(.systemGray))
+                        Text("Play Computer")
+                            .foregroundColor(Color(.systemGray6))
+                            .padding()
+                    }
+                    .fixedSize()
+                }
                 Button {
                     // bring to game
                     vm.startMatchmaking()
@@ -50,6 +64,9 @@ struct LaunchView: View {
 
 struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {
-        LaunchView(vm: ViewModel())
+        LaunchView(
+            vm: ViewModel(),
+            computerVM: VsComputerViewModel()
+        )
     }
 }

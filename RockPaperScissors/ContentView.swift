@@ -13,6 +13,7 @@ enum PlayerAuthState: String {
 
 struct ContentView: View {
     @StateObject var vm = ViewModel()
+    @StateObject var computerVM = VsComputerViewModel()
     
     var body: some View {
         ZStack {
@@ -20,8 +21,13 @@ struct ContentView: View {
                 Text("Game Over")
             } else if vm.inGame {
                 RPSvsPersonView(vm: vm)
+            } else if computerVM.inGame {
+                RPSvsComputerView(vm: computerVM)
             } else {
-                LaunchView(vm: vm)
+                LaunchView(
+                    vm: vm,
+                    computerVM: computerVM
+                )
             }
         }
         .onAppear {
