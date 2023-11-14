@@ -1,5 +1,29 @@
 import SwiftUI
 
+struct LaunchButtonView: View {
+    
+    var title: String
+    var function: () -> Void
+    
+    var body: some View {
+        Button {
+            // bring to game
+//            computerVM.inGame = true
+            function()
+        } label: {
+            ZStack {
+                Capsule()
+                    .foregroundColor(Color(.systemGray))
+                    .frame(minWidth: 200)
+                Text(title)
+                    .foregroundColor(Color(.systemGray6))
+                    .padding()
+            }
+            .fixedSize()
+        }
+    }
+}
+
 struct LaunchView: View {
     @ObservedObject var vm: ViewModel
     @ObservedObject var computerVM: VsComputerViewModel
@@ -21,33 +45,21 @@ struct LaunchView: View {
            
             VStack {
                 Spacer()
-                Button {
-                    // bring to game
-                    computerVM.inGame = true
-                } label: {
-                    ZStack {
-                        Capsule()
-                            .foregroundColor(Color(.systemGray))
-                        Text("Play Computer")
-                            .foregroundColor(Color(.systemGray6))
-                            .padding()
-                    }
-                    .fixedSize()
-                }
-                Button {
-                    // bring to game
+                LaunchButtonView(title: "Play Computer", function: { computerVM.inGame = true })
+                LaunchButtonView(title: "Matchmaking", function: {
                     vm.startMatchmaking()
-                } label: {
-                    ZStack {
-                        Capsule()
-                            .foregroundColor(Color(.systemGray))
-                        Text("Matchmaking")
-                            .foregroundColor(Color(.systemGray6))
-                            .padding()
-                    }
-                    .fixedSize()
-                }
+                    
+                })
                 .disabled(vm.authenticationState != .authenticated || vm.inGame)
+                LaunchButtonView(title: "Leaderboard", function: {
+                    // Go to leaderboard
+                    
+                })
+                LaunchButtonView(title: "In-App Purchases", function: {
+                    // Go to in app purchases
+                    
+                })
+                
                 Text(vm.authenticationState.rawValue)
                     .font(.headline)
                     .padding()

@@ -9,8 +9,6 @@ enum PlayerAuthState: String {
     case restricted = "You're not allowed to play multiplayer games."
 }
 
-
-
 struct ContentView: View {
     @StateObject var vm = ViewModel()
     @StateObject var computerVM = VsComputerViewModel()
