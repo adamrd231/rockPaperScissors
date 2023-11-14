@@ -49,7 +49,7 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     func showLeaderboards() {
-        let gameCenterVC = GKGameCenterViewController(state: .leaderboards)
+        let gameCenterVC = GKGameCenterViewController(leaderboardID: "gamesWon", playerScope: .global, timeScope: .allTime)
         gameCenterVC.gameCenterDelegate = self
         rootViewController?.present(gameCenterVC, animated: true, completion: nil)
         
