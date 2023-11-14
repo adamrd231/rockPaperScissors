@@ -101,6 +101,10 @@ struct RPSvsComputerView: View {
             }
             Spacer()
         }
+        .onAppear {
+            print("Loading achievements \(computerVM.gamesPlayed)")
+            vm.loadAchievements(gamesPlayed: computerVM.gamesPlayed)
+        }
         .onDisappear {
             print("Saving game to leaderboard")
             // TODO: implement both below

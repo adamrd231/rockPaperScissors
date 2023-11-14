@@ -37,8 +37,6 @@ class ViewModel: NSObject, ObservableObject {
     
     var playerUUIDKey = UUID().uuidString
     
-   
-    
     // Leaderboard
     @Published var playersList: [GKPlayer] = []
     
@@ -50,6 +48,40 @@ class ViewModel: NSObject, ObservableObject {
     override init() {
         super.init()
         addSubscribers()
+    }
+    
+    func loadAchievements(gamesPlayed: Int) {
+        GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in
+            let achievementID = "PlayFirstGame"
+            var achievement: GKAchievement? = nil
+            achievement = achievements?.first(where: { $0.identifier == achievementID })
+            
+            if achievement == nil {
+                print("check")
+                achievement = GKAchievement(identifier: achievementID)
+                if gamesPlayed > 0 {
+                    print("check percent")
+                    achievement?.percentComplete = 100
+                    let achievementsToReport: [GKAchievement] = [achievement!]
+                    GKAchievement.report(achievementsToReport, withCompletionHandler: {(error: Error?) in
+                        print("reporting")
+                        
+                        
+                        if error != nil {
+                            print("Error reporting achievement: \(String(describing: error))")
+                        }
+                    })
+                }
+            }
+            
+            if error != nil {
+                print("Error get achievement: \(String(describing: error))")
+            }
+        })
+    }
+    
+    func updateAchievement() {
+        
     }
     
     func showLeaderboards() {
@@ -67,7 +99,7 @@ class ViewModel: NSObject, ObservableObject {
                     newHighScore,
                     context: 0,
                     player: GKLocalPlayer.local,
-                    leaderboardIDs: ["gamesWon"]
+                    leaderboardIDs: ["gamesWon", "playerOfTheWeek"]
                     
                 )
             }

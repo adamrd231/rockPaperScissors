@@ -8,6 +8,7 @@ class VsComputerViewModel: ObservableObject {
     @Published var computerChoice: WeaponOfChoice
     @Published var userChoice: WeaponOfChoice? = nil
     @AppStorage("computerStreak") var streak: Int = 0
+    @AppStorage("gamesPlayed") var gamesPlayed: Int = 0
     
     @Published var inGame: Bool = false
     @Published var gameOver: Bool = false
@@ -32,6 +33,7 @@ class VsComputerViewModel: ObservableObject {
     }
     
     func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) {
+        gamesPlayed += 1
         switch (playerChoice, computerChoice) {
         case (.rock, .rock): playerTie()
         case (.rock, .scissors): playerWon()
