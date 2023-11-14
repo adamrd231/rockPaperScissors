@@ -1,12 +1,14 @@
 import SwiftUI
+import GameKit
 
 struct RPSvsComputerView: View {
-    @ObservedObject var vm: VsComputerViewModel
+    @ObservedObject var computerVM: VsComputerViewModel
+    @ObservedObject var vm: ViewModel
     var body: some View {
         VStack {
             HStack {
                 Button {
-                    vm.inGame = false
+                    computerVM.inGame = false
                 } label: {
                     Image(systemName: "arrowtriangle.backward.fill")
                         .resizable()
@@ -14,8 +16,8 @@ struct RPSvsComputerView: View {
                 }
                 Spacer()
                 VStack {
-                    Text(vm.streak > -1 ? "Wins" : "Loses")
-                    Text(vm.streak, format: .number)
+                    Text(computerVM.streak > -1 ? "Wins" : "Loses")
+                    Text(computerVM.streak, format: .number)
                         .font(.largeTitle)
                 }
                 .bold()
@@ -23,7 +25,7 @@ struct RPSvsComputerView: View {
                 Spacer()
                 Button {
                     // Reset streak counter to 0
-                    vm.streak = 0
+                    computerVM.streak = 0
                     // TODO: Make user watch an ad to do this
                 } label: {
                     Image(systemName: "arrow.clockwise")
@@ -36,9 +38,9 @@ struct RPSvsComputerView: View {
           
             Spacer()
            
-            if let result = vm.gameResult {
-                if let choice = vm.userChoice,
-                   let computerChoice = vm.computerChoice {
+            if let result = computerVM.gameResult {
+                if let choice = computerVM.userChoice,
+                   let computerChoice = computerVM.computerChoice {
                     Text(result.description)
                         .font(.largeTitle)
                         .padding()
@@ -60,23 +62,23 @@ struct RPSvsComputerView: View {
                 }
                 
                 Button("Play Again") {
-                    vm.userChoice = nil
-                    vm.gameResult = nil
-                    vm.computerChoice = vm.choices[Int.random(in: 0..<3)]
+                    computerVM.userChoice = nil
+                    computerVM.gameResult = nil
+                    computerVM.computerChoice = computerVM.choices[Int.random(in: 0..<3)]
                 }
                 .buttonStyle(.bordered)
                 
             } else {
                 VStack {
-                    ForEach(vm.choices, id: \.self) { choice in
+                    ForEach(computerVM.choices, id: \.self) { choice in
                         Button {
                             // Play game
-                            vm.userChoice = choice
-                            vm.rockPaperScissors(choice, vm.computerChoice)
+                            computerVM.userChoice = choice
+                            computerVM.rockPaperScissors(choice, computerVM.computerChoice)
                         } label: {
                             ZStack {
                                 Capsule()
-                                    .foregroundColor(choice == vm.userChoice ? Color(.systemGray4) : Color(.systemGray6))
+                                    .foregroundColor(choice == computerVM.userChoice ? Color(.systemGray4) : Color(.systemGray6))
                                 
                                 VStack(spacing: 0) {
                                     
@@ -92,18 +94,32 @@ struct RPSvsComputerView: View {
                             }
                             .fixedSize()
                         }
-                        .disabled(vm.gameResult != nil)
+                        .disabled(computerVM.gameResult != nil)
                     }
                 }
                 .padding()
             }
             Spacer()
         }
+        .onDisappear {
+            print("Saving game to leaderboard")
+            // TODO: implement both below
+            // If score is better than leaderboard overall, submit to overall
+            
+            // Update score for player of the week
+            
+            print("Authenticated")
+            vm.submitScoreToLeaderBoard(newHighScore: computerVM.streak)
+        }
+
     }
 }
 
 struct RockPaperScissorsView_Previews: PreviewProvider {
     static var previews: some View {
-        RPSvsComputerView(vm: VsComputerViewModel())
+        RPSvsComputerView(
+            computerVM: VsComputerViewModel(),
+            vm: ViewModel()
+        )
     }
 }

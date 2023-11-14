@@ -3,6 +3,8 @@ import SwiftUI
 import GameKit
 import Combine
 
+
+
 class ViewModel: NSObject, ObservableObject {
     
     // Game Center
@@ -35,6 +37,8 @@ class ViewModel: NSObject, ObservableObject {
     
     var playerUUIDKey = UUID().uuidString
     
+   
+    
     // Leaderboard
     @Published var playersList: [GKPlayer] = []
     
@@ -49,10 +53,25 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     func showLeaderboards() {
-        let gameCenterVC = GKGameCenterViewController(leaderboardID: "gamesWon", playerScope: .global, timeScope: .allTime)
+        let gameCenterVC = GKGameCenterViewController(state: .leaderboards)
         gameCenterVC.gameCenterDelegate = self
         rootViewController?.present(gameCenterVC, animated: true, completion: nil)
         
+    }
+    
+    func submitScoreToLeaderBoard(newHighScore: Int) {
+        if authenticationState == .authenticated {
+            print("Score: \(streak)")
+            Task {
+                try await GKLeaderboard.submitScore(
+                    newHighScore,
+                    context: 0,
+                    player: GKLocalPlayer.local,
+                    leaderboardIDs: ["gamesWon"]
+                    
+                )
+            }
+        }
     }
     
     

@@ -24,7 +24,10 @@ struct ContentView: View {
             } else if vm.inGame {
                 RPSvsPersonView(vm: vm)
             } else if computerVM.inGame {
-                RPSvsComputerView(vm: computerVM)
+                RPSvsComputerView(
+                    computerVM: computerVM,
+                    vm: vm
+                )
             } else {
                 LaunchView(
                     vm: vm,
