@@ -17,6 +17,10 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
+            Image("rockPaperScissorsBackground")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .edgesIgnoringSafeArea(.all)
             if vm.isGameOver {
                 Text("Game Over")
             } else if vm.inGame {

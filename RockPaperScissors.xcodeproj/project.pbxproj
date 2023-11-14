@@ -70,16 +70,13 @@
 		660982EA2AFEC98000A7D0D0 /* RockPaperScissors */ = {
 			isa = PBXGroup;
 			children = (
+				66952CA32B0320E500F091F4 /* ViewModel */,
 				660983022AFFCCB800A7D0D0 /* Views */,
 				660982FA2AFFCAFB00A7D0D0 /* States */,
 				660982EB2AFEC98000A7D0D0 /* RockPaperScissorsApp.swift */,
-				660982ED2AFEC98000A7D0D0 /* ContentView.swift */,
 				660982EF2AFEC98800A7D0D0 /* Assets.xcassets */,
 				660982F12AFEC98900A7D0D0 /* RockPaperScissors.entitlements */,
 				660982F22AFEC98900A7D0D0 /* Preview Content */,
-				660983002AFFCB6A00A7D0D0 /* ViewModel.swift */,
-				660983072AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift */,
-				660983092AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift */,
 			);
 			path = RockPaperScissors;
 			sourceTree = "<group>";
@@ -104,12 +101,23 @@
 		660983022AFFCCB800A7D0D0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				660982ED2AFEC98000A7D0D0 /* ContentView.swift */,
 				660983032AFFCCC500A7D0D0 /* RPSvsComputerView.swift */,
 				66952CA12B02F47400F091F4 /* VSComputerViewModel.swift */,
 				660983052AFFE30F00A7D0D0 /* LaunchView.swift */,
 				6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		66952CA32B0320E500F091F4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				660983002AFFCB6A00A7D0D0 /* ViewModel.swift */,
+				660983072AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift */,
+				660983092AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,7 +340,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
@@ -371,7 +379,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;

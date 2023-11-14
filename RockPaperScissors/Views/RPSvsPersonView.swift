@@ -11,97 +11,88 @@ struct RPSvsPersonView: View {
     @ObservedObject var vm: ViewModel
     
     var body: some View {
-        ZStack {
-            Image("rockPaperScissorsBackground")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .edgesIgnoringSafeArea(.all)
-            VStack {
-                HStack {
-                    Spacer()
-                    VStack {
-                        Text("Current score")
-                            .bold()
-                        Text(vm.streak, format: .number)
-                    }
-                }
-                .padding()
-               Spacer()
-                VStack {
-                    VStack() {
-                        ForEach(vm.choices, id: \.self) { choice in
-                            Button {
-                                vm.playGame(playerChoice: choice)
-                            } label: {
-                                ZStack {
-                                    Capsule()
-                                        .foregroundColor(choice == vm.userChoice ? Color(.systemGray4) : Color(.systemGray6))
-                                    
-                                    VStack(spacing: 0) {
-                                        
-                                        Image(choice.description)
-                                            .resizable()
-                                            .frame(width: 100, height: 100)
-                                            .font(.largeTitle)
-                                        Text(choice.description)
-                                    }
-                                    .padding()
-                                    .frame(minWidth: 250, minHeight: 90)
-                                    .foregroundColor(Color(.systemGray))
-                                }
-                                .fixedSize()
-                            }
-                            .disabled(vm.userChoice != nil && vm.computerChoice != nil)
-                        }
-                    }
-                    .onChange(of: vm.playAgain) { newValue in
-                        if vm.playAgain && vm.playerWantsToPlayAgain {
-                            vm.userChoice = nil
-                            vm.computerChoice = nil
-                            vm.playAgain = false
-                            vm.playerWantsToPlayAgain = false
-                            vm.gameResult = nil
-                        }
-                    }
-                    .onChange(of: vm.playerWantsToPlayAgain) { newValue in
-                        if vm.playAgain && vm.playerWantsToPlayAgain {
-                            vm.userChoice = nil
-                            vm.computerChoice = nil
-                            vm.playAgain = false
-                            vm.playerWantsToPlayAgain = false
-                            vm.gameResult = nil
-                        }
-                    }
-                }
-             
+        VStack {
+            HStack {
                 Spacer()
-           
-                HStack {
-                    if let choice = vm.userChoice {
-                        VStack {
-                            Text("You chose:")
-                            Image(choice.description)
-                                .resizable()
-                                .frame(width: 100, height: 100)
-                        
-                        }
-                    }
-                    if let _ = vm.userChoice,
-                       let theirChoice = vm.computerChoice {
-                        Text("VS")
-                            .bold()
-                        VStack {
-                            Text("They chose:")
-                            Image(theirChoice.description)
-                                .resizable()
-                                .frame(width: 100, height: 100)
-                        }
-                    }
+                VStack {
+                    Text("Current score")
+                        .bold()
+                    Text(vm.streak, format: .number)
                 }
             }
             .padding()
-            
+           Spacer()
+            VStack {
+                VStack() {
+                    ForEach(vm.choices, id: \.self) { choice in
+                        Button {
+                            vm.playGame(playerChoice: choice)
+                        } label: {
+                            ZStack {
+                                Capsule()
+                                    .foregroundColor(choice == vm.userChoice ? Color(.systemGray4) : Color(.systemGray6))
+                                
+                                VStack(spacing: 0) {
+                                    
+                                    Image(choice.description)
+                                        .resizable()
+                                        .frame(width: 100, height: 100)
+                                        .font(.largeTitle)
+                                    Text(choice.description)
+                                }
+                                .padding()
+                                .frame(minWidth: 250, minHeight: 90)
+                                .foregroundColor(Color(.systemGray))
+                            }
+                            .fixedSize()
+                        }
+                        .disabled(vm.userChoice != nil && vm.computerChoice != nil)
+                    }
+                }
+                .onChange(of: vm.playAgain) { newValue in
+                    if vm.playAgain && vm.playerWantsToPlayAgain {
+                        vm.userChoice = nil
+                        vm.computerChoice = nil
+                        vm.playAgain = false
+                        vm.playerWantsToPlayAgain = false
+                        vm.gameResult = nil
+                    }
+                }
+                .onChange(of: vm.playerWantsToPlayAgain) { newValue in
+                    if vm.playAgain && vm.playerWantsToPlayAgain {
+                        vm.userChoice = nil
+                        vm.computerChoice = nil
+                        vm.playAgain = false
+                        vm.playerWantsToPlayAgain = false
+                        vm.gameResult = nil
+                    }
+                }
+            }
+            Spacer()
+            HStack {
+                if let choice = vm.userChoice {
+                    VStack {
+                        Text("You chose:")
+                        Image(choice.description)
+                            .resizable()
+                            .frame(width: 100, height: 100)
+                    
+                    }
+                }
+                if let _ = vm.userChoice,
+                   let theirChoice = vm.computerChoice {
+                    Text("VS")
+                        .bold()
+                    VStack {
+                        Text("They chose:")
+                        Image(theirChoice.description)
+                            .resizable()
+                            .frame(width: 100, height: 100)
+                    }
+                }
+            }
         }
+        .padding()
         if let result = vm.gameResult {
             ZStack {
                 Capsule()
@@ -130,8 +121,6 @@ struct RPSvsPersonView: View {
                 .padding()
             }
             .fixedSize()
-            
-            
         }
     }
 }
