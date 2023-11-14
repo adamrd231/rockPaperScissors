@@ -35,6 +35,9 @@ class ViewModel: NSObject, ObservableObject {
     
     var playerUUIDKey = UUID().uuidString
     
+    // Leaderboard
+    @Published var playersList: [GKPlayer] = []
+    
     var rootViewController: UIViewController? {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         return windowScene?.windows.first?.rootViewController
@@ -44,6 +47,28 @@ class ViewModel: NSObject, ObservableObject {
         super.init()
         addSubscribers()
     }
+    
+    func showLeaderboards() {
+        let gameCenterVC = GKGameCenterViewController(state: .leaderboards)
+        gameCenterVC.gameCenterDelegate = self
+        rootViewController?.present(gameCenterVC, animated: true, completion: nil)
+        
+    }
+    
+    
+    func startMatchmaking() {
+        let request = GKMatchRequest()
+        request.minPlayers = 2
+        request.maxPlayers = 2
+        
+        let matchmakingVC = GKMatchmakerViewController(matchRequest: request)
+        matchmakingVC?.matchmakerDelegate = self
+        if let matchmaker = matchmakingVC {
+            rootViewController?.present(matchmaker, animated: true)
+        }
+    }
+    
+    
     
     func addSubscribers() {
         $userChoice
@@ -57,6 +82,8 @@ class ViewModel: NSObject, ObservableObject {
             }
             .store(in: &cancellable)
     }
+    
+
     
     func authenticateUser() {
         GKLocalPlayer.local.authenticateHandler = { [self] vc, e in
@@ -80,19 +107,7 @@ class ViewModel: NSObject, ObservableObject {
             }
         }
     }
-    
-    func startMatchmaking() {
-        let request = GKMatchRequest()
-        request.minPlayers = 2
-        request.maxPlayers = 2
-        
-        let matchmakingVC = GKMatchmakerViewController(matchRequest: request)
-        matchmakingVC?.matchmakerDelegate = self
-        if let matchmaker = matchmakingVC {
-            rootViewController?.present(matchmaker, animated: true)
-        }
-    }
-    
+
     func startMatch(newMatch: GKMatch) {
         match = newMatch
         match?.delegate = self

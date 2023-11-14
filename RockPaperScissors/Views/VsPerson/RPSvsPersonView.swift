@@ -1,10 +1,3 @@
-//
-//  RPSvsPersonView.swift
-//  RockPaperScissors
-//
-//  Created by Adam Reed on 11/11/23.
-//
-
 import SwiftUI
 
 struct RPSvsPersonView: View {

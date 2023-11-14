@@ -1,15 +1,7 @@
-//
-//  RockPaperScissorsView.swift
-//  RockPaperScissors
-//
-//  Created by Adam Reed on 11/11/23.
-//
-
 import SwiftUI
 
 struct RPSvsComputerView: View {
     @ObservedObject var vm: VsComputerViewModel
-    
     var body: some View {
         VStack {
             HStack {
@@ -27,7 +19,7 @@ struct RPSvsComputerView: View {
                         .font(.largeTitle)
                 }
                 .bold()
-               
+
                 Spacer()
                 Button {
                     // Reset streak counter to 0
@@ -44,8 +36,6 @@ struct RPSvsComputerView: View {
           
             Spacer()
            
-            
-            
             if let result = vm.gameResult {
                 if let choice = vm.userChoice,
                    let computerChoice = vm.computerChoice {

@@ -14,3 +14,11 @@ extension ViewModel: GKMatchmakerViewControllerDelegate {
         viewController.dismiss(animated: true)
     }
 }
+
+extension ViewModel: GKGameCenterControllerDelegate {
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true)
+    }
+    
+    
+}

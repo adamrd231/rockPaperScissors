@@ -21,6 +21,7 @@ struct LaunchView: View {
             .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
             LaunchButtonView(title: "Leaderboard", function: {
                 // Go to leaderboard
+                vm.showLeaderboards()
                 
             })
             LaunchButtonView(title: "In-App Purchases", function: {

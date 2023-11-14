@@ -72,10 +72,10 @@
 		660982EA2AFEC98000A7D0D0 /* RockPaperScissors */ = {
 			isa = PBXGroup;
 			children = (
+				660982EB2AFEC98000A7D0D0 /* RockPaperScissorsApp.swift */,
 				66952CA32B0320E500F091F4 /* ViewModel */,
 				660983022AFFCCB800A7D0D0 /* Views */,
 				660982FA2AFFCAFB00A7D0D0 /* States */,
-				660982EB2AFEC98000A7D0D0 /* RockPaperScissorsApp.swift */,
 				660982EF2AFEC98800A7D0D0 /* Assets.xcassets */,
 				660982F12AFEC98900A7D0D0 /* RockPaperScissors.entitlements */,
 				660982F22AFEC98900A7D0D0 /* Preview Content */,
@@ -103,11 +103,10 @@
 		660983022AFFCCB800A7D0D0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				66952CA72B03286000F091F4 /* LaunchScreen */,
+				66952CA92B032B5300F091F4 /* VsPerson */,
+				66952CA82B032B4500F091F4 /* VsComputer */,
 				660982ED2AFEC98000A7D0D0 /* ContentView.swift */,
-				660983032AFFCCC500A7D0D0 /* RPSvsComputerView.swift */,
-				66952CA12B02F47400F091F4 /* VSComputerViewModel.swift */,
-				6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */,
+				66952CA72B03286000F091F4 /* LaunchScreen */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -129,6 +128,23 @@
 				66952CA52B03285A00F091F4 /* LaunchButtonView.swift */,
 			);
 			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
+		66952CA82B032B4500F091F4 /* VsComputer */ = {
+			isa = PBXGroup;
+			children = (
+				66952CA12B02F47400F091F4 /* VSComputerViewModel.swift */,
+				660983032AFFCCC500A7D0D0 /* RPSvsComputerView.swift */,
+			);
+			path = VsComputer;
+			sourceTree = "<group>";
+		};
+		66952CA92B032B5300F091F4 /* VsPerson */ = {
+			isa = PBXGroup;
+			children = (
+				6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */,
+			);
+			path = VsPerson;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
