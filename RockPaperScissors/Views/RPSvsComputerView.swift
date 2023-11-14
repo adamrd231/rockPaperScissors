@@ -69,7 +69,7 @@ struct RPSvsComputerView: View {
                     }
                 }
                 
-                Button("Reset") {
+                Button("Play Again") {
                     vm.userChoice = nil
                     vm.gameResult = nil
                     vm.computerChoice = vm.choices[Int.random(in: 0..<3)]

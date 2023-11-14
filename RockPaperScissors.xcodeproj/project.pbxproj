@@ -20,6 +20,7 @@
 		6609830A2AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983092AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift */; };
 		6609830E2B008D2500A7D0D0 /* RPSvsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */; };
 		66952CA22B02F47400F091F4 /* VSComputerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CA12B02F47400F091F4 /* VSComputerViewModel.swift */; };
+		66952CA62B03285A00F091F4 /* LaunchButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CA52B03285A00F091F4 /* LaunchButtonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		660983092AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+GKMatchDelegate.swift"; sourceTree = "<group>"; };
 		6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPSvsPersonView.swift; sourceTree = "<group>"; };
 		66952CA12B02F47400F091F4 /* VSComputerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSComputerViewModel.swift; sourceTree = "<group>"; };
+		66952CA52B03285A00F091F4 /* LaunchButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchButtonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,10 +103,10 @@
 		660983022AFFCCB800A7D0D0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				66952CA72B03286000F091F4 /* LaunchScreen */,
 				660982ED2AFEC98000A7D0D0 /* ContentView.swift */,
 				660983032AFFCCC500A7D0D0 /* RPSvsComputerView.swift */,
 				66952CA12B02F47400F091F4 /* VSComputerViewModel.swift */,
-				660983052AFFE30F00A7D0D0 /* LaunchView.swift */,
 				6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */,
 			);
 			path = Views;
@@ -118,6 +120,15 @@
 				660983092AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		66952CA72B03286000F091F4 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				660983052AFFE30F00A7D0D0 /* LaunchView.swift */,
+				66952CA52B03285A00F091F4 /* LaunchButtonView.swift */,
+			);
+			path = LaunchScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +208,7 @@
 				6609830E2B008D2500A7D0D0 /* RPSvsPersonView.swift in Sources */,
 				660982FE2AFFCB3000A7D0D0 /* GameResults.swift in Sources */,
 				660983062AFFE30F00A7D0D0 /* LaunchView.swift in Sources */,
+				66952CA62B03285A00F091F4 /* LaunchButtonView.swift in Sources */,
 				6609830A2AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift in Sources */,
 				660982FC2AFFCB0800A7D0D0 /* WeaponOfChoice.swift in Sources */,
 				660982EE2AFEC98000A7D0D0 /* ContentView.swift in Sources */,
