@@ -41,6 +41,7 @@ struct LaunchView: View {
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 200)
             }
+            Banner()
             
         }
         .onAppear {

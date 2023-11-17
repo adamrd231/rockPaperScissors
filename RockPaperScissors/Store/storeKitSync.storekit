@@ -1,0 +1,54 @@
+{
+  "identifier" : "20A8D522",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6471902382",
+    "_developerTeamID" : "6SFM579B5E",
+    "_lastSynchronizedDate" : 721927896.409531
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21413601",
+      "localizations" : [
+
+      ],
+      "name" : "Platinum member",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6472489283",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Removes all advertising in game",
+              "displayName" : "Platinum membership",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "platinumMember",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "platinumMember",
+          "subscriptionGroupID" : "21413601",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}

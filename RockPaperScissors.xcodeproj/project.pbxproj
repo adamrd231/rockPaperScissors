@@ -23,6 +23,8 @@
 		66952CA62B03285A00F091F4 /* LaunchButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CA52B03285A00F091F4 /* LaunchButtonView.swift */; };
 		66952CAC2B07BDE100F091F4 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CAB2B07BDE100F091F4 /* StoreManager.swift */; };
 		66952CAF2B07BEE700F091F4 /* InAppPurchasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CAE2B07BEE700F091F4 /* InAppPurchasesView.swift */; };
+		66952CB22B081A5A00F091F4 /* BannerAdvertisement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CB12B081A5A00F091F4 /* BannerAdvertisement.swift */; };
+		66952CB42B081AB300F091F4 /* Interstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CB32B081AB300F091F4 /* Interstitial.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		66952CAB2B07BDE100F091F4 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		66952CAD2B07BED300F091F4 /* storeKitSync.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = storeKitSync.storekit; sourceTree = "<group>"; };
 		66952CAE2B07BEE700F091F4 /* InAppPurchasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesView.swift; sourceTree = "<group>"; };
+		66952CB12B081A5A00F091F4 /* BannerAdvertisement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdvertisement.swift; sourceTree = "<group>"; };
+		66952CB32B081AB300F091F4 /* Interstitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interstitial.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,7 @@
 			children = (
 				660982EB2AFEC98000A7D0D0 /* RockPaperScissorsApp.swift */,
 				660982ED2AFEC98000A7D0D0 /* ContentView.swift */,
+				66952CB02B081A3E00F091F4 /* Advertising */,
 				66952CAA2B07BDD600F091F4 /* Store */,
 				66952CA32B0320E500F091F4 /* ViewModel */,
 				660983022AFFCCB800A7D0D0 /* Views */,
@@ -163,6 +168,15 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
+		66952CB02B081A3E00F091F4 /* Advertising */ = {
+			isa = PBXGroup;
+			children = (
+				66952CB12B081A5A00F091F4 /* BannerAdvertisement.swift */,
+				66952CB32B081AB300F091F4 /* Interstitial.swift */,
+			);
+			path = Advertising;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -236,11 +250,13 @@
 				660983012AFFCB6A00A7D0D0 /* ViewModel.swift in Sources */,
 				660983082AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift in Sources */,
 				660983042AFFCCC500A7D0D0 /* RPSvsComputerView.swift in Sources */,
+				66952CB22B081A5A00F091F4 /* BannerAdvertisement.swift in Sources */,
 				66952CA22B02F47400F091F4 /* VSComputerViewModel.swift in Sources */,
 				6609830E2B008D2500A7D0D0 /* RPSvsPersonView.swift in Sources */,
 				660982FE2AFFCB3000A7D0D0 /* GameResults.swift in Sources */,
 				66952CAF2B07BEE700F091F4 /* InAppPurchasesView.swift in Sources */,
 				660983062AFFE30F00A7D0D0 /* LaunchView.swift in Sources */,
+				66952CB42B081AB300F091F4 /* Interstitial.swift in Sources */,
 				66952CA62B03285A00F091F4 /* LaunchButtonView.swift in Sources */,
 				66952CAC2B07BDE100F091F4 /* StoreManager.swift in Sources */,
 				6609830A2AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift in Sources */,
