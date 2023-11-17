@@ -61,16 +61,12 @@ struct RPSvsComputerView: View {
                             }
                         }
                         Button("Play Again") {
-                            computerVM.userChoice = nil
-                            computerVM.gameResult = nil
-                            computerVM.computerChoice = computerVM.choices[Int.random(in: 0..<3)]
+                            computerVM.resetGame()
                         }
                         .buttonStyle(.bordered)
                     }
                     .onTapGesture {
-                        computerVM.userChoice = nil
-                        computerVM.gameResult = nil
-                        computerVM.computerChoice = computerVM.choices[Int.random(in: 0..<3)]
+                        computerVM.resetGame()
                     }
                 }
             } else {
@@ -118,6 +114,7 @@ struct RPSvsComputerView: View {
             // Update score for player of the week
             
             print("Authenticated")
+            print("computer streak score: \(computerVM.streak)")
             vm.submitScoreToLeaderBoard(newHighScore: computerVM.streak)
         }
 

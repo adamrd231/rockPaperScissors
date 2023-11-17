@@ -3,6 +3,7 @@ import SwiftUI
 struct LaunchView: View {
     @ObservedObject var vm: ViewModel
     @ObservedObject var computerVM: VsComputerViewModel
+    @ObservedObject var storeManager: StoreManager()
     
     var body: some View {
         VStack {

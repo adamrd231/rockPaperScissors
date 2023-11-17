@@ -32,6 +32,12 @@ class VsComputerViewModel: ObservableObject {
         gameResult = .tie
     }
     
+    func resetGame() {
+        userChoice = nil
+        gameResult = nil
+        computerChoice = choices[Int.random(in: 0..<3)]
+    }
+    
     func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) {
         gamesPlayed += 1
         switch (playerChoice, computerChoice) {

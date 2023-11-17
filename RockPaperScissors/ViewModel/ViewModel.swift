@@ -3,8 +3,6 @@ import SwiftUI
 import GameKit
 import Combine
 
-
-
 class ViewModel: NSObject, ObservableObject {
     
     // Game Center
@@ -12,7 +10,6 @@ class ViewModel: NSObject, ObservableObject {
     @Published var isGameOver = false
     @Published var isRoundOver = false
     @Published var authenticationState = PlayerAuthState.unauthenticated
-    
     @Published var isShowingAlert = false
 
     // Game
@@ -25,16 +22,12 @@ class ViewModel: NSObject, ObservableObject {
     
     @Published var playAgain: Bool = false
     @Published var playerWantsToPlayAgain: Bool = false
-    
     private var cancellable = Set<AnyCancellable>()
-    
-    @Published var isTimeKeeper: Bool = false
     
     // GameKit
     var match: GKMatch?
     var otherPlayer: GKPlayer?
     var localPlayer = GKLocalPlayer.local
-    
     var playerUUIDKey = UUID().uuidString
     
     // Leaderboard
@@ -57,23 +50,17 @@ class ViewModel: NSObject, ObservableObject {
             achievement = achievements?.first(where: { $0.identifier == achievementID })
             
             if achievement == nil {
-                print("check")
                 achievement = GKAchievement(identifier: achievementID)
                 if gamesPlayed > 0 {
-                    print("check percent")
                     achievement?.percentComplete = 100
                     let achievementsToReport: [GKAchievement] = [achievement!]
                     GKAchievement.report(achievementsToReport, withCompletionHandler: {(error: Error?) in
-                        print("reporting")
-                        
-                        
                         if error != nil {
                             print("Error reporting achievement: \(String(describing: error))")
                         }
                     })
                 }
             }
-            
             if error != nil {
                 print("Error get achievement: \(String(describing: error))")
             }
@@ -93,19 +80,23 @@ class ViewModel: NSObject, ObservableObject {
     
     func submitScoreToLeaderBoard(newHighScore: Int) {
         if authenticationState == .authenticated {
-            print("Score: \(streak)")
+            print("Score: \(newHighScore)")
             Task {
-                try await GKLeaderboard.submitScore(
-                    newHighScore,
-                    context: 0,
-                    player: GKLocalPlayer.local,
-                    leaderboardIDs: ["gamesWon", "playerOfTheWeek"]
-                    
-                )
+                do {
+                    try await GKLeaderboard.submitScore(
+                        newHighScore,
+                        context: 0,
+                        player: GKLocalPlayer.local,
+                        leaderboardIDs: ["gamesWon", "playerOfTheWeek"]
+                        
+                    )
+                } catch let error {
+                    print("Error submitting leaderboard scores: \(error.localizedDescription)")
+                }
+                
             }
         }
     }
-    
     
     func startMatchmaking() {
         let request = GKMatchRequest()
@@ -119,8 +110,6 @@ class ViewModel: NSObject, ObservableObject {
         }
     }
     
-    
-    
     func addSubscribers() {
         $userChoice
             .combineLatest($computerChoice)
@@ -133,8 +122,6 @@ class ViewModel: NSObject, ObservableObject {
             }
             .store(in: &cancellable)
     }
-    
-
     
     func authenticateUser() {
         GKLocalPlayer.local.authenticateHandler = { [self] vc, e in
