@@ -39,13 +39,15 @@ class InterstitialAdManager: NSObject, ObservableObject {
         
         func showRewardedAd() {
             let root = UIApplication.shared.windows.last?.rootViewController
-            
+            print("Showing ad")
             if let ad = rewardedAd {
-                ad.present(fromRootViewController: root!, userDidEarnRewardHandler: {
-                    let reward = self.rewardedAd!.adReward
-                    self.showedRewardedAd = true
-                    print("Reward \(reward.type)")
-                    print("Rewarding user!")
+                print("test \(ad)")
+                    ad.present(fromRootViewController: root!, userDidEarnRewardHandler: {
+                        print("test2")
+                        let reward = self.rewardedAd!.adReward
+            
+                        self.showedRewardedAd = true
+                        print("Rewarding user!")
                 })
             } else {
                 print("Interstitial advertisement not ready")
@@ -71,8 +73,7 @@ class InterstitialAdManager: NSObject, ObservableObject {
     final class Interstitial: NSObject, GADFullScreenContentDelegate, ObservableObject {
 
         private var interstitial: GADInterstitialAd?
-       
-
+    
         override init() {
             super.init()
             requestInterstitialAds()

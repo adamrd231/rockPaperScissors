@@ -6,8 +6,10 @@ class AdsViewModel: ObservableObject {
     
     static let shared = AdsViewModel()
     @Published var interstitial = InterstitialAdManager.Interstitial()
-    @Published var showedRewarded: Bool = false
     @Published var rewarded = InterstitialAdManager.Rewarded()
+    
+    @Published var showedRewarded: Bool = false
+
 
     @Published var interstitialCounter = 0 {
         

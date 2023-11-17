@@ -48,10 +48,10 @@ struct RPSvsComputerView: View {
                     Text("Are you sure, this can not be un-done?")
                 }
                 .statusBar(hidden: true)
-                .onChange(of: admobVM.showedRewarded) { newValue in
+                .onChange(of: admobVM.rewarded.showedRewardedAd) { newValue in
                     print("Changed up!")
                     computerVM.streak = 0
-                    admobVM.rewarded.showedRewardedAd = false
+//                    admobVM.rewarded.showedRewardedAd = false
                 }
             }
             .padding()
