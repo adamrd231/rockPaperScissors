@@ -23,7 +23,6 @@ struct RPSvsComputerView: View {
                         .font(.largeTitle)
                 }
                 .bold()
-
                 Spacer()
                 Button {
                     // Reset streak counter to 0
@@ -33,6 +32,7 @@ struct RPSvsComputerView: View {
                         .resizable()
                         .frame(width: 20, height: 25)
                 }
+                .disabled(admobVM.rewarded.rewardedAd == nil)
                 .alert("Watch ad to reset streak?", isPresented: $computerVM.isResettingStreak) {
                     Button {
                         admobVM.showRewarded.toggle()
@@ -48,7 +48,11 @@ struct RPSvsComputerView: View {
                     Text("Are you sure, this can not be un-done?")
                 }
                 .statusBar(hidden: true)
-                
+                .onChange(of: admobVM.showedRewarded) { newValue in
+                    print("Changed up!")
+                    computerVM.streak = 0
+                    admobVM.rewarded.showedRewardedAd = false
+                }
             }
             .padding()
             .padding(.top, 35)

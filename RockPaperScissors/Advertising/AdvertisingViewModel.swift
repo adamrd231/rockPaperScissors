@@ -35,6 +35,8 @@ class AdsViewModel: ObservableObject {
             if showRewarded {
                 rewarded.showRewardedAd()
                 showRewarded = false
+            } else {
+                rewarded.loadRewardedAd()
             }
         }
     }
@@ -49,9 +51,11 @@ class AdsViewModel: ObservableObject {
     func addSubscriber() {
         rewarded.$showedRewardedAd
             .sink { returnedRewardedAdStatus in
-                print("FInished showing rewarded ad")
-                self.showedRewarded = true
-                
+                print("FInished showing rewarded ad \(returnedRewardedAdStatus)")
+                if returnedRewardedAdStatus {
+                    self.showedRewarded = true
+                    print("rewarded ad \(self.showedRewarded)")
+                }
             }
             .store(in: &cancellable)
     }

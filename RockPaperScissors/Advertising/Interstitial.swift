@@ -15,7 +15,7 @@ class InterstitialAdManager: NSObject, ObservableObject {
     }
     
     final class Rewarded: NSObject, GADFullScreenContentDelegate, ObservableObject {
-        private var rewardedAd: GADRewardedAd?
+        var rewardedAd: GADRewardedAd?
         @Published var showedRewardedAd: Bool = false
         var computerViewModel = VsComputerViewModel()
         override init() {
@@ -31,7 +31,8 @@ class InterstitialAdManager: NSObject, ObservableObject {
                 if let e = error {
                     print("Failed to load rewarded ad with error \(e.localizedDescription)")
                 }
-               rewardedAd = ad
+                rewardedAd = ad
+                rewardedAd?.fullScreenContentDelegate = self
                 return
             })
         }
