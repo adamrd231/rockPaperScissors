@@ -1,4 +1,5 @@
 import SwiftUI
+import GoogleMobileAds
 
 enum PlayerAuthState: String {
     case authenticating = "Logging into Game Center..."
@@ -13,6 +14,7 @@ struct ContentView: View {
     @StateObject var vm = ViewModel()
     @StateObject var computerVM = VsComputerViewModel()
     @StateObject var storeManager = StoreManager()
+//    @StateObject var admobVM = Adm
     
     var body: some View {
         ZStack {
@@ -40,9 +42,9 @@ struct ContentView: View {
             }
             
         }
-//        .onAppear {
-//            vm.authenticateUser()
-//        }
+        .onAppear {
+            GADMobileAds.sharedInstance().start(completionHandler: nil)
+        }
     }
 }
 
