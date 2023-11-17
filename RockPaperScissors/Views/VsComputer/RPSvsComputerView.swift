@@ -25,12 +25,25 @@ struct RPSvsComputerView: View {
                 Spacer()
                 Button {
                     // Reset streak counter to 0
-                    computerVM.streak = 0
-                    // TODO: Make user watch an ad to do this
+                    computerVM.isResettingStreak.toggle()
                 } label: {
                     Image(systemName: "arrow.clockwise")
                         .resizable()
                         .frame(width: 20, height: 25)
+                }
+                .alert("Reset streak?", isPresented: $computerVM.isResettingStreak) {
+                    Button {
+                        
+                    } label: {
+                        Text("Im sure")
+                    }
+                    Button {
+                        
+                    } label: {
+                        Text("Cancel")
+                    }
+                } message: {
+                    Text("Are you sure, this can not be un-done?")
                 }
             }
             .padding()

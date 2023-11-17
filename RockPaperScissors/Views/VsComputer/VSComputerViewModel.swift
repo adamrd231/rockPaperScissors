@@ -13,6 +13,8 @@ class VsComputerViewModel: ObservableObject {
     @Published var inGame: Bool = false
     @Published var gameOver: Bool = false
     
+    @Published var isResettingStreak: Bool = false
+    
     init() {
         computerChoice = choices[Int.random(in: 0..<3)]
     }
