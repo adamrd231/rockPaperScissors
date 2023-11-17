@@ -3,7 +3,7 @@ import SwiftUI
 struct LaunchView: View {
     @ObservedObject var vm: ViewModel
     @ObservedObject var computerVM: VsComputerViewModel
-    @ObservedObject var storeManager: StoreManager()
+    @ObservedObject var storeManager: StoreManager
     
     var body: some View {
         VStack {
@@ -29,7 +29,7 @@ struct LaunchView: View {
             .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
             LaunchButtonView(title: "In-App Purchases", function: {
                 // Go to in app purchases
-                
+                storeManager.isViewingStore = true
             })
             if vm.authenticationState == .unauthenticated || vm.authenticationState == .authenticating || vm.authenticationState == .error {
                 Button("Log into Game Center") {
@@ -57,7 +57,8 @@ struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {
         LaunchView(
             vm: ViewModel(),
-            computerVM: VsComputerViewModel()
+            computerVM: VsComputerViewModel(),
+            storeManager: StoreManager()
         )
     }
 }

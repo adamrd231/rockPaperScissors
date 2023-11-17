@@ -12,6 +12,7 @@ enum PlayerAuthState: String {
 struct ContentView: View {
     @StateObject var vm = ViewModel()
     @StateObject var computerVM = VsComputerViewModel()
+    @StateObject var storeManager = StoreManager()
     
     var body: some View {
         ZStack {
@@ -28,12 +29,16 @@ struct ContentView: View {
                     computerVM: computerVM,
                     vm: vm
                 )
+            } else if storeManager.isViewingStore {
+               InAppPurchaseView(storeManager: storeManager)
             } else {
                 LaunchView(
                     vm: vm,
-                    computerVM: computerVM
+                    computerVM: computerVM,
+                    storeManager: storeManager
                 )
             }
+            
         }
 //        .onAppear {
 //            vm.authenticateUser()

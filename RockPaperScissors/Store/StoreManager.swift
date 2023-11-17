@@ -13,6 +13,7 @@ class StoreManager: ObservableObject  {
         StoreIDsConstant.platinumMember
     ]
     
+    @Published var isViewingStore: Bool = false
     @Published var products:[Product] = []
     @Published var purchasedNonConsumables: Set<Product> = []
     

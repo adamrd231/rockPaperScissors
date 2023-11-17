@@ -77,8 +77,9 @@
 		660982EA2AFEC98000A7D0D0 /* RockPaperScissors */ = {
 			isa = PBXGroup;
 			children = (
-				66952CAA2B07BDD600F091F4 /* Store */,
 				660982EB2AFEC98000A7D0D0 /* RockPaperScissorsApp.swift */,
+				660982ED2AFEC98000A7D0D0 /* ContentView.swift */,
+				66952CAA2B07BDD600F091F4 /* Store */,
 				66952CA32B0320E500F091F4 /* ViewModel */,
 				660983022AFFCCB800A7D0D0 /* Views */,
 				660982FA2AFFCAFB00A7D0D0 /* States */,
@@ -111,7 +112,6 @@
 			children = (
 				66952CA92B032B5300F091F4 /* VsPerson */,
 				66952CA82B032B4500F091F4 /* VsComputer */,
-				660982ED2AFEC98000A7D0D0 /* ContentView.swift */,
 				66952CA72B03286000F091F4 /* LaunchScreen */,
 			);
 			path = Views;
