@@ -4,6 +4,8 @@ import GameKit
 struct RPSvsComputerView: View {
     @ObservedObject var computerVM: VsComputerViewModel
     @ObservedObject var vm: ViewModel
+    @ObservedObject var admobVM: AdsViewModel
+    
     var body: some View {
         VStack {
             HStack {
@@ -75,11 +77,13 @@ struct RPSvsComputerView: View {
                         }
                         Button("Play Again") {
                             computerVM.resetGame()
+                            admobVM.interstitialCounter += 1
                         }
                         .buttonStyle(.bordered)
                     }
                     .onTapGesture {
                         computerVM.resetGame()
+                        admobVM.interstitialCounter += 1
                     }
                 }
             } else {
@@ -138,7 +142,8 @@ struct RockPaperScissorsView_Previews: PreviewProvider {
     static var previews: some View {
         RPSvsComputerView(
             computerVM: VsComputerViewModel(),
-            vm: ViewModel()
+            vm: ViewModel(),
+            admobVM: AdsViewModel()
         )
     }
 }

@@ -14,7 +14,7 @@ struct ContentView: View {
     @StateObject var vm = ViewModel()
     @StateObject var computerVM = VsComputerViewModel()
     @StateObject var storeManager = StoreManager()
-//    @StateObject var admobVM = Adm
+    @StateObject var admobVM = AdsViewModel()
     
     var body: some View {
         ZStack {
@@ -29,7 +29,8 @@ struct ContentView: View {
             } else if computerVM.inGame {
                 RPSvsComputerView(
                     computerVM: computerVM,
-                    vm: vm
+                    vm: vm,
+                    admobVM: admobVM
                 )
             } else if storeManager.isViewingStore {
                InAppPurchaseView(storeManager: storeManager)

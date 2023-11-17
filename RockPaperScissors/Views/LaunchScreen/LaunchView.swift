@@ -7,6 +7,7 @@ struct LaunchView: View {
     
     var body: some View {
         VStack {
+            Spacer()
             Image("title")
                 .resizable()
                 .frame(width: 200, height: 300)
@@ -41,6 +42,7 @@ struct LaunchView: View {
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 200)
             }
+            Spacer()
             Banner()
             
         }
