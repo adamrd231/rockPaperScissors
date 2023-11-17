@@ -33,9 +33,9 @@ struct RPSvsComputerView: View {
                         .resizable()
                         .frame(width: 20, height: 25)
                 }
-                .alert("Reset streak?", isPresented: $computerVM.isResettingStreak) {
+                .alert("Watch ad to reset streak?", isPresented: $computerVM.isResettingStreak) {
                     Button {
-                        
+                        admobVM.showRewarded.toggle()
                     } label: {
                         Text("Im sure")
                     }
@@ -47,6 +47,8 @@ struct RPSvsComputerView: View {
                 } message: {
                     Text("Are you sure, this can not be un-done?")
                 }
+                .statusBar(hidden: true)
+                
             }
             .padding()
             .padding(.top, 35)

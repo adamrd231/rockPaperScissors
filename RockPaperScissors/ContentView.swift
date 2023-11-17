@@ -43,6 +43,15 @@ struct ContentView: View {
             }
             
         }
+        .onChange(of: admobVM.showedRewarded) { newValue in
+            print("Resetting streak counter rewarded ad")
+            print("status: \(admobVM.showedRewarded)")
+            if admobVM.showedRewarded {
+                computerVM.streak = 0
+            } else {
+                print("\(admobVM.showedRewarded)")
+            }
+        }
         .onAppear {
             GADMobileAds.sharedInstance().start(completionHandler: nil)
         }
