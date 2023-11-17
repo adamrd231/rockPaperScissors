@@ -24,6 +24,8 @@ struct LaunchView: View {
                 vm.showLeaderboards()
                 
             })
+            .disabled(vm.authenticationState != .authenticated || vm.inGame)
+            .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
             LaunchButtonView(title: "In-App Purchases", function: {
                 // Go to in app purchases
                 
@@ -39,6 +41,9 @@ struct LaunchView: View {
                     .frame(maxWidth: 200)
             }
             
+        }
+        .onAppear {
+            vm.authenticateUser()
         }
         .padding()
         .alert("Opponent left game", isPresented: $vm.isShowingAlert) {

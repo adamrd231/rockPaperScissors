@@ -41,33 +41,38 @@ struct RPSvsComputerView: View {
             if let result = computerVM.gameResult {
                 if let choice = computerVM.userChoice,
                    let computerChoice = computerVM.computerChoice {
-                    Text(result.description)
-                        .font(.largeTitle)
-                        .padding()
-                        .textCase(.uppercase)
-                    HStack {
-                        VStack {
-                            Text("You chose:")
-                            Image(choice.description)
-                                .resizable()
-                                .frame(width: 100, height: 100)
+                    VStack {
+                        Text(result.description)
+                            .font(.largeTitle)
+                            .padding()
+                            .textCase(.uppercase)
+                        HStack {
+                            VStack {
+                                Text("You chose:")
+                                Image(choice.description)
+                                    .resizable()
+                                    .frame(width: 100, height: 100)
+                            }
+                            VStack {
+                                Text("Computer chose:")
+                                Image(computerChoice.description)
+                                    .resizable()
+                                    .frame(width: 100, height: 100)
+                            }
                         }
-                        VStack {
-                            Text("Computer chose:")
-                            Image(computerChoice.description)
-                                .resizable()
-                                .frame(width: 100, height: 100)
+                        Button("Play Again") {
+                            computerVM.userChoice = nil
+                            computerVM.gameResult = nil
+                            computerVM.computerChoice = computerVM.choices[Int.random(in: 0..<3)]
                         }
+                        .buttonStyle(.bordered)
+                    }
+                    .onTapGesture {
+                        computerVM.userChoice = nil
+                        computerVM.gameResult = nil
+                        computerVM.computerChoice = computerVM.choices[Int.random(in: 0..<3)]
                     }
                 }
-                
-                Button("Play Again") {
-                    computerVM.userChoice = nil
-                    computerVM.gameResult = nil
-                    computerVM.computerChoice = computerVM.choices[Int.random(in: 0..<3)]
-                }
-                .buttonStyle(.bordered)
-                
             } else {
                 VStack {
                     ForEach(computerVM.choices, id: \.self) { choice in
