@@ -15,8 +15,33 @@ class VsComputerViewModel: ObservableObject {
     
     @Published var isResettingStreak: Bool = false
     
+    var rootViewController: UIViewController? {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        return windowScene?.windows.first?.rootViewController
+    }
+    
+    var rewardedAdVC: AdsViewController // Declare AdsViewController
+    
     init() {
         computerChoice = choices[Int.random(in: 0..<3)]
+        rewardedAdVC = AdsViewController()
+        
+        rewardedAdVC.adCompletionHandler = { [weak self] in
+            print("Updating streak")
+            self?.updateStreakAfterAdCompletion()
+        }
+    }
+    
+    func updateStreakAfterAdCompletion() {
+        self.streak = 0
+    }
+    
+    func loadRewardedAd() {
+        rewardedAdVC.loadRewardedAd()
+    }
+    
+    func showRewardedAd() {
+        rewardedAdVC.show()
     }
     
     // Functions

@@ -38,22 +38,12 @@ class ViewModel: NSObject, ObservableObject {
         return windowScene?.windows.first?.rootViewController
     }
     
-    var rewardedAdVC: AdsViewController // Declare AdsViewController
     
     override init() {
-        rewardedAdVC = AdsViewController()
-        
         super.init()
         addSubscribers()
     }
-    
-    func loadRewardedAd() {
-        rewardedAdVC.loadRewardedAd()
-    }
-    
-    func showRewardedAd() {
-        rewardedAdVC.show()
-    }
+
     
     func loadAchievements(gamesPlayed: Int) {
         GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in

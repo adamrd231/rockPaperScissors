@@ -27,7 +27,7 @@
 		66952CB22B081A5A00F091F4 /* BannerAdvertisement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CB12B081A5A00F091F4 /* BannerAdvertisement.swift */; };
 		66952CB42B081AB300F091F4 /* Interstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CB32B081AB300F091F4 /* Interstitial.swift */; };
 		66C8BD6E2B081D82009834DB /* AdvertisingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD6D2B081D82009834DB /* AdvertisingViewModel.swift */; };
-		66C8BD702B0BBF38009834DB /* Rewarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD6F2B0BBF38009834DB /* Rewarded.swift */; };
+		66C8BD702B0BBF38009834DB /* AdsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD6F2B0BBF38009834DB /* AdsViewController.swift */; };
 		66C8BD722B0BC3AA009834DB /* AdmobConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD712B0BC3AA009834DB /* AdmobConstants.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,7 +55,7 @@
 		66952CB32B081AB300F091F4 /* Interstitial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interstitial.swift; sourceTree = "<group>"; };
 		66C8BD6C2B081CF6009834DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		66C8BD6D2B081D82009834DB /* AdvertisingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisingViewModel.swift; sourceTree = "<group>"; };
-		66C8BD6F2B0BBF38009834DB /* Rewarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewarded.swift; sourceTree = "<group>"; };
+		66C8BD6F2B0BBF38009834DB /* AdsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsViewController.swift; sourceTree = "<group>"; };
 		66C8BD712B0BC3AA009834DB /* AdmobConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobConstants.swift; sourceTree = "<group>"; };
 		6D5F6773A788F7AC3A510F84 /* Pods-RockPaperScissors.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RockPaperScissors.debug.xcconfig"; path = "Target Support Files/Pods-RockPaperScissors/Pods-RockPaperScissors.debug.xcconfig"; sourceTree = "<group>"; };
 		7B13EECBF9A0BD8924D49607 /* Pods_RockPaperScissors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RockPaperScissors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,7 +198,7 @@
 				66952CB12B081A5A00F091F4 /* BannerAdvertisement.swift */,
 				66952CB32B081AB300F091F4 /* Interstitial.swift */,
 				66C8BD6D2B081D82009834DB /* AdvertisingViewModel.swift */,
-				66C8BD6F2B0BBF38009834DB /* Rewarded.swift */,
+				66C8BD6F2B0BBF38009834DB /* AdsViewController.swift */,
 			);
 			path = Advertising;
 			sourceTree = "<group>";
@@ -344,7 +344,7 @@
 				660982FC2AFFCB0800A7D0D0 /* WeaponOfChoice.swift in Sources */,
 				660982EE2AFEC98000A7D0D0 /* ContentView.swift in Sources */,
 				660982EC2AFEC98000A7D0D0 /* RockPaperScissorsApp.swift in Sources */,
-				66C8BD702B0BBF38009834DB /* Rewarded.swift in Sources */,
+				66C8BD702B0BBF38009834DB /* AdsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

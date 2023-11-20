@@ -21,6 +21,7 @@ class AdsViewController: UIViewController, GADFullScreenContentDelegate, Observa
     }
     
     @Published var rewardedAd: GADRewardedAd? = nil
+    var adCompletionHandler: (() -> Void)?
     
     func loadRewardedAd() {
         let request = GADRequest()
@@ -36,41 +37,38 @@ class AdsViewController: UIViewController, GADFullScreenContentDelegate, Observa
         })
     }
     
-    func show() -> Bool {
+    func show() {
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else {
-            print("Root view controller is not setup")
-            return false
+            print("error presenting rewarded ad: No root controller")
+            return
         }
         
-        print("PResenting from root view controller \(rootViewController)")
       if let ad = rewardedAd {
-          print("ad")
         ad.present(fromRootViewController: rootViewController) {
           let reward = ad.adReward
           print("Reward received with currency \(reward.amount), amount \(reward.amount.doubleValue)")
           // TODO: Reward the user.
-            
+     
         }
-        return true
       } else {
         print("Ad wasn't ready")
-          return false
       }
     }
     
     /// Tells the delegate that the ad failed to present full screen content.
       func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
-        print("Ad did fail to present full screen content.")
+          print("Ad did fail to present full screen content.")
       }
 
       /// Tells the delegate that the ad will present full screen content.
       func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        print("Ad will present full screen content.")
+          print("Ad will present full screen content.")
       }
 
       /// Tells the delegate that the ad dismissed full screen content.
       func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        print("Ad did dismiss full screen content.")
+          print("Ad did dismiss full screen content.")
+          adCompletionHandler?()
       }
 }
 

@@ -36,7 +36,7 @@ struct RPSvsComputerView: View {
 //                .disabled(admobVM.rewarded.rewardedAd == nil)
                 .alert("Watch ad to reset streak?", isPresented: $computerVM.isResettingStreak) {
                     Button {
-                        vm.showRewardedAd()
+                        computerVM.showRewardedAd()
                     } label: {
                         Text("Im sure")
                     }
@@ -123,7 +123,7 @@ struct RPSvsComputerView: View {
             Spacer()
         }
         .onAppear {
-            vm.loadRewardedAd()
+            computerVM.loadRewardedAd()
         }
         .onDisappear {
             // TODO: Only send this if it's a high score?
