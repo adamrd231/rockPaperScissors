@@ -100,13 +100,18 @@ struct RPSvsComputerView: View {
                         }
                         Button("Play Again") {
                             computerVM.resetGame()
-                            admobVM.interstitialCounter += 1
+                            if !storeManager.purchasedNonConsumables.contains(where: { $0.id == StoreIDsConstant.platinumMember }) {
+                                admobVM.interstitialCounter += 1
+                            }
                         }
                         .buttonStyle(.bordered)
                     }
                     .onTapGesture {
                         computerVM.resetGame()
-                        admobVM.interstitialCounter += 1
+                        if !storeManager.purchasedNonConsumables.contains(where: { $0.id == StoreIDsConstant.platinumMember }) {
+                            admobVM.interstitialCounter += 1
+                        }
+                       
                     }
                 }
             } else {
