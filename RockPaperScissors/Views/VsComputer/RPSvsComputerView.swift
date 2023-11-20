@@ -13,10 +13,20 @@ struct RPSvsComputerView: View {
                 Button {
                     computerVM.inGame = false
                 } label: {
-                    Image(systemName: "arrowtriangle.backward.fill")
-                        .resizable()
-                        .frame(width: 20, height: 25)
+                    HStack(spacing: 5) {
+                        Image(systemName: "arrowtriangle.backward.fill")
+                            .resizable()
+                            .frame(width: 20, height: 25)
+                        Text("Go back")
+                            .font(.caption)
+                    }
+                    .padding(10)
+                    .background(Color(.darkGray))
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
                 }
+                .frame(minWidth: UIScreen.main.bounds.width * 0.33)
+     
                 Spacer()
                 VStack {
                     Text(computerVM.streak > -1 ? "Wins" : "Loses")
@@ -24,15 +34,26 @@ struct RPSvsComputerView: View {
                         .font(.largeTitle)
                 }
                 .bold()
+         
                 Spacer()
                 Button {
                     // Reset streak counter to 0
                     computerVM.isResettingStreak.toggle()
                 } label: {
-                    Image(systemName: "arrow.clockwise")
-                        .resizable()
-                        .frame(width: 20, height: 25)
+                    HStack {
+                        Image(systemName: "arrow.counterclockwise.circle.fill")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                        Text("Reset streak")
+                            .font(.caption)
+                    }
+                    .padding(10)
+                    .background(Color(.darkGray))
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
+          
                 }
+                .frame(minWidth: UIScreen.main.bounds.width * 0.33)
 //                .disabled(admobVM.rewarded.rewardedAd == nil)
                 .alert("Watch ad to reset streak?", isPresented: $computerVM.isResettingStreak) {
                     Button {
@@ -54,7 +75,6 @@ struct RPSvsComputerView: View {
             .padding()
             .padding(.top, 35)
           
-            Spacer()
            
             if let result = computerVM.gameResult {
                 if let choice = computerVM.userChoice,
