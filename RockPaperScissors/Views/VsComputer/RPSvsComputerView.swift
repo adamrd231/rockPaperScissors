@@ -27,7 +27,7 @@ struct RPSvsComputerView: View {
                 }
                 .frame(minWidth: UIScreen.main.bounds.width * 0.33)
      
-                Spacer()
+          
                 VStack {
                     Text(computerVM.streak > -1 ? "Wins" : "Loses")
                     Text(computerVM.streak, format: .number)
@@ -35,7 +35,7 @@ struct RPSvsComputerView: View {
                 }
                 .bold()
          
-                Spacer()
+        
                 Button {
                     // Reset streak counter to 0
                     computerVM.isResettingStreak.toggle()
@@ -145,7 +145,7 @@ struct RPSvsComputerView: View {
                 }
                 .padding()
             }
-            Spacer()
+
             if !storeManager.purchasedNonConsumables.contains(where: { $0.id ==  StoreIDsConstant.platinumMember }) {
                 Banner()
             }

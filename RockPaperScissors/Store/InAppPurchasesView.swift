@@ -5,8 +5,7 @@ struct InAppPurchaseView: View {
     @ObservedObject var storeManager: StoreManager
     
     var body: some View {
-        // Second Screen
-        VStack(spacing: .zero) {
+        List {
             HStack {
                 Button {
                     storeManager.isViewingStore = false
@@ -30,19 +29,16 @@ struct InAppPurchaseView: View {
                         .foregroundColor(.clear)
                 }
             }
-
             .padding()
-            .padding(.top, 35)
+
+            explanationSection
+            availablePurchasesSection
+            restorePurchasesSection
             
-            List {
-                explanationSection
-                availablePurchasesSection
-                restorePurchasesSection
-                
-            }
-            .padding(.horizontal)
-            .scrollContentBackground(.hidden)
         }
+        .padding(.horizontal)
+        .padding(.top, 25)
+        .scrollContentBackground(.hidden)
     }
 }
 
