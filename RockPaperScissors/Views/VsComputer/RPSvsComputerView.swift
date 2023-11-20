@@ -5,6 +5,7 @@ struct RPSvsComputerView: View {
     @ObservedObject var computerVM: VsComputerViewModel
     @ObservedObject var vm: ViewModel
     @ObservedObject var admobVM: AdsViewModel
+
     
     var body: some View {
         VStack {
@@ -32,10 +33,10 @@ struct RPSvsComputerView: View {
                         .resizable()
                         .frame(width: 20, height: 25)
                 }
-                .disabled(admobVM.rewarded.rewardedAd == nil)
+//                .disabled(admobVM.rewarded.rewardedAd == nil)
                 .alert("Watch ad to reset streak?", isPresented: $computerVM.isResettingStreak) {
                     Button {
-                        admobVM.showRewarded.toggle()
+                        vm.showRewardedAd()
                     } label: {
                         Text("Im sure")
                     }
@@ -48,11 +49,7 @@ struct RPSvsComputerView: View {
                     Text("Are you sure, this can not be un-done?")
                 }
                 .statusBar(hidden: true)
-                .onChange(of: admobVM.rewarded.showedRewardedAd) { newValue in
-                    print("Changed up!")
-                    computerVM.streak = 0
-//                    admobVM.rewarded.showedRewardedAd = false
-                }
+
             }
             .padding()
             .padding(.top, 35)
@@ -126,18 +123,12 @@ struct RPSvsComputerView: View {
             Spacer()
         }
         .onAppear {
-            print("Loading achievements \(computerVM.gamesPlayed)")
-            vm.loadAchievements(gamesPlayed: computerVM.gamesPlayed)
+            vm.loadRewardedAd()
         }
         .onDisappear {
-            print("Saving game to leaderboard")
-            // TODO: implement both below
+            // TODO: Only send this if it's a high score?
             // If score is better than leaderboard overall, submit to overall
-            
             // Update score for player of the week
-            
-            print("Authenticated")
-            print("computer streak score: \(computerVM.streak)")
             vm.submitScoreToLeaderBoard(newHighScore: computerVM.streak)
         }
 
