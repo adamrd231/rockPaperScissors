@@ -13,7 +13,6 @@ struct LaunchView: View {
                 .frame(width: 200, height: 300)
                 .padding()
 
-
             LaunchButtonView(title: computerVM.streak > -1 ? "Play Computer +\(computerVM.streak)" : "Play Computer \(computerVM.streak)", function: { computerVM.inGame = true })
             LaunchButtonView(title: "Matchmaking", function: {
                 vm.startMatchmaking()
@@ -21,6 +20,7 @@ struct LaunchView: View {
             })
             .disabled(vm.authenticationState != .authenticated || vm.inGame)
             .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
+            
             LaunchButtonView(title: "Leaderboard", function: {
                 // Go to leaderboard
                 vm.showLeaderboards()
@@ -28,13 +28,21 @@ struct LaunchView: View {
             })
             .disabled(vm.authenticationState != .authenticated || vm.inGame)
             .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
+            
             LaunchButtonView(title: "In-App Purchases", function: {
                 // Go to in app purchases
                 storeManager.isViewingStore = true
             })
+            
             if vm.authenticationState == .unauthenticated || vm.authenticationState == .authenticating || vm.authenticationState == .error {
-                Button("Log into Game Center") {
-                    vm.authenticateUser()
+                Button(vm.authenticationState == .error ?  "Use phone to login to game center" : "Log into Game Center") {
+                    print("Test0")
+                    if vm.authenticationState == .error {
+                        vm.goToGameCenter()
+                    } else {
+                        vm.authenticateUser()
+                    }
+                   
                 }
                 .buttonStyle(.borderedProminent)
                 Text(vm.authenticationState.rawValue)
@@ -42,6 +50,7 @@ struct LaunchView: View {
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 200)
             }
+               
             Spacer()
             Banner()
             

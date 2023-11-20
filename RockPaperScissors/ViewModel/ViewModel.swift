@@ -11,7 +11,7 @@ class ViewModel: NSObject, ObservableObject {
     @Published var isRoundOver = false
     @Published var authenticationState = PlayerAuthState.unauthenticated
     @Published var isShowingAlert = false
-
+    
     // Game
     let choices:[WeaponOfChoice] = [.rock, .paper, .scissors]
     @Published var gameResult: GameResult? = nil
@@ -43,7 +43,7 @@ class ViewModel: NSObject, ObservableObject {
         super.init()
         addSubscribers()
     }
-
+    
     
     func loadAchievements(gamesPlayed: Int) {
         GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in
@@ -119,15 +119,29 @@ class ViewModel: NSObject, ObservableObject {
                 if let u = user,
                    let c = computer {
                     self?.rockPaperScissors(u, c)
-                
+                    
                 }
             }
             .store(in: &cancellable)
     }
     
+    func goToGameCenter() {
+        if let gameCenterURL = URL(string: "gamecenter:")  {
+            if UIApplication.shared.canOpenURL(gameCenterURL) {
+                UIApplication.shared.open(gameCenterURL)
+            } else {
+                print("Can not open gameCenter")
+            }
+        } else {
+            print("Invalid URL for game center")
+        }
+    }
+    
     func authenticateUser() {
         GKLocalPlayer.local.authenticateHandler = { [self] vc, e in
+            print("Test")
             if let viewController = vc {
+                print("Test1")
                 rootViewController?.present(viewController, animated: true)
                 return
             }
