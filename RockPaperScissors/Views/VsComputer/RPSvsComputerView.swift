@@ -21,8 +21,8 @@ struct RPSvsComputerView: View {
                             .font(.caption)
                     }
                     .padding(10)
-                    .background(Color(.darkGray))
-                    .foregroundColor(.white)
+                    .background(Color(.systemGray6))
+                    .foregroundColor(Color(.systemGray))
                     .cornerRadius(12)
                 }
                 .frame(minWidth: UIScreen.main.bounds.width * 0.33)
@@ -48,8 +48,8 @@ struct RPSvsComputerView: View {
                             .font(.caption)
                     }
                     .padding(10)
-                    .background(Color(.darkGray))
-                    .foregroundColor(.white)
+                    .background(Color(.systemGray6))
+                    .foregroundColor(Color(.systemGray))
                     .cornerRadius(12)
           
                 }
@@ -162,5 +162,6 @@ struct RockPaperScissorsView_Previews: PreviewProvider {
             vm: ViewModel(),
             admobVM: AdsViewModel()
         )
+        .preferredColorScheme(.dark)
     }
 }
