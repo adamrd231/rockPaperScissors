@@ -15,7 +15,7 @@ class AdsViewController: UIViewController, GADFullScreenContentDelegate, Observa
 #if DEBUG
         static var rewardedAdID = "ca-app-pub-3940256099942544/1712485313"
 #else
-        static var rewardedAdID = ""
+        static var rewardedAdID = "ca-app-pub-4186253562269967/8456973890"
 #endif
         
     }

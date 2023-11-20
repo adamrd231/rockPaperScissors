@@ -31,14 +31,5 @@ class AdsViewModel: ObservableObject {
             }
         }
     }
-//    @Published var showRewarded = false {
-//        didSet {
-//            if showRewarded {
-//                rewarded.showRewardedAd()
-//                showRewarded = false
-//            } else {
-//                rewarded.loadRewardedAd()
-//            }
-//        }
-//    }
+
 }
