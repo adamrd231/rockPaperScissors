@@ -52,8 +52,9 @@ struct LaunchView: View {
             }
                
             Spacer()
-            Banner()
-            
+            if !storeManager.purchasedNonConsumables.contains(where: { $0.id ==  StoreIDsConstant.platinumMember }) {
+                Banner()
+            }
         }
         .onAppear {
             vm.authenticateUser()

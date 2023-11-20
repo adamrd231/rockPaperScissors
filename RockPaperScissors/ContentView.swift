@@ -30,7 +30,8 @@ struct ContentView: View {
                 RPSvsComputerView(
                     computerVM: computerVM,
                     vm: vm,
-                    admobVM: admobVM
+                    admobVM: admobVM,
+                    storeManager: storeManager
                 )
           
             } else if storeManager.isViewingStore {

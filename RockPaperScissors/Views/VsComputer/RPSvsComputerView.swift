@@ -5,7 +5,7 @@ struct RPSvsComputerView: View {
     @ObservedObject var computerVM: VsComputerViewModel
     @ObservedObject var vm: ViewModel
     @ObservedObject var admobVM: AdsViewModel
-
+    @ObservedObject var storeManager: StoreManager
     
     var body: some View {
         VStack {
@@ -141,6 +141,9 @@ struct RPSvsComputerView: View {
                 .padding()
             }
             Spacer()
+            if !storeManager.purchasedNonConsumables.contains(where: { $0.id ==  StoreIDsConstant.platinumMember }) {
+                Banner()
+            }
         }
         .onAppear {
             computerVM.loadRewardedAd()
@@ -160,7 +163,8 @@ struct RockPaperScissorsView_Previews: PreviewProvider {
         RPSvsComputerView(
             computerVM: VsComputerViewModel(),
             vm: ViewModel(),
-            admobVM: AdsViewModel()
+            admobVM: AdsViewModel(),
+            storeManager: StoreManager()
         )
         .preferredColorScheme(.dark)
     }
