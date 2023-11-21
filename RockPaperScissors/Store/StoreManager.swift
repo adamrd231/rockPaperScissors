@@ -41,15 +41,26 @@ class StoreManager: ObservableObject  {
     }
     
     @MainActor
-    func purchase(_ product: Product) async throws -> Transaction? {
+    func purchase(_ product: Product) async throws {
         let result = try await product.purchase()
         switch result {
         case .success(.verified(let transaction)):
             purchasedNonConsumables.insert(product)
             await transaction.finish()
-            return transaction
-            
-        default: return nil
+
+        case let .success(.unverified(_, error)):
+            print("Purchase error: success but unverified \(error)")
+            // Success, but transaction / receipt can't be verified
+            // Possibly a jailbroken phone?
+            break
+        case .pending:
+            // Transaction waiting on SCA (Strong customer auth)
+            // Needs approval from Ask to Buy
+            break
+        case .userCancelled:
+            break
+        default:
+            break
         }
     }
     
