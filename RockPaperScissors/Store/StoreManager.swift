@@ -7,6 +7,7 @@ struct StoreIDsConstant {
     static var platinumMember = "platinumMember"
 }
 
+@MainActor
 class StoreManager: ObservableObject  {
 
     private var productIDs = [
@@ -15,6 +16,11 @@ class StoreManager: ObservableObject  {
     
     @Published var isViewingStore: Bool = false
     @Published var products:[Product] = []
+    
+    @Published var purchasedProductIDs: Set<String> = []
+    @Published var isLoadingProducts: Bool = false
+    @Published var productsLoaded: Bool = false
+    
     @Published var purchasedNonConsumables: Set<Product> = []
     
     // Listen for transactions that might be successful but not recorded
@@ -33,6 +39,8 @@ class StoreManager: ObservableObject  {
     
     @MainActor
     func requestProducts() async {
+        guard !self.productsLoaded else { return }
+        
         do {
             products = try await Product.products(for: productIDs).sorted(by: { $0.price > $1.price })
         } catch let error {
@@ -45,8 +53,9 @@ class StoreManager: ObservableObject  {
         let result = try await product.purchase()
         switch result {
         case .success(.verified(let transaction)):
-            purchasedNonConsumables.insert(product)
+           
             await transaction.finish()
+
 
         case let .success(.unverified(_, error)):
             print("Purchase error: success but unverified \(error)")
@@ -89,8 +98,13 @@ class StoreManager: ObservableObject  {
         switch result {
             case let.verified(transaction):
                 guard let product = self.products.first(where: { $0.id == transaction.productID }) else { return }
-                self.purchasedNonConsumables.insert(product)
-                await transaction.finish()
+                if transaction.revocationDate == nil {
+//                    self.purchasedNonConsumables.insert(product)
+                    self.purchasedProductIDs.insert(transaction.productID)
+                } else {
+                    self.purchasedProductIDs.remove(transaction.productID)
+                }
+//                await transaction.finish()
             default: return
         }
     }
