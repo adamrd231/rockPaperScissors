@@ -82,10 +82,8 @@ extension InAppPurchaseView {
                                 Text(product.description)
                                     .font(.caption)
                             }
-                            
                             Spacer()
-                            
-                            if storeManager.purchasedNonConsumables.contains(where: {$0.id == product.id}) {
+                            if storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
                                 Image(systemName: "checkmark.circle")
                             } else {
                                 Button("$\(product.price.description)") {
@@ -94,7 +92,7 @@ extension InAppPurchaseView {
                                         try await storeManager.purchase(product)
                                     }
                                 }
-                                .disabled(storeManager.purchasedNonConsumables.contains(where: { $0.id == product.id}))
+                                .disabled(storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember))
                                 .buttonStyle(.bordered)
                             }
                         }

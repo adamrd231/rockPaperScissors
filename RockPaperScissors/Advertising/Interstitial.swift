@@ -3,20 +3,20 @@ import GoogleMobileAds
 
 class InterstitialAdManager: NSObject, ObservableObject {
     
-    struct AdMobConstant {
-        #if DEBUG
-            static var interstitialID = "ca-app-pub-3940256099942544/4411468910"
-            static var rewardedAd = "ca-app-pub-3940256099942544/1712485313"
-        #else
-            static var interstitialID = "ca-app-pub-4186253562269967/2739804861"
-            static var rewardedAd = ""
-        #endif
-        
-    }
-    
     final class Interstitial: NSObject, GADFullScreenContentDelegate, ObservableObject {
 
         private var interstitial: GADInterstitialAd?
+        
+        struct AdMobConstant {
+            #if DEBUG
+                static var interstitialID = "ca-app-pub-3940256099942544/4411468910"
+                static var rewardedAd = "ca-app-pub-3940256099942544/1712485313"
+            #else
+                static var interstitialID = "ca-app-pub-4186253562269967/2739804861"
+                static var rewardedAd = ""
+            #endif
+            
+        }
     
         override init() {
             super.init()

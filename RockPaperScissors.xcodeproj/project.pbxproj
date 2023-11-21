@@ -29,6 +29,7 @@
 		66C8BD6E2B081D82009834DB /* AdvertisingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD6D2B081D82009834DB /* AdvertisingViewModel.swift */; };
 		66C8BD702B0BBF38009834DB /* AdsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD6F2B0BBF38009834DB /* AdsViewController.swift */; };
 		66C8BD722B0BC3AA009834DB /* AdmobConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD712B0BC3AA009834DB /* AdmobConstants.swift */; };
+		66C8BD742B0D086D009834DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66C8BD732B0D086D009834DB /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		66C8BD6D2B081D82009834DB /* AdvertisingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisingViewModel.swift; sourceTree = "<group>"; };
 		66C8BD6F2B0BBF38009834DB /* AdsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsViewController.swift; sourceTree = "<group>"; };
 		66C8BD712B0BC3AA009834DB /* AdmobConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobConstants.swift; sourceTree = "<group>"; };
+		66C8BD732B0D086D009834DB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		6D5F6773A788F7AC3A510F84 /* Pods-RockPaperScissors.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RockPaperScissors.debug.xcconfig"; path = "Target Support Files/Pods-RockPaperScissors/Pods-RockPaperScissors.debug.xcconfig"; sourceTree = "<group>"; };
 		7B13EECBF9A0BD8924D49607 /* Pods_RockPaperScissors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RockPaperScissors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C6F307B44695A3C1683964 /* Pods-RockPaperScissors.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RockPaperScissors.release.xcconfig"; path = "Target Support Files/Pods-RockPaperScissors/Pods-RockPaperScissors.release.xcconfig"; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				217B744BE43C86DAA5858779 /* Pods_RockPaperScissors.framework in Frameworks */,
+				66C8BD742B0D086D009834DB /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +80,7 @@
 		283C2D92B483346ED70ECB82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				66C8BD732B0D086D009834DB /* StoreKit.framework */,
 				7B13EECBF9A0BD8924D49607 /* Pods_RockPaperScissors.framework */,
 			);
 			name = Frameworks;

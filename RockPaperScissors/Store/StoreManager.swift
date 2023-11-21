@@ -21,8 +21,6 @@ class StoreManager: ObservableObject  {
     @Published var isLoadingProducts: Bool = false
     @Published var productsLoaded: Bool = false
     
-    @Published var purchasedNonConsumables: Set<Product> = []
-    
     // Listen for transactions that might be successful but not recorded
     var transactionListener: Task <Void, Error>?
     private var cancellable = Set<AnyCancellable>()
@@ -40,9 +38,8 @@ class StoreManager: ObservableObject  {
     @MainActor
     func requestProducts() async {
         guard !self.productsLoaded else { return }
-        
         do {
-            products = try await Product.products(for: productIDs).sorted(by: { $0.price > $1.price })
+            products = try await Product.products(for: productIDs)
         } catch let error {
             print("Error requesting products: \(error)")
         }
@@ -53,10 +50,8 @@ class StoreManager: ObservableObject  {
         let result = try await product.purchase()
         switch result {
         case .success(.verified(let transaction)):
-           
             await transaction.finish()
-
-
+            purchasedProductIDs.insert(product.id)
         case let .success(.unverified(_, error)):
             print("Purchase error: success but unverified \(error)")
             // Success, but transaction / receipt can't be verified
@@ -100,11 +95,11 @@ class StoreManager: ObservableObject  {
                 guard let product = self.products.first(where: { $0.id == transaction.productID }) else { return }
                 if transaction.revocationDate == nil {
 //                    self.purchasedNonConsumables.insert(product)
-                    self.purchasedProductIDs.insert(transaction.productID)
+                    self.purchasedProductIDs.insert(product.id)
                 } else {
-                    self.purchasedProductIDs.remove(transaction.productID)
+                    self.purchasedProductIDs.remove(product.id)
                 }
-//                await transaction.finish()
+                await transaction.finish()
             default: return
         }
     }

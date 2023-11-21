@@ -52,7 +52,7 @@ struct LaunchView: View {
             }
                
             Spacer()
-            if !storeManager.purchasedNonConsumables.contains(where: { $0.id ==  StoreIDsConstant.platinumMember }) {
+            if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
                 Banner()
             }
         }
