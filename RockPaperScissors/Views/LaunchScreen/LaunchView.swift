@@ -24,15 +24,9 @@ struct LaunchView: View {
             LaunchButtonView(title: "Leaderboard", function: {
                 // Go to leaderboard
                 vm.showLeaderboards()
-                
             })
             .disabled(vm.authenticationState != .authenticated || vm.inGame)
             .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
-            
-            LaunchButtonView(title: "In-App Purchases", function: {
-                // Go to in app purchases
-                storeManager.isViewingStore = true
-            })
             
             if vm.authenticationState == .unauthenticated || vm.authenticationState == .authenticating || vm.authenticationState == .error {
                 Button(vm.authenticationState == .error ?  "Use phone to login to game center" : "Log into Game Center") {
@@ -52,10 +46,8 @@ struct LaunchView: View {
             }
                
             Spacer()
-            if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
-                Banner()
-            }
         }
+        .background(.clear)
         .onAppear {
             vm.authenticateUser()
         }
@@ -75,3 +67,6 @@ struct LaunchView_Previews: PreviewProvider {
         )
     }
 }
+
+
+

@@ -1,6 +1,26 @@
 import SwiftUI
 import GoogleMobileAds
 
+enum TabbedItems: Int, CaseIterable {
+    case home = 0
+    case inAppPurchases
+    
+    var title: String {
+        switch self {
+        case .home: return "Home"
+        case .inAppPurchases: return "In-App Purchases"
+        }
+    }
+    
+    var iconName: String {
+        switch self {
+        case .home: return "play.fill"
+        case .inAppPurchases: return "creditcard.fill"
+
+        }
+    }
+}
+
 enum PlayerAuthState: String {
     case authenticating = "Logging into Game Center..."
     case unauthenticated = "Please sign into game center to play against people"
@@ -15,44 +35,91 @@ struct ContentView: View {
     @StateObject var computerVM = VsComputerViewModel()
     @StateObject var storeManager = StoreManager()
     @StateObject var admobVM = AdsViewModel()
+    @State var selectedTab = 0
+
     
     var body: some View {
-        ZStack {
-            Image("rockPaperScissorsBackground")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .edgesIgnoringSafeArea(.all)
-            if vm.isGameOver {
-                Text("Game Over")
-            } else if vm.inGame {
-                RPSvsPersonView(vm: vm)
-            } else if computerVM.inGame {
-                RPSvsComputerView(
-                    computerVM: computerVM,
-                    vm: vm,
-                    admobVM: admobVM,
-                    storeManager: storeManager
-                )
-          
-            } else if storeManager.isViewingStore {
-               InAppPurchaseView(storeManager: storeManager)
-            } else {
-                LaunchView(
-                    vm: vm,
-                    computerVM: computerVM,
-                    storeManager: storeManager
-                )
+        if vm.isGameOver {
+            Text("Game Over")
+        } else if vm.inGame {
+            RPSvsPersonView(vm: vm)
+        } else if computerVM.inGame {
+            RPSvsComputerView(
+                computerVM: computerVM,
+                vm: vm,
+                admobVM: admobVM,
+                storeManager: storeManager
+            )
+        } else {
+            ZStack {
+                Image("rockPaperScissorsBackground")
+                    .resizable()
+                    .edgesIgnoringSafeArea(.all)
+                VStack {
+                    TabView(selection: $selectedTab) {
+                        LaunchView(
+                            vm: vm,
+                            computerVM: computerVM,
+                            storeManager: storeManager
+                        )
+                        .tag(0)
+                        .onAppear {
+                            GADMobileAds.sharedInstance().start(completionHandler: nil)
+                        }
+                        
+                        InAppPurchaseView(storeManager: storeManager)
+                            .tag(1)
+                        
+                    }
+   
+                    ZStack {
+                        HStack {
+                            ForEach((TabbedItems.allCases), id: \.self) { item in
+                                Button {
+                                    selectedTab = item.rawValue
+                                } label: {
+                                    customTabbedItem(imageName: item.iconName, title: item.title, isActive: selectedTab == item.rawValue)
+                                }
+                            }
+                        }
+                    }
+                    .frame(height: 70)
+                    .background(Color.theme.backgroundColor.opacity(0.4))
+                    .cornerRadius(35)
+                    .padding(.horizontal, 13)
+                    
+                }
             }
-            
         }
-        .onAppear {
-            GADMobileAds.sharedInstance().start(completionHandler: nil)
-        }
+        
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(vm: ViewModel())
+    }
+}
+
+extension ContentView {
+    func customTabbedItem(imageName: String, title: String, isActive: Bool) -> some View {
+        HStack(spacing: 10) {
+            Spacer()
+            Image(systemName: imageName)
+                .resizable()
+                .renderingMode(.template)
+                .foregroundColor(isActive ? Color.theme.text : Color.theme.text.opacity(0.6))
+                .frame(width: 20, height: 20)
+            if isActive {
+                Text(title)
+                    .font(.system(size: 14))
+                    .foregroundColor(isActive ? Color.theme.text : Color.theme.text.opacity(0.6))
+            }
+            Spacer()
+        }
+        .frame(width: isActive ? .infinity : UIScreen.main.bounds.width * 0.3, height: 60)
+        .background(isActive ? Color.theme.backgroundColor.opacity(0.8) : Color.theme.backgroundColor.opacity(0.3))
+        .cornerRadius(30)
+        .padding(5)
     }
 }

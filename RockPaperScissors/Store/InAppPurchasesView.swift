@@ -5,40 +5,18 @@ struct InAppPurchaseView: View {
     @ObservedObject var storeManager: StoreManager
     
     var body: some View {
-        List {
-            HStack {
-                Button {
-                    storeManager.isViewingStore = false
-                    
-                } label: {
-                    Image(systemName: "arrowtriangle.backward.fill")
-                        .resizable()
-                        .frame(width: 20, height: 25)
-                }
-                Spacer()
-                Text("In-App Purchases")
-                    .font(.title3)
-                    .bold()
-                Spacer()
-                Button {
-                    //
-                } label: {
-                    Image(systemName: "arrowtriangle.backward.fill")
-                        .resizable()
-                        .frame(width: 20, height: 25)
-                        .foregroundColor(.clear)
-                }
+        VStack {
+            Text("In-App Purchases")
+                .font(.title3)
+                .bold()
+            List {
+                explanationSection
+                availablePurchasesSection
+                restorePurchasesSection
+                
             }
-            .padding()
-
-            explanationSection
-            availablePurchasesSection
-            restorePurchasesSection
-            
+            .scrollContentBackground(.hidden)
         }
-        .padding(.horizontal)
-        .padding(.top, 25)
-        .scrollContentBackground(.hidden)
     }
 }
 
