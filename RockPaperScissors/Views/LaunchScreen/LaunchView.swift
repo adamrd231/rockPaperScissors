@@ -47,7 +47,6 @@ struct LaunchView: View {
                
             Spacer()
         }
-        .background(.clear)
         .onAppear {
             vm.authenticateUser()
         }

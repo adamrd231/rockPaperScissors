@@ -1,6 +1,27 @@
 import SwiftUI
 import GoogleMobileAds
 
+
+struct BackgroundHelper: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        DispatchQueue.main.async {
+            // find first superview with color and make it transparent
+            var parent = view.superview
+            repeat {
+                if parent?.backgroundColor != nil {
+                    parent?.backgroundColor = UIColor.clear
+                    break
+                }
+                parent = parent?.superview
+            } while (parent != nil)
+        }
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {}
+}
+
 enum TabbedItems: Int, CaseIterable {
     case home = 0
     case inAppPurchases
@@ -36,25 +57,31 @@ struct ContentView: View {
     @StateObject var storeManager = StoreManager()
     @StateObject var admobVM = AdsViewModel()
     @State var selectedTab = 0
-
+    
+    
+    init() {
+    
+        
+    }
     
     var body: some View {
-        if vm.isGameOver {
-            Text("Game Over")
-        } else if vm.inGame {
-            RPSvsPersonView(vm: vm)
-        } else if computerVM.inGame {
-            RPSvsComputerView(
-                computerVM: computerVM,
-                vm: vm,
-                admobVM: admobVM,
-                storeManager: storeManager
-            )
-        } else {
-            ZStack {
-                Image("rockPaperScissorsBackground")
-                    .resizable()
-                    .edgesIgnoringSafeArea(.all)
+        ZStack {
+            Image("rockPaperScissorsBackground")
+                .resizable()
+                .edgesIgnoringSafeArea(.all)
+            
+            if vm.isGameOver {
+                Text("Game Over")
+            } else if vm.inGame {
+                RPSvsPersonView(vm: vm)
+            } else if computerVM.inGame {
+                RPSvsComputerView(
+                    computerVM: computerVM,
+                    vm: vm,
+                    admobVM: admobVM,
+                    storeManager: storeManager
+                )
+            } else {
                 VStack {
                     TabView(selection: $selectedTab) {
                         LaunchView(
@@ -62,16 +89,19 @@ struct ContentView: View {
                             computerVM: computerVM,
                             storeManager: storeManager
                         )
+                        .background(BackgroundHelper())
+                        .toolbarBackground(.blue, for: .tabBar)
                         .tag(0)
+           
                         .onAppear {
                             GADMobileAds.sharedInstance().start(completionHandler: nil)
                         }
                         
                         InAppPurchaseView(storeManager: storeManager)
                             .tag(1)
+                            .background(BackgroundHelper())
                         
                     }
-   
                     ZStack {
                         HStack {
                             ForEach((TabbedItems.allCases), id: \.self) { item in
@@ -87,17 +117,16 @@ struct ContentView: View {
                     .background(Color.theme.backgroundColor.opacity(0.4))
                     .cornerRadius(35)
                     .padding(.horizontal, 13)
-                    
+                    .toolbarBackground(.blue, for: .tabBar)
                 }
             }
         }
-        
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(vm: ViewModel())
+        ContentView()
     }
 }
 
