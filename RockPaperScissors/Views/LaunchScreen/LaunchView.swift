@@ -46,6 +46,9 @@ struct LaunchView: View {
             }
                
             Spacer()
+            if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
+                Banner()
+            }
         }
         .onAppear {
             vm.authenticateUser()

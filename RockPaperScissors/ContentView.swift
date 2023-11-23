@@ -108,8 +108,7 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .background(Color.theme.backgroundColor.opacity(0.4))
-                    .toolbarBackground(.blue, for: .tabBar)
+                    .background(Color.theme.backgroundColor.opacity(0.66))
                 }
             }
         }
@@ -133,15 +132,14 @@ extension ContentView {
                 .frame(width: 20, height: 20)
             if isActive {
                 Text(title)
-                    .font(.system(size: 14))
+                    .font(.system(size: 16))
+                    .fontWeight(.bold)
                     .foregroundColor(isActive ? Color.theme.text : Color.theme.text.opacity(0.6))
             }
             Spacer()
         }
-        .padding()
-
-        .frame(width: isActive ? .infinity : UIScreen.main.bounds.width * 0.3, height: 80)
-        .background(isActive ? Color.theme.backgroundColor.opacity(0.5) : Color.theme.backgroundColor.opacity(0))
+        .frame(width: isActive ? .infinity : UIScreen.main.bounds.width * 0.4, height: 80)
+        .background(isActive ? Color.theme.backgroundColor.opacity(1) : Color.theme.backgroundColor.opacity(0.5))
 
 
     }
