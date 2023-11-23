@@ -58,17 +58,12 @@ struct ContentView: View {
     @StateObject var admobVM = AdsViewModel()
     @State var selectedTab = 0
     
-    
-    init() {
-    
-        
-    }
-    
     var body: some View {
         ZStack {
             Image("rockPaperScissorsBackground")
                 .resizable()
                 .edgesIgnoringSafeArea(.all)
+                .scaledToFill()
             
             if vm.isGameOver {
                 Text("Game Over")
@@ -113,10 +108,7 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .frame(height: 70)
                     .background(Color.theme.backgroundColor.opacity(0.4))
-                    .cornerRadius(35)
-                    .padding(.horizontal, 13)
                     .toolbarBackground(.blue, for: .tabBar)
                 }
             }
@@ -146,9 +138,11 @@ extension ContentView {
             }
             Spacer()
         }
-        .frame(width: isActive ? .infinity : UIScreen.main.bounds.width * 0.3, height: 60)
-        .background(isActive ? Color.theme.backgroundColor.opacity(0.8) : Color.theme.backgroundColor.opacity(0.3))
-        .cornerRadius(30)
-        .padding(5)
+        .padding()
+
+        .frame(width: isActive ? .infinity : UIScreen.main.bounds.width * 0.3, height: 80)
+        .background(isActive ? Color.theme.backgroundColor.opacity(0.5) : Color.theme.backgroundColor.opacity(0))
+
+
     }
 }
