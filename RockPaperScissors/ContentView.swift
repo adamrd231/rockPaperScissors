@@ -1,7 +1,6 @@
 import SwiftUI
 import GoogleMobileAds
 
-
 struct BackgroundHelper: UIViewRepresentable {
     func makeUIView(context: Context) -> UIView {
         let view = UIView()
@@ -22,26 +21,6 @@ struct BackgroundHelper: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
-enum TabbedItems: Int, CaseIterable {
-    case home = 0
-    case inAppPurchases
-    
-    var title: String {
-        switch self {
-        case .home: return "Home"
-        case .inAppPurchases: return "In-App Purchases"
-        }
-    }
-    
-    var iconName: String {
-        switch self {
-        case .home: return "play.fill"
-        case .inAppPurchases: return "creditcard.fill"
-
-        }
-    }
-}
-
 enum PlayerAuthState: String {
     case authenticating = "Logging into Game Center..."
     case unauthenticated = "Please sign into game center to play against people"
@@ -56,7 +35,6 @@ struct ContentView: View {
     @StateObject var computerVM = VsComputerViewModel()
     @StateObject var storeManager = StoreManager()
     @StateObject var admobVM = AdsViewModel()
-    @State var selectedTab = 0
     
     var body: some View {
         ZStack {
@@ -78,7 +56,7 @@ struct ContentView: View {
                 )
             } else {
                 VStack {
-                    TabView(selection: $selectedTab) {
+                    TabView {
                         LaunchView(
                             vm: vm,
                             computerVM: computerVM,
@@ -87,28 +65,26 @@ struct ContentView: View {
                         .background(BackgroundHelper())
                         .toolbarBackground(.blue, for: .tabBar)
                         .tag(0)
-           
                         .onAppear {
                             GADMobileAds.sharedInstance().start(completionHandler: nil)
+                        }
+                        .tabItem {
+                            VStack {
+                                Image(systemName: "house.fill")
+                                Text("Home")
+                            }
                         }
                         
                         InAppPurchaseView(storeManager: storeManager)
                             .tag(1)
                             .background(BackgroundHelper())
-                        
-                    }
-                    ZStack {
-                        HStack {
-                            ForEach((TabbedItems.allCases), id: \.self) { item in
-                                Button {
-                                    selectedTab = item.rawValue
-                                } label: {
-                                    customTabbedItem(imageName: item.iconName, title: item.title, isActive: selectedTab == item.rawValue)
+                            .tabItem {
+                                VStack {
+                                    Image(systemName: "creditcard.fill")
+                                    Text("In-app Purchases")
                                 }
                             }
-                        }
                     }
-                    .background(Color.theme.backgroundColor.opacity(0.66))
                 }
             }
         }
@@ -118,29 +94,5 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-    }
-}
-
-extension ContentView {
-    func customTabbedItem(imageName: String, title: String, isActive: Bool) -> some View {
-        HStack(spacing: 10) {
-            Spacer()
-            Image(systemName: imageName)
-                .resizable()
-                .renderingMode(.template)
-                .foregroundColor(isActive ? Color.theme.text : Color.theme.text.opacity(0.6))
-                .frame(width: 20, height: 20)
-            if isActive {
-                Text(title)
-                    .font(.system(size: 16))
-                    .fontWeight(.bold)
-                    .foregroundColor(isActive ? Color.theme.text : Color.theme.text.opacity(0.6))
-            }
-            Spacer()
-        }
-        .frame(width: isActive ? .infinity : UIScreen.main.bounds.width * 0.4, height: 80)
-        .background(isActive ? Color.theme.backgroundColor.opacity(1) : Color.theme.backgroundColor.opacity(0.5))
-
-
     }
 }

@@ -6,7 +6,7 @@ struct LaunchView: View {
     @ObservedObject var storeManager: StoreManager
     
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             Spacer()
             Image("title")
                 .resizable()
@@ -45,10 +45,8 @@ struct LaunchView: View {
                     .frame(maxWidth: 200)
             }
                
-            Spacer()
-            if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
-                Banner()
-            }
+ 
+  
         }
         .onAppear {
             vm.authenticateUser()
