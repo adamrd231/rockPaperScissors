@@ -13,6 +13,7 @@ struct RPSvsPersonView: View {
                     Image(systemName: "arrowtriangle.backward.fill")
                         .resizable()
                         .frame(width: 20, height: 25)
+                        .foregroundColor(Color.theme.backgroundColor)
                 }
                 Spacer()
                 VStack {
@@ -20,9 +21,10 @@ struct RPSvsPersonView: View {
                         .bold()
                     Text(vm.streak, format: .number)
                 }
+                .foregroundColor(Color.theme.text)
             }
             .padding()
-            .padding(.top, 35)
+            .padding(.top, 50)
             .onChange(of: vm.playAgain) { newValue in
                 if vm.playAgain && vm.playerWantsToPlayAgain {
                     print("reset from me")
