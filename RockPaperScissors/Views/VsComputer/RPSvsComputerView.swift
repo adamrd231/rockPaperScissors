@@ -14,7 +14,24 @@ struct RPSvsComputerView: View {
                 currentStreak: computerVM.streak,
                 rightHandFunction: { computerVM.isResettingStreak.toggle() },
                 showRewardedAd: { computerVM.showRewardedAd() },
-                isResettingStreak: $computerVM.isResettingStreak)
+                isResettingStreak: $computerVM.isResettingStreak
+            )
+            .alert("Watch ad to reset streak?", isPresented: $computerVM.isResettingStreak) {
+                Button {
+                    computerVM.showRewardedAd()
+                } label: {
+                    Text("Im sure")
+                }
+                Button {
+                    
+                } label: {
+                    Text("Cancel")
+                }
+            } message: {
+                Text("Are you sure, this can not be un-done?")
+            }
+            
+            Spacer(minLength: 0)
 
             if let result = computerVM.gameResult {
                 if let choice = computerVM.userChoice,
@@ -27,12 +44,14 @@ struct RPSvsComputerView: View {
                         HStack {
                             VStack {
                                 Text("You chose:")
+                                    .foregroundColor(Color.theme.backgroundColor)
                                 Image(choice.description)
                                     .resizable()
                                     .frame(width: 100, height: 100)
                             }
                             VStack {
                                 Text("Computer chose:")
+                                    .foregroundColor(Color.theme.backgroundColor)
                                 Image(computerChoice.description)
                                     .resizable()
                                     .frame(width: 100, height: 100)
@@ -55,37 +74,9 @@ struct RPSvsComputerView: View {
                     }
                 }
             } else {
-                VStack {
-                    ForEach(computerVM.choices, id: \.self) { choice in
-                        Button {
-                            // Play game
-                            computerVM.userChoice = choice
-                            computerVM.rockPaperScissors(choice, computerVM.computerChoice)
-                        } label: {
-                            ZStack {
-                                Capsule()
-                                    .foregroundColor(choice == computerVM.userChoice ? Color(.systemGray4) : Color(.systemGray6))
-                                
-                                VStack(spacing: 0) {
-                                    
-                                    Image(choice.description)
-                                        .resizable()
-                                        .frame(width: 100, height: 100)
-                                        .font(.largeTitle)
-                                    Text(choice.description)
-                                }
-                                .padding()
-                                .frame(minWidth: 250, minHeight: 90)
-                                .foregroundColor(Color(.systemGray))
-                            }
-                            .fixedSize()
-                        }
-                        .disabled(computerVM.gameResult != nil)
-                    }
-                }
-                .padding()
+                RockPaperScissorsView(computerVM: computerVM)
             }
-
+            Spacer(minLength: 0)
             if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
                 Banner()
             }

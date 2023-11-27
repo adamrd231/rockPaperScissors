@@ -150,11 +150,10 @@
 		660983022AFFCCB800A7D0D0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				66C8BD7E2B14E325009834DB /* GameComponents */,
 				66952CA92B032B5300F091F4 /* VsPerson */,
 				66952CA82B032B4500F091F4 /* VsComputer */,
 				66952CA72B03286000F091F4 /* LaunchScreen */,
-				66C8BD782B14DFB7009834DB /* RockPaperScissorsView.swift */,
-				66C8BD7C2B14E15A009834DB /* GameHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -222,6 +221,15 @@
 				66C8BD762B0D0E6A009834DB /* Color.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		66C8BD7E2B14E325009834DB /* GameComponents */ = {
+			isa = PBXGroup;
+			children = (
+				66C8BD7C2B14E15A009834DB /* GameHeaderView.swift */,
+				66C8BD782B14DFB7009834DB /* RockPaperScissorsView.swift */,
+			);
+			path = GameComponents;
 			sourceTree = "<group>";
 		};
 		AA8CF4245F83CCFE9D636E19 /* Pods */ = {

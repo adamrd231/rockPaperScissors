@@ -38,15 +38,15 @@ struct ContentView: View {
     
     init() {
         UITabBar.appearance().backgroundColor = UIColor(Color.theme.tabViewBackground)
-
     }
     
     var body: some View {
         ZStack {
             Image("rockPaperScissorsBackground")
                 .resizable()
-                .edgesIgnoringSafeArea(.all)
                 .scaledToFill()
+                .edgesIgnoringSafeArea(.all)
+
             
             if vm.isGameOver {
                 Text("Game Over")
@@ -60,35 +60,33 @@ struct ContentView: View {
                     storeManager: storeManager
                 )
             } else {
-                VStack {
-                    TabView {
-                        LaunchView(
-                            vm: vm,
-                            computerVM: computerVM,
-                            storeManager: storeManager
-                        )
-                        .background(BackgroundHelper())
-                        .tag(0)
-                        .onAppear {
-                            GADMobileAds.sharedInstance().start(completionHandler: nil)
+                TabView {
+                    LaunchView(
+                        vm: vm,
+                        computerVM: computerVM,
+                        storeManager: storeManager
+                    )
+                    .background(BackgroundHelper())
+                    .tag(0)
+                    .onAppear {
+                        GADMobileAds.sharedInstance().start(completionHandler: nil)
+                    }
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "house.fill")
+                            Text("Home")
                         }
+                    }
+                    
+                    InAppPurchaseView(storeManager: storeManager)
+                        .tag(1)
+                        .background(BackgroundHelper())
                         .tabItem {
                             VStack {
-                                Image(systemName: "house.fill")
-                                Text("Home")
+                                Image(systemName: "creditcard.fill")
+                                Text("In-app Purchases")
                             }
                         }
-                        
-                        InAppPurchaseView(storeManager: storeManager)
-                            .tag(1)
-                            .background(BackgroundHelper())
-                            .tabItem {
-                                VStack {
-                                    Image(systemName: "creditcard.fill")
-                                    Text("In-app Purchases")
-                                }
-                            }
-                    }
                 }
             }
         }

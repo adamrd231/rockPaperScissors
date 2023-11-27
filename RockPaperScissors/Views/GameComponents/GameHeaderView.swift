@@ -18,7 +18,6 @@ struct GameHeaderView: View {
     var body: some View {
         HStack {
             Button {
-//                computerVM.inGame = false
                 returnFunction()
             } label: {
                 HStack(spacing: 5) {
@@ -26,52 +25,41 @@ struct GameHeaderView: View {
                         .resizable()
                         .frame(width: 20, height: 25)
                 }
-                .foregroundColor(Color.theme.text)
+                .foregroundColor(Color.theme.backgroundColor)
             }
  
-      
+            Spacer()
             VStack {
-                Text(currentStreak > -1 ? "Wins" : "Loses")
+                Text("streak")
+                    .font(.caption)
+                    .textCase(.uppercase)
                 Text(currentStreak, format: .number)
                     .font(.largeTitle)
             }
+            .padding()
+            .padding(.horizontal)
+            .foregroundColor(Color.theme.text)
+            .background(Color.theme.backgroundColor.opacity(0.66))
+            .cornerRadius(5)
             .bold()
      
-    
+            Spacer()
             Button {
-                // Reset streak counter to 0
-//                computerVM.isResettingStreak.toggle()
                 rightHandFunction()
             } label: {
                 HStack {
                     Image(systemName: "arrow.counterclockwise.circle.fill")
                         .resizable()
                         .frame(width: 25, height: 25)
-
+                        .foregroundColor(Color.theme.backgroundColor)
                 }
-                .foregroundColor(Color.theme.text)
             }
 //                .disabled(admobVM.rewarded.rewardedAd == nil)
-            .alert("Watch ad to reset streak?", isPresented: $isResettingStreak) {
-                Button {
-//                    computerVM.showRewardedAd()
-                    showRewardedAd()
-                } label: {
-                    Text("Im sure")
-                }
-                Button {
-                    
-                } label: {
-                    Text("Cancel")
-                }
-            } message: {
-                Text("Are you sure, this can not be un-done?")
-            }
-            .statusBar(hidden: true)
+
 
         }
         .padding()
-        .padding(.top, 35)
+        .padding(.top, 60)
     }
 }
 

@@ -7,10 +7,9 @@ struct LaunchView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            Spacer()
             Image("title")
                 .resizable()
-                .frame(width: 200, height: 300)
+                .frame(width: 150, height: 200)
                 .padding()
 
             LaunchButtonView(
@@ -36,23 +35,19 @@ struct LaunchView: View {
             
             if vm.authenticationState == .unauthenticated || vm.authenticationState == .authenticating || vm.authenticationState == .error {
                 Button(vm.authenticationState == .error ?  "Use phone to login to game center" : "Log into Game Center") {
-                    print("Test0")
                     if vm.authenticationState == .error {
                         vm.goToGameCenter()
                     } else {
                         vm.authenticateUser()
                     }
-                   
                 }
                 .buttonStyle(.borderedProminent)
                 Text(vm.authenticationState.rawValue)
                     .font(.footnote)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 200)
+                    .foregroundColor(Color.black.opacity(0.8))
             }
-               
- 
-  
         }
         .onAppear {
             vm.authenticateUser()
