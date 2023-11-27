@@ -7,6 +7,7 @@ struct LaunchView: View {
     
     var body: some View {
         VStack(spacing: 10) {
+            Spacer()
             Image("title")
                 .resizable()
                 .frame(width: 150, height: 200)
@@ -47,6 +48,10 @@ struct LaunchView: View {
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 200)
                     .foregroundColor(Color.black.opacity(0.8))
+            }
+            Spacer()
+            if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
+                Banner()
             }
         }
         .onAppear {
