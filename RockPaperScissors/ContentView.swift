@@ -36,6 +36,11 @@ struct ContentView: View {
     @StateObject var storeManager = StoreManager()
     @StateObject var admobVM = AdsViewModel()
     
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor(Color.theme.tabViewBackground)
+
+    }
+    
     var body: some View {
         ZStack {
             Image("rockPaperScissorsBackground")
@@ -63,7 +68,6 @@ struct ContentView: View {
                             storeManager: storeManager
                         )
                         .background(BackgroundHelper())
-                        .toolbarBackground(.blue, for: .tabBar)
                         .tag(0)
                         .onAppear {
                             GADMobileAds.sharedInstance().start(completionHandler: nil)

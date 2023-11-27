@@ -11,10 +11,10 @@ struct LaunchButtonView: View {
         } label: {
             ZStack {
                 Capsule()
-                    .foregroundColor(Color(.systemGray))
+                    .foregroundColor(Color.theme.backgroundColor)
                     .frame(minWidth: 230)
                 Text(title)
-                    .foregroundColor(Color(.systemGray6))
+                    .foregroundColor(Color.theme.text)
                     .padding()
             }
             .fixedSize()
