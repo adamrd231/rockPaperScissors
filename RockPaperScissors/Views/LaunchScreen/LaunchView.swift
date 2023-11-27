@@ -13,18 +13,24 @@ struct LaunchView: View {
                 .frame(width: 200, height: 300)
                 .padding()
 
-            LaunchButtonView(title: computerVM.streak > -1 ? "Play Computer +\(computerVM.streak)" : "Play Computer \(computerVM.streak)", function: { computerVM.inGame = true })
-            LaunchButtonView(title: "Matchmaking", function: {
-                vm.startMatchmaking()
-                
-            })
+            LaunchButtonView(
+                title: "Play Computer",
+                icon: "play.fill",
+                function: { computerVM.inGame = true }
+            )
+            LaunchButtonView(
+                title: "Matchmaking",
+                icon: "play",
+                function: { vm.startMatchmaking() }
+            )
             .disabled(vm.authenticationState != .authenticated || vm.inGame)
             .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
             
-            LaunchButtonView(title: "Leaderboard", function: {
-                // Go to leaderboard
-                vm.showLeaderboards()
-            })
+            LaunchButtonView(
+                title: "Leaderboard",
+                icon: "star.leadinghalf.filled",
+                function: { vm.showLeaderboards() }
+            )
             .disabled(vm.authenticationState != .authenticated || vm.inGame)
             .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
             

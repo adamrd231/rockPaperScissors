@@ -31,6 +31,8 @@
 		66C8BD722B0BC3AA009834DB /* AdmobConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD712B0BC3AA009834DB /* AdmobConstants.swift */; };
 		66C8BD742B0D086D009834DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66C8BD732B0D086D009834DB /* StoreKit.framework */; };
 		66C8BD772B0D0E6A009834DB /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD762B0D0E6A009834DB /* Color.swift */; };
+		66C8BD792B14DFB8009834DB /* RockPaperScissorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD782B14DFB7009834DB /* RockPaperScissorsView.swift */; };
+		66C8BD7D2B14E15A009834DB /* GameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD7C2B14E15A009834DB /* GameHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +63,8 @@
 		66C8BD712B0BC3AA009834DB /* AdmobConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmobConstants.swift; sourceTree = "<group>"; };
 		66C8BD732B0D086D009834DB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		66C8BD762B0D0E6A009834DB /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		66C8BD782B14DFB7009834DB /* RockPaperScissorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockPaperScissorsView.swift; sourceTree = "<group>"; };
+		66C8BD7C2B14E15A009834DB /* GameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHeaderView.swift; sourceTree = "<group>"; };
 		6D5F6773A788F7AC3A510F84 /* Pods-RockPaperScissors.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RockPaperScissors.debug.xcconfig"; path = "Target Support Files/Pods-RockPaperScissors/Pods-RockPaperScissors.debug.xcconfig"; sourceTree = "<group>"; };
 		7B13EECBF9A0BD8924D49607 /* Pods_RockPaperScissors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RockPaperScissors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C6F307B44695A3C1683964 /* Pods-RockPaperScissors.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RockPaperScissors.release.xcconfig"; path = "Target Support Files/Pods-RockPaperScissors/Pods-RockPaperScissors.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 				66952CA92B032B5300F091F4 /* VsPerson */,
 				66952CA82B032B4500F091F4 /* VsComputer */,
 				66952CA72B03286000F091F4 /* LaunchScreen */,
+				66C8BD782B14DFB7009834DB /* RockPaperScissorsView.swift */,
+				66C8BD7C2B14E15A009834DB /* GameHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -342,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				660983012AFFCB6A00A7D0D0 /* ViewModel.swift in Sources */,
+				66C8BD7D2B14E15A009834DB /* GameHeaderView.swift in Sources */,
 				66C8BD722B0BC3AA009834DB /* AdmobConstants.swift in Sources */,
 				660983082AFFE51400A7D0D0 /* Matchmanager+GKMatchMakerViewController.swift in Sources */,
 				660983042AFFCCC500A7D0D0 /* RPSvsComputerView.swift in Sources */,
@@ -354,6 +361,7 @@
 				660983062AFFE30F00A7D0D0 /* LaunchView.swift in Sources */,
 				66952CB42B081AB300F091F4 /* Interstitial.swift in Sources */,
 				66952CA62B03285A00F091F4 /* LaunchButtonView.swift in Sources */,
+				66C8BD792B14DFB8009834DB /* RockPaperScissorsView.swift in Sources */,
 				66C8BD772B0D0E6A009834DB /* Color.swift in Sources */,
 				66952CAC2B07BDE100F091F4 /* StoreManager.swift in Sources */,
 				6609830A2AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift in Sources */,
