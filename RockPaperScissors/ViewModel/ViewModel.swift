@@ -3,6 +3,16 @@ import SwiftUI
 import GameKit
 import Combine
 
+struct GamePlayer {
+    var id = UUID()
+    var name: String? = nil
+    var choice: WeaponOfChoice? = nil
+}
+
+struct RockPaperScissorsGameModel {
+    
+}
+
 class ViewModel: NSObject, ObservableObject {
     
     // Game Center
@@ -13,7 +23,6 @@ class ViewModel: NSObject, ObservableObject {
     @Published var isShowingAlert = false
     
     // Game
-    let choices:[WeaponOfChoice] = [.rock, .paper, .scissors]
     @Published var gameResult: GameResult? = nil
     @Published var computerChoice: WeaponOfChoice? = nil
     @Published var userChoice: WeaponOfChoice? = nil

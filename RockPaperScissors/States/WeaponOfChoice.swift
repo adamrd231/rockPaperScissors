@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum WeaponOfChoice: CustomStringConvertible, Equatable {
+enum WeaponOfChoice: CustomStringConvertible, Equatable, CaseIterable {
     case rock
     case scissors
     case paper

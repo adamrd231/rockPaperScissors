@@ -101,7 +101,7 @@ struct RPSvsPersonView: View {
             } else {
                 VStack {
                     VStack() {
-                        ForEach(vm.choices, id: \.self) { choice in
+                        ForEach(WeaponOfChoice.allCases, id: \.self) { choice in
                             Button {
                                 vm.playGame(playerChoice: choice)
                             } label: {
