@@ -3,14 +3,29 @@ import SwiftUI
 import GameKit
 import Combine
 
-struct GamePlayer {
-    var id = UUID()
-    var name: String? = nil
-    var choice: WeaponOfChoice? = nil
+protocol RPSgamePlayer {
+    var id: String { get set }
+    var name: String { get set }
 }
 
+struct PersonPlayer: RPSgamePlayer {
+    var id: String
+    var name: String
+    var weaponOfChoice: WeaponOfChoice? = nil
+}
+
+struct ComputerPlayer: RPSgamePlayer {
+    var id: String
+    var name: String
+    var weaponOfChoice: WeaponOfChoice = WeaponOfChoice.allCases[Int.random(in: 0..<3)]
+}
+
+
 struct RockPaperScissorsGameModel {
-    
+    var player = PersonPlayer(id: UUID().uuidString, name: "Player")
+    var computerPlayer = ComputerPlayer(id: UUID().uuidString, name: "Computer")
+    var streak: Int = 0
+    var gameResult: GameResult? = nil
 }
 
 class ViewModel: NSObject, ObservableObject {
@@ -23,10 +38,11 @@ class ViewModel: NSObject, ObservableObject {
     @Published var isShowingAlert = false
     
     // Game
-    @Published var gameResult: GameResult? = nil
-    @Published var computerChoice: WeaponOfChoice? = nil
-    @Published var userChoice: WeaponOfChoice? = nil
-    @Published var streak: Int = 0
+    @Published var gameModel = RockPaperScissorsGameModel()
+//    @Published var gameResult: GameResult? = nil
+//    @Published var computerChoice: WeaponOfChoice? = nil
+//    @Published var userChoice: WeaponOfChoice? = nil
+//    @Published var streak: Int = 0
     @Published var lastReceivedData: WeaponOfChoice? = nil
     
     @Published var playAgain: Bool = false
@@ -122,13 +138,10 @@ class ViewModel: NSObject, ObservableObject {
     }
     
     func addSubscribers() {
-        $userChoice
-            .combineLatest($computerChoice)
-            .sink { [weak self] user, computer in
-                if let u = user,
-                   let c = computer {
-                    self?.rockPaperScissors(u, c)
-                    
+        $gameModel
+            .sink { [weak self] game in
+                if let playerChoice = game.player.weaponOfChoice {
+                    self?.rockPaperScissors(playerChoice, game.computerPlayer.weaponOfChoice)
                 }
             }
             .store(in: &cancellable)
@@ -180,17 +193,15 @@ class ViewModel: NSObject, ObservableObject {
     
     // Functions
     func playerWon() {
-        streak += 1
-        gameResult = .win
+        gameModel.gameResult = .win
     }
     
     func playerLost() {
-        streak -= 1
-        gameResult = .lose
+        gameModel.gameResult = .lose
     }
     
     func playerTie() {
-        gameResult = .tie
+        gameModel.gameResult = .tie
     }
     
     func resetGame() {
