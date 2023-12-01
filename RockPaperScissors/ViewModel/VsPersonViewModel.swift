@@ -1,17 +1,18 @@
 import Foundation
 import SwiftUI
 import GameKit
-import Combine
-
 
 class VsPersonViewModel: NSObject, ObservableObject {
     // GameKit
     var match: GKMatch?
     var otherPlayer: GKPlayer?
-    var personPlayer = PersonPlayer(id: UUID().uuidString, name: "")
+    @Published var authenticationState = PlayerAuthState.unauthenticated
     var localPlayer = GKLocalPlayer.local
     var playerUUIDKey = UUID().uuidString
-    
+    // Game controls
+    @Published var lastReceivedData: WeaponOfChoice? = nil
+    @Published var playAgain: Bool = false
+    @Published var playerWantsToPlayAgain: Bool = false
     // Game Center
     @Published var inGame = false
     @Published var isGameOver = false
@@ -21,23 +22,9 @@ class VsPersonViewModel: NSObject, ObservableObject {
     // Leaderboard
     @Published var playersList: [GKPlayer] = []
     
-    @Published var authenticationState = PlayerAuthState.unauthenticated
-    
-    @Published var lastReceivedData: WeaponOfChoice? = nil
-    
-    @Published var playAgain: Bool = false
-    @Published var playerWantsToPlayAgain: Bool = false
-    
-    private var cancellable = Set<AnyCancellable>()
-    
     var rootViewController: UIViewController? {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         return windowScene?.windows.first?.rootViewController
-    }
-    
-    override init() {
-        super.init()
-        personPlayer.name = localPlayer.displayName
     }
     
     
