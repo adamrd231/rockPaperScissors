@@ -2,7 +2,7 @@ import Foundation
 import GameKit
 
 
-extension ViewModel: GKMatchmakerViewControllerDelegate {
+extension VsPersonViewModel: GKMatchmakerViewControllerDelegate {
     func matchmakerViewController(_ viewController: GKMatchmakerViewController, didFind match: GKMatch) {
         viewController.dismiss(animated: true)
         startMatch(newMatch: match)
@@ -15,7 +15,7 @@ extension ViewModel: GKMatchmakerViewControllerDelegate {
     }
 }
 
-extension ViewModel: GKGameCenterControllerDelegate {
+extension VsPersonViewModel: GKGameCenterControllerDelegate {
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
         gameCenterViewController.dismiss(animated: true)
     }

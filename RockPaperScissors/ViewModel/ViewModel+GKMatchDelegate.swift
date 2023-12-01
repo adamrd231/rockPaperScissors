@@ -1,7 +1,7 @@
 import Foundation
 import GameKit
 
-extension ViewModel: GKMatchDelegate {
+extension VsPersonViewModel: GKMatchDelegate {
     func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
         let content = String(decoding: data, as: UTF8.self)
         

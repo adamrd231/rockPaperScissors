@@ -1,10 +1,3 @@
-//
-//  GameHeaderView.swift
-//  RockPaperScissors
-//
-//  Created by Adam Reed on 11/27/23.
-//
-
 import SwiftUI
 
 struct GameHeaderView: View {
@@ -58,7 +51,7 @@ struct GameHeaderView: View {
 
 
         }
-        .padding()
+        .padding(.horizontal)
         .padding(.top, 60)
     }
 }

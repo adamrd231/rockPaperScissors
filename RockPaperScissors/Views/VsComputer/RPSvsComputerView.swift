@@ -1,24 +1,57 @@
 import SwiftUI
 import GameKit
 
+struct RPSGraphic: View {
+    let playerChoice: WeaponOfChoice
+    
+    var body: some View {
+        ZStack {
+            Capsule()
+                .foregroundColor(Color.theme.backgroundColor)
+            VStack(spacing: 0) {
+                Image(playerChoice.description)
+                    .resizable()
+                    .frame(maxWidth: 100, maxHeight: 100)
+                    .font(.largeTitle)
+                Text(playerChoice.description)
+                    .foregroundColor(Color.theme.text)
+            }
+            .padding(25)
+            .padding(.horizontal, 25)
+        }
+        .fixedSize()
+    }
+}
+
 struct RPSvsComputerView: View {
-    @ObservedObject var computerVM: VsComputerViewModel
-    @ObservedObject var vm: ViewModel
-    @ObservedObject var admobVM: AdsViewModel
+    @ObservedObject var vsComputerViewModel: VsComputerViewModel
+    @ObservedObject var vsPersonViewModel: VsPersonViewModel
+    @ObservedObject var adsVM: AdsViewModel
     @ObservedObject var storeManager: StoreManager
     
     var body: some View {
         VStack {
             GameHeaderView(
-                returnFunction: { computerVM.inGame = false },
-                currentStreak: computerVM.streak,
-                rightHandFunction: { computerVM.isResettingStreak.toggle() },
-                showRewardedAd: { computerVM.showRewardedAd() },
-                isResettingStreak: $computerVM.isResettingStreak
+                returnFunction: { vsComputerViewModel.inGame = false },
+                currentStreak: vsComputerViewModel.gameModel.streak,
+                rightHandFunction: { vsComputerViewModel.isResettingStreak.toggle() },
+                showRewardedAd: { vsComputerViewModel.showRewardedAd() },
+                isResettingStreak: $vsComputerViewModel.isResettingStreak
             )
-            .alert("Watch ad to reset streak?", isPresented: $computerVM.isResettingStreak) {
+            .onChange(of: vsComputerViewModel.gameModel.player.weaponOfChoice) { newValue in
+                if let choice = newValue {
+                    let result = vsComputerViewModel.gameModel.rockPaperScissors(choice, vsComputerViewModel.gameModel.computerPlayer.weaponOfChoice)
+                    vsComputerViewModel.gameModel.gameResult = result
+                    switch result {
+                    case .lose: vsComputerViewModel.gameModel.streak -= 1
+                    case .tie: print("Tie")
+                    case .win: vsComputerViewModel.gameModel.streak += 1
+                    }
+                }
+            }
+            .alert("Watch ad to reset streak?", isPresented: $vsComputerViewModel.isResettingStreak) {
                 Button {
-                    computerVM.showRewardedAd()
+                    vsComputerViewModel.showRewardedAd()
                 } label: {
                     Text("Im sure")
                 }
@@ -33,62 +66,64 @@ struct RPSvsComputerView: View {
             
             Spacer(minLength: 0)
 
-            if let result = computerVM.gameResult {
-                if let choice = computerVM.userChoice,
-                   let computerChoice = computerVM.computerChoice {
+            // MARK: Game over screen
+            ZStack {
+                // MARK: Playing game
+                RockPaperScissorsView(computerVM: vsComputerViewModel)
+                if let playerChoice = vsComputerViewModel.gameModel.player.weaponOfChoice {
                     VStack {
-                        Text(result.description)
-                            .font(.largeTitle)
-                            .padding()
-                            .textCase(.uppercase)
-                        HStack {
-                            VStack {
-                                Text("You chose:")
-                                    .foregroundColor(Color.theme.backgroundColor)
-                                Image(choice.description)
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                            }
-                            VStack {
-                                Text("Computer chose:")
-                                    .foregroundColor(Color.theme.backgroundColor)
-                                Image(computerChoice.description)
-                                    .resizable()
-                                    .frame(width: 100, height: 100)
-                            }
+                        if let result = vsComputerViewModel.gameModel.gameResult {
+                            Text(result.description)
+                                .font(.largeTitle)
+                                .padding()
+                                .textCase(.uppercase)
+                        }
+
+                        VStack {
+                            RPSGraphic(playerChoice: playerChoice)
+                            Text("VS")
+                                .font(.largeTitle)
+                                .fontWeight(.heavy)
+                            RPSGraphic(playerChoice: vsComputerViewModel.gameModel.computerPlayer.weaponOfChoice)
                         }
                         Button("Play Again") {
-                            computerVM.resetGame()
+                            // Reset everything to start new game
+                            vsComputerViewModel.startNewGame()
+                            // If applicable, update counter for ads
                             if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
-                                admobVM.interstitialCounter += 1
+                                adsVM.interstitialCounter += 1
                             }
                         }
                         .buttonStyle(.bordered)
                     }
                     .onTapGesture {
-                        computerVM.resetGame()
+                        // Reset everything to start new game
+                        vsComputerViewModel.startNewGame()
+                        // If applicable, update counter for ads
                         if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
-                            admobVM.interstitialCounter += 1
+                            adsVM.interstitialCounter += 1
                         }
-                       
                     }
+                    .foregroundColor(Color.theme.backgroundColor)
+                    .padding()
+                    .background(Color.theme.text)
+                    .cornerRadius(20)
                 }
-            } else {
-                RockPaperScissorsView(computerVM: computerVM)
             }
+
             Spacer(minLength: 0)
             if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
                 Banner()
             }
         }
         .onAppear {
-            computerVM.loadRewardedAd()
+            vsComputerViewModel.loadRewardedAd()
         }
         .onDisappear {
             // TODO: Only send this if it's a high score?
             // If score is better than leaderboard overall, submit to overall
             // Update score for player of the week
-            vm.submitScoreToLeaderBoard(newHighScore: computerVM.streak)
+//            .submitScoreToLeaderBoard(newHighScore: computerVM.gameModel.streak)
         }
 
     }
@@ -97,9 +132,9 @@ struct RPSvsComputerView: View {
 struct RPSvsComputerView_Previews: PreviewProvider {
     static var previews: some View {
         RPSvsComputerView(
-            computerVM: VsComputerViewModel(),
-            vm: ViewModel(),
-            admobVM: AdsViewModel(),
+            vsComputerViewModel: VsComputerViewModel(),
+            vsPersonViewModel: VsPersonViewModel(),
+            adsVM: AdsViewModel(),
             storeManager: StoreManager()
         )
         .preferredColorScheme(.dark)

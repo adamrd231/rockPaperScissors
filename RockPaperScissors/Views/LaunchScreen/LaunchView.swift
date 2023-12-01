@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct LaunchView: View {
-    @ObservedObject var vm: ViewModel
-    @ObservedObject var computerVM: VsComputerViewModel
+    @ObservedObject var vsPersonViewModel: VsPersonViewModel
+    @ObservedObject var vsComputerViewModel: VsComputerViewModel
     @ObservedObject var storeManager: StoreManager
     
     var body: some View {
@@ -16,34 +16,34 @@ struct LaunchView: View {
             LaunchButtonView(
                 title: "Play Computer",
                 icon: "play.fill",
-                function: { computerVM.inGame = true }
+                function: { vsComputerViewModel.inGame = true }
             )
             LaunchButtonView(
                 title: "Matchmaking",
                 icon: "play",
-                function: { vm.startMatchmaking() }
+                function: { vsPersonViewModel.startMatchmaking() }
             )
-            .disabled(vm.authenticationState != .authenticated || vm.inGame)
-            .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
+            .disabled(vsPersonViewModel.authenticationState != .authenticated || vsPersonViewModel.inGame)
+            .opacity(vsPersonViewModel.authenticationState != .authenticated ? 0.66 : 1.0)
             
             LaunchButtonView(
                 title: "Leaderboard",
                 icon: "star.leadinghalf.filled",
-                function: { vm.showLeaderboards() }
+                function: { vsPersonViewModel.showLeaderboards() }
             )
-            .disabled(vm.authenticationState != .authenticated || vm.inGame)
-            .opacity(vm.authenticationState != .authenticated ? 0.66 : 1.0)
+            .disabled(vsPersonViewModel.authenticationState != .authenticated || vsPersonViewModel.inGame)
+            .opacity(vsPersonViewModel.authenticationState != .authenticated ? 0.66 : 1.0)
             
-            if vm.authenticationState == .unauthenticated || vm.authenticationState == .authenticating || vm.authenticationState == .error {
-                Button(vm.authenticationState == .error ?  "Use phone to login to game center" : "Log into Game Center") {
-                    if vm.authenticationState == .error {
-                        vm.goToGameCenter()
+            if vsPersonViewModel.authenticationState == .unauthenticated || vsPersonViewModel.authenticationState == .authenticating || vsPersonViewModel.authenticationState == .error {
+                Button(vsPersonViewModel.authenticationState == .error ?  "Use phone to login to game center" : "Log into Game Center") {
+                    if vsPersonViewModel.authenticationState == .error {
+                        vsPersonViewModel.goToGameCenter()
                     } else {
-                        vm.authenticateUser()
+                        vsPersonViewModel.authenticateUser()
                     }
                 }
                 .buttonStyle(.borderedProminent)
-                Text(vm.authenticationState.rawValue)
+                Text(vsPersonViewModel.authenticationState.rawValue)
                     .font(.footnote)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 200)
@@ -55,10 +55,10 @@ struct LaunchView: View {
             }
         }
         .onAppear {
-            vm.authenticateUser()
+            vsPersonViewModel.authenticateUser()
         }
         .padding()
-        .alert("Opponent left game", isPresented: $vm.isShowingAlert) {
+        .alert("Opponent left game", isPresented: $vsPersonViewModel.isShowingAlert) {
             Button("OK", role: .cancel) { }
         }
     }
@@ -67,8 +67,8 @@ struct LaunchView: View {
 struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {
         LaunchView(
-            vm: ViewModel(),
-            computerVM: VsComputerViewModel(),
+            vsPersonViewModel: VsPersonViewModel(),
+            vsComputerViewModel: VsComputerViewModel(),
             storeManager: StoreManager()
         )
     }

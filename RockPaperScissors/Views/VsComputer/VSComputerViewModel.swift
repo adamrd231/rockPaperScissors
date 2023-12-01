@@ -1,29 +1,50 @@
-
 import SwiftUI
+import Combine
+
+struct RPSvsComputerGameModel {
+    var player = PersonPlayer(id: UUID().uuidString, name: "Player")
+    var computerPlayer = ComputerPlayer(id: UUID().uuidString, name: "Computer")
+    var streak: Int = 0
+    var gameResult: GameResult? = nil
+
+    
+    mutating func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) -> GameResult {
+        switch (playerChoice, computerChoice) {
+        case (.rock, .rock): return .tie
+        case (.rock, .scissors): return  .win
+        case (.rock, .paper): return .lose
+            
+        case (.paper, .rock): return .win
+        case (.paper, .scissors): return .lose
+        case (.paper, .paper): return .tie
+            
+        case (.scissors, .scissors): return .tie
+        case (.scissors, .rock): return .lose
+        case (.scissors, .paper): return .win
+        }
+    }
+}
 
 class VsComputerViewModel: ObservableObject {
     // Game
-    let choices:[WeaponOfChoice] = [.rock, .paper, .scissors]
-    @Published var gameResult: GameResult? = nil
-    @Published var computerChoice: WeaponOfChoice
-    @Published var userChoice: WeaponOfChoice? = nil
-    @AppStorage("computerStreak") var streak: Int = 0
-    @AppStorage("gamesPlayed") var gamesPlayed: Int = 0
+    @Published var gameModel = RPSvsComputerGameModel()
+    @Published var isGameOver: Bool = false
     
     @Published var inGame: Bool = false
-    @Published var gameOver: Bool = false
-    
+    // Advertising
     @Published var isResettingStreak: Bool = false
+    
+    private var cancellable = Set<AnyCancellable>()
+    
+    // AdsViewController
+    var rewardedAdVC: AdsViewController
     
     var rootViewController: UIViewController? {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         return windowScene?.windows.first?.rootViewController
     }
     
-    var rewardedAdVC: AdsViewController // Declare AdsViewController
-    
     init() {
-        computerChoice = choices[Int.random(in: 0..<3)]
         rewardedAdVC = AdsViewController()
         
         rewardedAdVC.adCompletionHandler = { [weak self] in
@@ -33,7 +54,7 @@ class VsComputerViewModel: ObservableObject {
     }
     
     func updateStreakAfterAdCompletion() {
-        self.streak = 0
+        self.gameModel.streak = 0
     }
     
     func loadRewardedAd() {
@@ -44,41 +65,11 @@ class VsComputerViewModel: ObservableObject {
         rewardedAdVC.show()
     }
     
-    // Functions
-    func playerWon() {
-        streak += 1
-        gameResult = .win
+    func startNewGame() {
+        gameModel.player.weaponOfChoice = nil
+        gameModel.computerPlayer.weaponOfChoice = WeaponOfChoice.allCases[Int.random(in: 0..<3)]
+
     }
     
-    func playerLost() {
-        streak -= 1
-        gameResult = .lose
-    }
     
-    func playerTie() {
-        gameResult = .tie
-    }
-    
-    func resetGame() {
-        userChoice = nil
-        gameResult = nil
-        computerChoice = choices[Int.random(in: 0..<3)]
-    }
-    
-    func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) {
-        gamesPlayed += 1
-        switch (playerChoice, computerChoice) {
-        case (.rock, .rock): playerTie()
-        case (.rock, .scissors): playerWon()
-        case (.rock, .paper): playerLost()
-            
-        case (.paper, .rock): playerWon()
-        case (.paper, .scissors): playerLost()
-        case (.paper, .paper): playerTie()
-            
-        case (.scissors, .scissors): playerTie()
-        case (.scissors, .rock): playerLost()
-        case (.scissors, .paper): playerWon()
-        }
-    }
 }
