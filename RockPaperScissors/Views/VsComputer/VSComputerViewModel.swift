@@ -66,6 +66,7 @@ class VsComputerViewModel: ObservableObject {
     }
     
     func startNewGame() {
+        gameModel.gameResult = nil
         gameModel.player.weaponOfChoice = nil
         gameModel.computerPlayer.weaponOfChoice = WeaponOfChoice.allCases[Int.random(in: 0..<3)]
 

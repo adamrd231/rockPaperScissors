@@ -23,7 +23,9 @@ struct RPSvsComputerView: View {
                 .onChange(of: vsComputerViewModel.gameModel.player.weaponOfChoice) { newValue in
                     if let choice = newValue {
                         let result = vsComputerViewModel.gameModel.rockPaperScissors(choice, vsComputerViewModel.gameModel.computerPlayer.weaponOfChoice)
+                        
                         vsComputerViewModel.gameModel.gameResult = result
+                        
                         switch result {
                         case .lose: vsComputerViewModel.gameModel.streak -= 1
                         case .tie: print("Tie")
@@ -48,9 +50,9 @@ struct RPSvsComputerView: View {
 
                 // MARK: Playing game
                 RockPaperScissorsView(
-                    computerVM: vsComputerViewModel,
                     storeManager: storeManager
                 )
+                .environmentObject(vsComputerViewModel)
             }
             .onAppear {
                 vsComputerViewModel.loadRewardedAd()
