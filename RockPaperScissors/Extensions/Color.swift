@@ -5,6 +5,7 @@ extension Color {
 }
 
 struct ColorTheme {
+    let blue = Color("blue")
     let text = Color("text")
     let backgroundColor = Color("backgroundColor")
     let tabViewBackground = Color("tabViewBackground")

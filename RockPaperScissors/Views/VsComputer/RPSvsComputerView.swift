@@ -13,7 +13,11 @@ struct RPSvsComputerView: View {
         GeometryReader { geo in
             VStack {
                 GameHeaderView(
-                    returnFunction: { vsComputerViewModel.inGame = false },
+                    returnFunction: {
+                        vsComputerViewModel.inGame = false
+                        vsComputerViewModel.gameModel.gameResult = nil
+                        vsComputerViewModel.gameModel.computerPlayer.weaponOfChoice = WeaponOfChoice.allCases[Int.random(in: 0..<3)]
+                    },
                     currentStreak: vsComputerViewModel.gameModel.streak,
                     rightHandFunction: { vsComputerViewModel.isResettingStreak.toggle() },
                     showRewardedAd: { vsComputerViewModel.showRewardedAd() },

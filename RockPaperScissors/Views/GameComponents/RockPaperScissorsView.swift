@@ -55,53 +55,8 @@ struct RockPaperScissorsView: View {
             }
             
             if let result = computerVM.gameModel.gameResult {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 15)
-                        .foregroundColor(Color.theme.text)
-                    
-                    VStack {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 15)
-                                .foregroundColor(Color.theme.backgroundColor)
-                            Rectangle()
-                                .offset(y: 10)
-                            Text("You \(result.description)")
-                                .padding()
-                                .textCase(.uppercase)
-                                .font(.caption)
-                                .fontWeight(.heavy)
-                                .foregroundColor(Color.theme.text)
-                        }
-        
-                        HStack {
-                            VStack {
-                                if let playerChoice = computerVM.gameModel.player.weaponOfChoice {
-                                    Text("You")
-                                    Image(playerChoice.description)
-                                        .resizable()
-                                        .frame(width: 75, height: 75)
-                                }
-                            }
-                            VStack {
-                                Text("Comp")
-                                Image(computerVM.gameModel.computerPlayer.weaponOfChoice.description)
-                                    .resizable()
-                                    .frame(width: 75, height: 75)
-                            }
-                        }
-                        .padding()
-                        Button("Play Again?") {
-                            computerVM.startNewGame()
-                        }
-                        .padding(.horizontal)
-                        .padding(.bottom)
-                        .foregroundColor(Color.theme.text)
-                        .buttonStyle(.borderedProminent)
-                    }
-                    .foregroundColor(Color.theme.backgroundColor)
-                }
-                
-                .fixedSize()
+                EndGameView(result: result)
+                    .environmentObject(computerVM)
             }
 
         }

@@ -36,6 +36,7 @@
 		66C8BD802B178E4E009834DB /* PlayerAuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD7F2B178E4E009834DB /* PlayerAuthState.swift */; };
 		66C8BD822B178ECC009834DB /* BackgroundHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD812B178ECC009834DB /* BackgroundHelper.swift */; };
 		66C8BD862B179881009834DB /* ComputerPlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD852B179881009834DB /* ComputerPlayerModel.swift */; };
+		66C8BD882B1E94D9009834DB /* EndGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C8BD872B1E94D9009834DB /* EndGameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +72,7 @@
 		66C8BD7F2B178E4E009834DB /* PlayerAuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAuthState.swift; sourceTree = "<group>"; };
 		66C8BD812B178ECC009834DB /* BackgroundHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundHelper.swift; sourceTree = "<group>"; };
 		66C8BD852B179881009834DB /* ComputerPlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerPlayerModel.swift; sourceTree = "<group>"; };
+		66C8BD872B1E94D9009834DB /* EndGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameView.swift; sourceTree = "<group>"; };
 		6D5F6773A788F7AC3A510F84 /* Pods-RockPaperScissors.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RockPaperScissors.debug.xcconfig"; path = "Target Support Files/Pods-RockPaperScissors/Pods-RockPaperScissors.debug.xcconfig"; sourceTree = "<group>"; };
 		7B13EECBF9A0BD8924D49607 /* Pods_RockPaperScissors.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RockPaperScissors.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C6F307B44695A3C1683964 /* Pods-RockPaperScissors.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RockPaperScissors.release.xcconfig"; path = "Target Support Files/Pods-RockPaperScissors/Pods-RockPaperScissors.release.xcconfig"; sourceTree = "<group>"; };
@@ -124,12 +126,12 @@
 				66C8BD832B179870009834DB /* GameModel */,
 				66C8BD752B0D0E5F009834DB /* Extensions */,
 				660982FA2AFFCAFB00A7D0D0 /* States */,
-				66C8BD6C2B081CF6009834DB /* Info.plist */,
 				66952CB02B081A3E00F091F4 /* Advertising */,
 				66952CAA2B07BDD600F091F4 /* Store */,
 				66952CA32B0320E500F091F4 /* ViewModel */,
 				660983022AFFCCB800A7D0D0 /* Views */,
 				660982EF2AFEC98800A7D0D0 /* Assets.xcassets */,
+				66C8BD6C2B081CF6009834DB /* Info.plist */,
 				660982F12AFEC98900A7D0D0 /* RockPaperScissors.entitlements */,
 				660982F22AFEC98900A7D0D0 /* Preview Content */,
 			);
@@ -237,6 +239,7 @@
 			children = (
 				66C8BD7C2B14E15A009834DB /* GameHeaderView.swift */,
 				66C8BD782B14DFB7009834DB /* RockPaperScissorsView.swift */,
+				66C8BD872B1E94D9009834DB /* EndGameView.swift */,
 			);
 			path = GameComponents;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				660982FE2AFFCB3000A7D0D0 /* GameResults.swift in Sources */,
 				66952CAF2B07BEE700F091F4 /* InAppPurchasesView.swift in Sources */,
 				660983062AFFE30F00A7D0D0 /* LaunchView.swift in Sources */,
+				66C8BD882B1E94D9009834DB /* EndGameView.swift in Sources */,
 				66952CB42B081AB300F091F4 /* Interstitial.swift in Sources */,
 				66952CA62B03285A00F091F4 /* LaunchButtonView.swift in Sources */,
 				66C8BD792B14DFB8009834DB /* RockPaperScissorsView.swift in Sources */,
