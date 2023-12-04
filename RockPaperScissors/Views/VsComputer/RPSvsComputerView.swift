@@ -19,7 +19,7 @@ struct RPSvsComputerView: View {
                     showRewardedAd: { vsComputerViewModel.showRewardedAd() },
                     isResettingStreak: $vsComputerViewModel.isResettingStreak
                 )
-                .frame(maxHeight: 150)
+                .frame(maxHeight: 120)
                 .onChange(of: vsComputerViewModel.gameModel.player.weaponOfChoice) { newValue in
                     if let choice = newValue {
                         let result = vsComputerViewModel.gameModel.rockPaperScissors(choice, vsComputerViewModel.gameModel.computerPlayer.weaponOfChoice)

@@ -16,8 +16,10 @@ struct ContentView: View {
             Image("rockPaperScissorsBackground")
                 .resizable()
                 .scaledToFill()
-                .clipped()
                 .edgesIgnoringSafeArea(.all)
+                .frame(maxWidth:UIScreen.main.bounds.width,
+                       maxHeight: UIScreen.main.bounds.height - 30
+                )
             
             if vsPersonViewModel.inGame {
                 RPSvsPersonView(vsPersonViewModel: vsPersonViewModel)

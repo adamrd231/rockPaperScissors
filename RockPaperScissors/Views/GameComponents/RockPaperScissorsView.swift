@@ -47,14 +47,11 @@ struct RockPaperScissorsView: View {
                 }
 //                .disabled(computerVM.gameResult != nil)
             }
-            
-
+            Spacer(minLength: 0)
             if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
-                Spacer(minLength: 0)
                 Banner()
             }
         }
-
     }
 }
 
