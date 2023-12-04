@@ -5,15 +5,9 @@ struct RPSvsPersonView: View {
     
     var body: some View {
         VStack {
-            GameHeaderView(
-                returnFunction: { vsPersonViewModel.inGame = false },
-                currentStreak: <#T##Int#>,
-                rightHandFunction: <#T##() -> Void#>,
-                showRewardedAd: <#T##() -> Void#>,
-                isResettingStreak: <#T##Binding<Bool>#>
-            )
+    
             Text("Currently playing")
-            Text(vsPersonViewModel.personPlayer.name)
+
             
         }
     }

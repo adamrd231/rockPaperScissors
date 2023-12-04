@@ -119,9 +119,9 @@
 		660982EA2AFEC98000A7D0D0 /* RockPaperScissors */ = {
 			isa = PBXGroup;
 			children = (
-				66C8BD832B179870009834DB /* GameModel */,
 				660982EB2AFEC98000A7D0D0 /* RockPaperScissorsApp.swift */,
 				660982ED2AFEC98000A7D0D0 /* ContentView.swift */,
+				66C8BD832B179870009834DB /* GameModel */,
 				66C8BD752B0D0E5F009834DB /* Extensions */,
 				660982FA2AFFCAFB00A7D0D0 /* States */,
 				66C8BD6C2B081CF6009834DB /* Info.plist */,

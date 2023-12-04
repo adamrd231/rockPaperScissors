@@ -49,7 +49,6 @@ class VsPersonViewModel: NSObject, ObservableObject {
                 } catch let error {
                     print("Error submitting leaderboard scores: \(error.localizedDescription)")
                 }
-                
             }
         }
     }
@@ -65,8 +64,6 @@ class VsPersonViewModel: NSObject, ObservableObject {
             rootViewController?.present(matchmaker, animated: true)
         }
     }
-    
-   
     
     func goToGameCenter() {
         if let gameCenterURL = URL(string: "gamecenter:")  {
@@ -136,10 +133,8 @@ class VsPersonViewModel: NSObject, ObservableObject {
         })
     }
  
-    
     func playGame(playerChoice: WeaponOfChoice) {
         sendString(playerChoice.description)
-//         = playerChoice
     }
     
     func receivedString(_ message: String) {
@@ -156,11 +151,9 @@ class VsPersonViewModel: NSObject, ObservableObject {
                 break
             }
             inGame = true
-   
         case "restart":
             // Received request from user to re-start the game
             playerWantsToPlayAgain = true
-
         // Handle guesses from the other player
         case WeaponOfChoice.scissors.description:
             print("Scissors")
@@ -177,6 +170,5 @@ class VsPersonViewModel: NSObject, ObservableObject {
         default:
             break
         }
-        
     }
 }
