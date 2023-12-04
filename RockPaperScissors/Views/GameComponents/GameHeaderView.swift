@@ -1,5 +1,22 @@
 import SwiftUI
 
+struct HeaderButton: View {
+    let function: () -> Void
+    let icon: String
+    var body: some View {
+        Button {
+            function()
+        } label: {
+            HStack(spacing: 5) {
+                Image(systemName: icon)
+                    .resizable()
+                    .frame(width: 20, height: 20)
+            }
+            .foregroundColor(Color.theme.text)
+        }
+    }
+}
+
 struct GameHeaderView: View {
     
     var returnFunction: () -> Void
@@ -10,47 +27,39 @@ struct GameHeaderView: View {
     
     var body: some View {
         ZStack {
+            // Background layer
             Color.theme.backgroundColor
-                .edgesIgnoringSafeArea(.all)
-                .fixedSize()
-            HStack {
-                Button {
-                    returnFunction()
-                } label: {
-                    HStack(spacing: 5) {
-                        Image(systemName: "arrowtriangle.backward.fill")
-                            .resizable()
-                            .frame(width: 20, height: 25)
+                .ignoresSafeArea()
+            
+            //
+            VStack {
+                Spacer()
+                HStack(alignment: .center) {
+                    HeaderButton(
+                        function: { returnFunction() },
+                        icon: "arrowtriangle.backward.fill"
+                    )
+                    Spacer()
+                    VStack {
+                        Text("streak")
+                            .font(.caption2)
+                            .textCase(.uppercase)
+                            .fontWeight(.heavy)
+                        Text(currentStreak, format: .number)
+                            .font(.largeTitle)
                     }
                     .foregroundColor(Color.theme.text)
-                }
-     
-                Spacer()
-                VStack {
-                    Text("streak")
-                        .font(.caption)
-                        .textCase(.uppercase)
-                    Text(currentStreak, format: .number)
-                        .font(.largeTitle)
-                        .bold()
-                }
 
-         
-                Spacer()
-                Button {
-                    rightHandFunction()
-                } label: {
-                    HStack {
-                        Image(systemName: "arrow.counterclockwise.circle.fill")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(Color.theme.text)
-                    }
+                    Spacer()
+                    HeaderButton(
+                        function: { rightHandFunction() },
+                        icon: "arrow.counterclockwise.circle.fill"
+                    )
+        //                .disabled(admobVM.rewarded.rewardedAd == nil)
                 }
-    //                .disabled(admobVM.rewarded.rewardedAd == nil)
+                .padding()
             }
         }
-
         .statusBar(hidden: true)
     }
 }
