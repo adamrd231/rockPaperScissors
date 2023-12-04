@@ -16,6 +16,7 @@ struct ContentView: View {
             Image("rockPaperScissorsBackground")
                 .resizable()
                 .scaledToFill()
+                .clipped()
                 .edgesIgnoringSafeArea(.all)
             
             if vsPersonViewModel.inGame {
