@@ -41,8 +41,8 @@ struct RockPaperScissorsView: View {
                 ForEach(choices, id: \.self) { choice in
                     Button {
                         // Play game
-                        computerVM.gameModel.player.weaponOfChoice = choice
-                        //                    computerVM.rockPaperScissors(choice, computerVM.computerChoice)
+                        print("Making choice")
+                        computerVM.makeSelection(choice: choice)
                     } label: {
                         RPSGraphic(playerChoice: choice)
                     }
@@ -54,7 +54,7 @@ struct RockPaperScissorsView: View {
                 }
             }
             
-            if let result = computerVM.gameModel.gameResult {
+            if let result = computerVM.match.result {
                 EndGameView(result: result)
                     .environmentObject(computerVM)
             }

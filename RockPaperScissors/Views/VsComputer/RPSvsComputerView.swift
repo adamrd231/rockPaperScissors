@@ -15,26 +15,18 @@ struct RPSvsComputerView: View {
                 GameHeaderView(
                     returnFunction: {
                         vsComputerViewModel.inGame = false
-                        vsComputerViewModel.gameModel.gameResult = nil
-                        vsComputerViewModel.gameModel.computerPlayer.weaponOfChoice = WeaponOfChoice.allCases[Int.random(in: 0..<3)]
+                        
                     },
-                    currentStreak: vsComputerViewModel.gameModel.streak,
+                    currentStreak: vsComputerViewModel.streak,
+                    gamesPlayed: vsComputerViewModel.matchesPlayed.count,
                     rightHandFunction: { vsComputerViewModel.isResettingStreak.toggle() },
                     showRewardedAd: { vsComputerViewModel.showRewardedAd() },
                     isResettingStreak: $vsComputerViewModel.isResettingStreak
                 )
                 .frame(maxHeight: 120)
-                .onChange(of: vsComputerViewModel.gameModel.player.weaponOfChoice) { newValue in
+                .onChange(of: vsComputerViewModel.match.player1.weaponOfChoice) { newValue in
                     if let choice = newValue {
-                        let result = vsComputerViewModel.gameModel.rockPaperScissors(choice, vsComputerViewModel.gameModel.computerPlayer.weaponOfChoice)
-                        
-                        vsComputerViewModel.gameModel.gameResult = result
-                        
-                        switch result {
-                        case .lose: vsComputerViewModel.gameModel.streak -= 1
-                        case .tie: print("Tie")
-                        case .win: vsComputerViewModel.gameModel.streak += 1
-                        }
+        
                     }
                 }
                 .alert("Watch ad to reset streak?", isPresented: $vsComputerViewModel.isResettingStreak) {
@@ -51,7 +43,6 @@ struct RPSvsComputerView: View {
                 } message: {
                     Text("Are you sure, this can not be un-done?")
                 }
-
                 // MARK: Playing game
                 RockPaperScissorsView(
                     storeManager: storeManager

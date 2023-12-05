@@ -34,7 +34,7 @@ struct EndGameView: View {
 
                 HStack {
                     VStack {
-                        if let playerChoice = computerVM.gameModel.player.weaponOfChoice {
+                        if let playerChoice = computerVM.match.player1.weaponOfChoice {
                             Text("You")
                                 .foregroundColor(Color.theme.text)
                             Image(playerChoice.description)
@@ -43,11 +43,13 @@ struct EndGameView: View {
                         }
                     }
                     VStack {
-                        Text("Comp")
-                            .foregroundColor(Color.theme.text)
-                        Image(computerVM.gameModel.computerPlayer.weaponOfChoice.description)
-                            .resizable()
-                            .frame(width: 75, height: 75)
+                        if let computerChoice = computerVM.match.player2.weaponOfChoice {
+                            Text("Comp")
+                                .foregroundColor(Color.theme.text)
+                            Image(computerChoice.description)
+                                .resizable()
+                                .frame(width: 75, height: 75)
+                        }
                     }
                 }
                 .padding()

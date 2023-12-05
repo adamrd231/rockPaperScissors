@@ -1,33 +1,28 @@
 import SwiftUI
 import Combine
 
-struct RPSvsComputerGameModel {
-    var player = PersonPlayer(id: UUID().uuidString, name: "Player")
-    var computerPlayer = ComputerPlayer(id: UUID().uuidString, name: "Computer")
-    var streak: Int = 0
-    var gameResult: GameResult? = nil
-
-    
-    mutating func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) -> GameResult {
-        switch (playerChoice, computerChoice) {
-        case (.rock, .rock): return .tie
-        case (.rock, .scissors): return  .win
-        case (.rock, .paper): return .lose
-            
-        case (.paper, .rock): return .win
-        case (.paper, .scissors): return .lose
-        case (.paper, .paper): return .tie
-            
-        case (.scissors, .scissors): return .tie
-        case (.scissors, .rock): return .lose
-        case (.scissors, .paper): return .win
-        }
-    }
-}
-
 class VsComputerViewModel: ObservableObject {
     // Game
-    @Published var gameModel = RPSvsComputerGameModel()
+    @Published var match = RPSMatch(
+        id: UUID().uuidString,
+        player1: PlayerModel(id: UUID().uuidString, name: "Player"),
+        player2: PlayerModel(id: UUID().uuidString, name: "Computer", weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
+    )
+    
+    var matchesPlayed:[RPSMatch] = []
+    
+    var matchesWon: Int {
+        return matchesPlayed.filter({ $0.result == .win }).count
+    }
+    
+    var matchesLost: Int {
+        return matchesPlayed.filter({ $0.result == .lose }).count
+    }
+    
+    var streak: Int {
+        return matchesWon - matchesLost
+    }
+
     @Published var isGameOver: Bool = false
     
     @Published var inGame: Bool = false
@@ -53,8 +48,14 @@ class VsComputerViewModel: ObservableObject {
         }
     }
     
+    func makeSelection(choice: WeaponOfChoice) {
+        print("Made selection")
+        match.player1.weaponOfChoice = choice
+        match.playMatch()
+    }
+    
     func updateStreakAfterAdCompletion() {
-        self.gameModel.streak = 0
+        matchesPlayed = []
     }
     
     func loadRewardedAd() {
@@ -66,11 +67,13 @@ class VsComputerViewModel: ObservableObject {
     }
     
     func startNewGame() {
-        gameModel.gameResult = nil
-        gameModel.player.weaponOfChoice = nil
-        gameModel.computerPlayer.weaponOfChoice = WeaponOfChoice.allCases[Int.random(in: 0..<3)]
-
+        matchesPlayed.append(match)
+        let player1 = match.player1
+        let player2 = match.player2
+        match = RPSMatch(
+            id: UUID().uuidString,
+            player1: PlayerModel(id: player1.id, name: player2.name, weaponOfChoice: nil),
+            player2: PlayerModel(id: player2.id, name: player2.name, weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
+        )
     }
-    
-    
 }
