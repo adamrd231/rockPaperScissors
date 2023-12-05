@@ -125,13 +125,11 @@
 			children = (
 				660982EB2AFEC98000A7D0D0 /* RockPaperScissorsApp.swift */,
 				660982ED2AFEC98000A7D0D0 /* ContentView.swift */,
-				66C8BD832B179870009834DB /* GameModel */,
 				66C8BD752B0D0E5F009834DB /* Extensions */,
 				660982FA2AFFCAFB00A7D0D0 /* States */,
 				66952CB02B081A3E00F091F4 /* Advertising */,
 				66952CAA2B07BDD600F091F4 /* Store */,
-				66952CA32B0320E500F091F4 /* ViewModel */,
-				660983022AFFCCB800A7D0D0 /* Views */,
+				660983022AFFCCB800A7D0D0 /* App */,
 				660982EF2AFEC98800A7D0D0 /* Assets.xcassets */,
 				66C8BD6C2B081CF6009834DB /* Info.plist */,
 				660982F12AFEC98900A7D0D0 /* RockPaperScissors.entitlements */,
@@ -159,15 +157,16 @@
 			path = States;
 			sourceTree = "<group>";
 		};
-		660983022AFFCCB800A7D0D0 /* Views */ = {
+		660983022AFFCCB800A7D0D0 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				66C8BD7E2B14E325009834DB /* GameComponents */,
+				66C8BD832B179870009834DB /* Models */,
+				66C8BD7E2B14E325009834DB /* Components */,
 				66952CA92B032B5300F091F4 /* VsPerson */,
 				66952CA82B032B4500F091F4 /* VsComputer */,
 				66952CA72B03286000F091F4 /* LaunchScreen */,
 			);
-			path = Views;
+			path = App;
 			sourceTree = "<group>";
 		};
 		66952CA32B0320E500F091F4 /* ViewModel */ = {
@@ -192,8 +191,8 @@
 		66952CA82B032B4500F091F4 /* VsComputer */ = {
 			isa = PBXGroup;
 			children = (
-				66952CA12B02F47400F091F4 /* VSComputerViewModel.swift */,
 				660983032AFFCCC500A7D0D0 /* RPSvsComputerView.swift */,
+				66C8BD8B2B1FDFAE009834DB /* ViewModel */,
 			);
 			path = VsComputer;
 			sourceTree = "<group>";
@@ -202,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */,
+				66952CA32B0320E500F091F4 /* ViewModel */,
 			);
 			path = VsPerson;
 			sourceTree = "<group>";
@@ -236,7 +236,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		66C8BD7E2B14E325009834DB /* GameComponents */ = {
+		66C8BD7E2B14E325009834DB /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				66C8BD7C2B14E15A009834DB /* GameHeaderView.swift */,
@@ -244,15 +244,23 @@
 				66C8BD872B1E94D9009834DB /* EndGameView.swift */,
 				66C8BD892B1F917C009834DB /* RPSGraphic.swift */,
 			);
-			path = GameComponents;
+			path = Components;
 			sourceTree = "<group>";
 		};
-		66C8BD832B179870009834DB /* GameModel */ = {
+		66C8BD832B179870009834DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				66C8BD852B179881009834DB /* ComputerPlayerModel.swift */,
 			);
-			path = GameModel;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		66C8BD8B2B1FDFAE009834DB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				66952CA12B02F47400F091F4 /* VSComputerViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		AA8CF4245F83CCFE9D636E19 /* Pods */ = {
