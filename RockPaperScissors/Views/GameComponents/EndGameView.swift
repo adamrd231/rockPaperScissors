@@ -5,18 +5,17 @@ struct EndGameView: View {
     let playerOneChoice: WeaponOfChoice
     let playerTwoChoice: WeaponOfChoice
     let buttonFunction: () -> Void
+    let computerRetryFunc: () -> Void?
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
                 .foregroundColor(Color.theme.backgroundColor)
             
-            VStack {
+            VStack(spacing: 25) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 15)
-                        .foregroundColor(Color.theme.blue)
                     Rectangle()
-                        .foregroundColor(Color.theme.blue)
                         .offset(y: 10)
                     Text("You \(result.description)")
                         .padding()
@@ -26,43 +25,68 @@ struct EndGameView: View {
                         .fontWeight(.heavy)
                         .foregroundColor(Color.theme.backgroundColor)
                 }
-
+                .foregroundColor(Color.theme.blue)
+                
                 HStack {
-                    VStack {
+                    VStack(spacing: 5) {
                         Text("You")
-                            .foregroundColor(Color.theme.text)
                         Image(playerOneChoice.description)
                             .resizable()
                             .frame(width: 75, height: 75)
                     }
-                    VStack {
+                    VStack(spacing: 5) {
                         Text("Comp")
-                            .foregroundColor(Color.theme.text)
                         Image(playerTwoChoice.description)
                             .resizable()
                             .frame(width: 75, height: 75)
                     }
                 }
-                .padding()
-                Button {
-                    // Reset game
-                    buttonFunction()
-                } label: {
-                    ZStack {
-                        Capsule()
-                            .foregroundColor(Color.theme.blue)
-                        Text("Play again?")
+                .foregroundColor(Color.theme.text)
+                
+                VStack {
+                    Button {
+                        // Reset game
+                        buttonFunction()
+                    } label: {
+                        ZStack {
+                            Capsule()
+                                .foregroundColor(Color.theme.blue)
+                            HStack {
+                                Image(systemName: "goforward")
+                                Text("Play again")
+                            }
                             .bold()
                             .foregroundColor(Color.theme.backgroundColor)
                             .padding()
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
                     }
-                    .fixedSize()
-                    .padding(.bottom)
+                    if result == .lose {
+                        Button {
+                            computerRetryFunc()
+                        } label: {
+                            ZStack {
+                                Capsule()
+                                    .foregroundColor(Color.theme.orange)
+                                HStack {
+                                    Image(systemName: "play.square")
+                                    Text("Retry")
+                                }
+                                .bold()
+                                .foregroundColor(Color.theme.backgroundColor)
+                                .padding()
+                            }
+                            .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
                 }
+                .padding(.horizontal)
+                .padding(.bottom)
             }
-            .foregroundColor(Color.theme.backgroundColor)
         }
+        .frame(minWidth: 230)
         .fixedSize()
+
     }
 }
 
@@ -72,7 +96,8 @@ struct EndGameView_Previews: PreviewProvider {
             result: .win,
             playerOneChoice: .rock,
             playerTwoChoice: .paper,
-            buttonFunction: {}
+            buttonFunction: {},
+            computerRetryFunc: {}
         )
     }
 }

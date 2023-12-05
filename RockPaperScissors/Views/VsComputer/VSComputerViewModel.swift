@@ -27,8 +27,6 @@ class VsComputerViewModel: ObservableObject {
     }
     @Published var isGameOver: Bool = false
     @Published var inGame: Bool = false
-    // Advertising
-    @Published var isResettingStreak: Bool = false
 
     // AdsViewController
     var rewardedAdVC: AdsViewController

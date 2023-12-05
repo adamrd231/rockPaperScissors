@@ -10,9 +10,8 @@ struct RPSvsComputerView: View {
         vsComputerViewModel.makeSelection(choice: choice)
     }
     
-    func shouldResetStreak() {
-        vsComputerViewModel.isResettingStreak.toggle()
-    }
+    @State var isRequestingAds: Bool = false
+    @State var isShowingExplanation: Bool = false
     
     var body: some View {
         VStack {
@@ -22,14 +21,26 @@ struct RPSvsComputerView: View {
                     vsComputerViewModel.inGame = false
                 },
                 currentStreak: vsComputerViewModel.streak,
-                rightHandFunction: { vsComputerViewModel.isResettingStreak.toggle() },
+                rightHandFunction: { isShowingExplanation.toggle() },
                 showRewardedAd: { vsComputerViewModel.showRewardedAd() }
             )
-            .alert("Watch ad to reset streak?", isPresented: $vsComputerViewModel.isResettingStreak) {
+            .alert("Watch ad to try again?", isPresented: $isRequestingAds) {
                 Button { vsComputerViewModel.showRewardedAd() } label: { Text("Im sure") }
                 Button { } label: { Text("Cancel") }
             } message: {
-                Text("Are you sure, this can not be un-done?")
+                Text("Watching ad will preserve your streak and let you try again.")
+            }
+            .sheet(isPresented: $isShowingExplanation) {
+                VStack {
+                    Text("It's the rock, the paper, the scissors!")
+                        .font(.title)
+                    Text("Pick a option, and the computer will randomly pick one as well. Try to get as many wins in a row as possible!")
+                }
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.75)
+                
+                .multilineTextAlignment(.center)
+                .padding()
             }
 
             ZStack {
@@ -50,7 +61,8 @@ struct RPSvsComputerView: View {
                         result: playerOneResult,
                         playerOneChoice: playerOneChoice,
                         playerTwoChoice: playerTwoChoice,
-                        buttonFunction: { vsComputerViewModel.startNewGame() }
+                        buttonFunction: { vsComputerViewModel.startNewGame() },
+                        computerRetryFunc: { isRequestingAds.toggle() }
                     )
                 }
             }

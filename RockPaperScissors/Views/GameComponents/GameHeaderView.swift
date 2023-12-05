@@ -50,7 +50,7 @@ struct GameHeaderView: View {
                     Spacer()
                     HeaderButton(
                         function: { rightHandFunction() },
-                        icon: "arrow.counterclockwise.circle.fill"
+                        icon: "questionmark.circle.fill"
                     )
                 }
                 .padding()
