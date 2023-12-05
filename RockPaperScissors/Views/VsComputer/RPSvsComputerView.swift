@@ -32,9 +32,13 @@ struct RPSvsComputerView: View {
             }
             .sheet(isPresented: $isShowingExplanation) {
                 VStack {
-                    Text("It's the rock, the paper, the scissors!")
-                        .font(.title)
-                    Text("Pick a option, and the computer will randomly pick one as well. Try to get as many wins in a row as possible!")
+                    VStack {
+                        Text("It's the rock, the paper, the scissors!")
+                            .font(.title)
+                        Text("Pick a option, and the computer will randomly pick one as well. Try to get as many wins in a row as possible!")
+                    }
+                    .frame(height: UIScreen.main.bounds.height * 0.3)
+           
                     Divider()
                     ScrollView {
                         HStack {
