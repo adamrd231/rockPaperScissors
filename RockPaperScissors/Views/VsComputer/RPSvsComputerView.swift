@@ -35,6 +35,23 @@ struct RPSvsComputerView: View {
                     Text("It's the rock, the paper, the scissors!")
                         .font(.title)
                     Text("Pick a option, and the computer will randomly pick one as well. Try to get as many wins in a row as possible!")
+                    Divider()
+                    ScrollView {
+                        HStack {
+                            Text("Record")
+                                .bold()
+                            Spacer()
+                        }
+                        ForEach(Array(zip(vsComputerViewModel.matchesPlayed.indices, vsComputerViewModel.matchesPlayed)), id: \.0) { index, match in
+                            HStack {
+                                Text(index + 1, format: .number)
+                                Text("Vs \(match.player2.name)")
+                                Spacer()
+                                Text(match.player1.result?.description ?? "N/A")
+                            }
+                        }
+                    }
+                    
                 }
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.75)

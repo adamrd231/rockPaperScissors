@@ -86,7 +86,6 @@ struct EndGameView: View {
         }
         .frame(minWidth: 230)
         .fixedSize()
-
     }
 }
 
