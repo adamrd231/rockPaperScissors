@@ -9,7 +9,22 @@ class VsComputerViewModel: ObservableObject {
     )
     
     @Published var matchesPlayed:[RPSMatch] = []
-    @Published var streak: Int = 0
+    var streak: Int {
+        var consecutiveWins = 0
+        // Iterate through the matches played
+        for match in matchesPlayed.reversed() {
+            // Check if player1 wins the match
+            if match.player1.result == .win {
+                consecutiveWins += 1
+            } else if match.player1.result == .tie {
+                
+            } else {
+                // If player1 doesn't win, break the streak
+                break
+            }
+        }
+        return consecutiveWins
+    }
     @Published var isGameOver: Bool = false
     @Published var inGame: Bool = false
     // Advertising

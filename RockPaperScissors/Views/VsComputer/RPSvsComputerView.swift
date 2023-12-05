@@ -16,6 +16,7 @@ struct RPSvsComputerView: View {
     
     var body: some View {
         VStack {
+            // Header with high score, controls
             GameHeaderView(
                 returnFunction: {
                     vsComputerViewModel.inGame = false
@@ -30,8 +31,9 @@ struct RPSvsComputerView: View {
             } message: {
                 Text("Are you sure, this can not be un-done?")
             }
-            // MARK: Playing game
+
             ZStack {
+                // Game View
                 RockPaperScissorsView(
                     chooseWeapon: { choice in
                         returnChoice(choice)
@@ -39,8 +41,8 @@ struct RPSvsComputerView: View {
                     isDisabled: vsComputerViewModel.match.player1.result != nil,
                     storeManager: storeManager
                 )
-                .environmentObject(vsComputerViewModel)
-                // Game result overlay
+
+                // Game Result overlay
                 if let playerOneResult = vsComputerViewModel.match.player1.result,
                    let playerOneChoice = vsComputerViewModel.match.player1.weaponOfChoice,
                    let playerTwoChoice = vsComputerViewModel.match.player2.weaponOfChoice {
