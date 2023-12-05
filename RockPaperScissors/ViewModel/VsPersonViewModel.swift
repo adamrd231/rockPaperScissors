@@ -22,6 +22,8 @@ class VsPersonViewModel: NSObject, ObservableObject {
     @Published var isRoundOver = false
     @Published var isShowingAlert = false
     
+    @Published var matchesPlayed: [RPSMatch] = []
+    
     // Game controls
     @Published var lastReceivedData: WeaponOfChoice? = nil
     @Published var playAgain: Bool = false

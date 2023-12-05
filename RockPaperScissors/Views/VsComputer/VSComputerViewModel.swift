@@ -9,7 +9,7 @@ class VsComputerViewModel: ObservableObject {
         player2: PlayerModel(id: UUID().uuidString, name: "Computer", weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
     )
     
-    var matchesPlayed:[RPSMatch] = []
+    @Published var matchesPlayed:[RPSMatch] = []
     
     var matchesWon: Int {
         return matchesPlayed.filter({ $0.result == .win }).count
@@ -44,7 +44,7 @@ class VsComputerViewModel: ObservableObject {
         
         rewardedAdVC.adCompletionHandler = { [weak self] in
             print("Updating streak")
-            self?.updateStreakAfterAdCompletion()
+            self?.matchesPlayed = []
         }
     }
     
@@ -55,7 +55,7 @@ class VsComputerViewModel: ObservableObject {
     }
     
     func updateStreakAfterAdCompletion() {
-        matchesPlayed = []
+        
     }
     
     func loadRewardedAd() {

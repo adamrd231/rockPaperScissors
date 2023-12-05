@@ -22,11 +22,14 @@ struct ContentView: View {
                 )
             
             if vsPersonViewModel.inGame {
-                RPSvsPersonView(vsPersonViewModel: vsPersonViewModel)
+                RPSvsPersonView(
+                    vsPersonViewModel: vsPersonViewModel,
+                    adsVM: adsVM,
+                    storeManager: storeManager
+                )
             } else if vsComputerViewModel.inGame {
                 RPSvsComputerView(
                     vsComputerViewModel: vsComputerViewModel,
-                    vsPersonViewModel: vsPersonViewModel ,
                     adsVM: adsVM,
                     storeManager: storeManager
                 )

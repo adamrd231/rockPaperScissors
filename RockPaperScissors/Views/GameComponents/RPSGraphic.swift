@@ -1,10 +1,3 @@
-//
-//  RPSGraphic.swift
-//  RockPaperScissors
-//
-//  Created by Adam Reed on 12/5/23.
-//
-
 import SwiftUI
 
 struct RPSGraphic: View {

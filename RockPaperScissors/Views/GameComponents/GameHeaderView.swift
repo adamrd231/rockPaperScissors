@@ -18,20 +18,17 @@ struct HeaderButton: View {
 }
 
 struct GameHeaderView: View {
-    
     var returnFunction: () -> Void
     var currentStreak: Int
     var rightHandFunction: () -> Void
     var showRewardedAd: () -> Void
-    @Binding var isResettingStreak: Bool
     
     var body: some View {
         ZStack {
             // Background layer
             Color.theme.backgroundColor
                 .ignoresSafeArea()
-            
-            //
+
             VStack {
                 Spacer()
                 HStack(alignment: .center) {
@@ -55,12 +52,12 @@ struct GameHeaderView: View {
                         function: { rightHandFunction() },
                         icon: "arrow.counterclockwise.circle.fill"
                     )
-        //                .disabled(admobVM.rewarded.rewardedAd == nil)
                 }
                 .padding()
             }
         }
         .statusBar(hidden: true)
+        .frame(maxHeight: 120)
     }
 }
 
@@ -70,8 +67,7 @@ struct GameHeaderView_Previews: PreviewProvider {
             returnFunction: { print("") },
             currentStreak: 1,
             rightHandFunction: { print("") },
-            showRewardedAd: {},
-            isResettingStreak: .constant(false)
+            showRewardedAd: {}
         )
     }
 }
