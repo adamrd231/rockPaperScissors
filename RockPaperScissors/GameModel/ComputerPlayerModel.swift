@@ -4,21 +4,20 @@ struct PlayerModel {
     var id: String
     var name: String
     var weaponOfChoice: WeaponOfChoice? = nil
+    var result: GameResult?
 }
 
 struct RPSMatch {
     var id: String
     var player1: PlayerModel
     var player2: PlayerModel
-    var result: GameResult?
     
-    mutating func playMatch(wop: WeaponOfChoice) -> GameResult? {
+    mutating func playMatch(wop: WeaponOfChoice) {
         player1.weaponOfChoice = wop
         if let player2Choice = player2.weaponOfChoice {
-            result = rockPaperScissors(wop, player2Choice)
-            return result
+            player1.result = rockPaperScissors(wop, player2Choice)
+            player2.result = rockPaperScissors(player2Choice, wop)
         }
-        return nil
     }
     
     func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) -> GameResult {

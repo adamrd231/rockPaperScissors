@@ -1,5 +1,4 @@
 import SwiftUI
-import Combine
 
 class VsComputerViewModel: ObservableObject {
     // Game
@@ -10,17 +9,12 @@ class VsComputerViewModel: ObservableObject {
     )
     
     @Published var matchesPlayed:[RPSMatch] = []
-    
     @Published var streak: Int = 0
-
     @Published var isGameOver: Bool = false
-    
     @Published var inGame: Bool = false
     // Advertising
     @Published var isResettingStreak: Bool = false
-    
-    private var cancellable = Set<AnyCancellable>()
-    
+
     // AdsViewController
     var rewardedAdVC: AdsViewController
     
@@ -31,26 +25,14 @@ class VsComputerViewModel: ObservableObject {
     
     init() {
         rewardedAdVC = AdsViewController()
-        
+        // This runs when rewarded advertising is completed
         rewardedAdVC.adCompletionHandler = { [weak self] in
-            print("Updating streak")
-            self?.matchesPlayed = []
+            self?.retryCurrentGame()
         }
     }
     
     func makeSelection(choice: WeaponOfChoice) {
-        let result = match.playMatch(wop: choice)
-        switch result {
-            case .win: streak += 1
-            case .tie: print("Good luck!")
-            case .lose: streak = 0
-            default: print("Default I guess")
-        }
-        matchesPlayed.append(match)
-    }
-    
-    func updateStreakAfterAdCompletion() {
-        matchesPlayed = []
+        match.playMatch(wop: choice)
     }
     
     func loadRewardedAd() {
@@ -62,6 +44,7 @@ class VsComputerViewModel: ObservableObject {
     }
     
     func startNewGame() {
+        matchesPlayed.append(match)
         let player1 = match.player1
         let player2 = match.player2
         match = RPSMatch(
@@ -69,5 +52,16 @@ class VsComputerViewModel: ObservableObject {
             player1: PlayerModel(id: player1.id, name: player2.name, weaponOfChoice: nil),
             player2: PlayerModel(id: player2.id, name: player2.name, weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
         )
+    }
+    
+    func retryCurrentGame() {
+        let currentMatchID = match.id
+        let player1 = match.player1
+        let player2 = match.player2
+        match = RPSMatch(
+            id: currentMatchID,
+            player1: PlayerModel(id: player1.id, name: player2.name, weaponOfChoice: nil),
+            player2: PlayerModel(id: player2.id, name: player2.name, weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
+            )
     }
 }

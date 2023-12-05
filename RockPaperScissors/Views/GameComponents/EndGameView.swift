@@ -1,15 +1,10 @@
-//
-//  EndGameView.swift
-//  RockPaperScissors
-//
-//  Created by Adam Reed on 12/4/23.
-//
-
 import SwiftUI
 
 struct EndGameView: View {
     let result: GameResult
-    @EnvironmentObject var computerVM: VsComputerViewModel
+    let playerOneChoice: WeaponOfChoice
+    let playerTwoChoice: WeaponOfChoice
+    let buttonFunction: () -> Void
     
     var body: some View {
         ZStack {
@@ -34,28 +29,24 @@ struct EndGameView: View {
 
                 HStack {
                     VStack {
-                        if let playerChoice = computerVM.match.player1.weaponOfChoice {
-                            Text("You")
-                                .foregroundColor(Color.theme.text)
-                            Image(playerChoice.description)
-                                .resizable()
-                                .frame(width: 75, height: 75)
-                        }
+                        Text("You")
+                            .foregroundColor(Color.theme.text)
+                        Image(playerOneChoice.description)
+                            .resizable()
+                            .frame(width: 75, height: 75)
                     }
                     VStack {
-                        if let computerChoice = computerVM.match.player2.weaponOfChoice {
-                            Text("Comp")
-                                .foregroundColor(Color.theme.text)
-                            Image(computerChoice.description)
-                                .resizable()
-                                .frame(width: 75, height: 75)
-                        }
+                        Text("Comp")
+                            .foregroundColor(Color.theme.text)
+                        Image(playerTwoChoice.description)
+                            .resizable()
+                            .frame(width: 75, height: 75)
                     }
                 }
                 .padding()
                 Button {
                     // Reset game
-                    computerVM.startNewGame()
+                    buttonFunction()
                 } label: {
                     ZStack {
                         Capsule()
@@ -77,7 +68,11 @@ struct EndGameView: View {
 
 struct EndGameView_Previews: PreviewProvider {
     static var previews: some View {
-        EndGameView(result: .tie)
-            .environmentObject(VsComputerViewModel())
+        EndGameView(
+            result: .win,
+            playerOneChoice: .rock,
+            playerTwoChoice: .paper,
+            buttonFunction: {}
+        )
     }
 }

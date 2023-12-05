@@ -36,14 +36,20 @@ struct RPSvsComputerView: View {
                     chooseWeapon: { choice in
                         returnChoice(choice)
                     },
-                    isDisabled: vsComputerViewModel.match.result != nil,
+                    isDisabled: vsComputerViewModel.match.player1.result != nil,
                     storeManager: storeManager
                 )
                 .environmentObject(vsComputerViewModel)
                 // Game result overlay
-                if let result = vsComputerViewModel.match.result {
-                    EndGameView(result: result)
-                        .environmentObject(vsComputerViewModel)
+                if let playerOneResult = vsComputerViewModel.match.player1.result,
+                   let playerOneChoice = vsComputerViewModel.match.player1.weaponOfChoice,
+                   let playerTwoChoice = vsComputerViewModel.match.player2.weaponOfChoice {
+                    EndGameView(
+                        result: playerOneResult,
+                        playerOneChoice: playerOneChoice,
+                        playerTwoChoice: playerTwoChoice,
+                        buttonFunction: { vsComputerViewModel.startNewGame() }
+                    )
                 }
             }
         }
