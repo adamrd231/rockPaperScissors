@@ -51,7 +51,7 @@ class VsComputerViewModel: ObservableObject {
     func makeSelection(choice: WeaponOfChoice) {
         print("Made selection")
         match.player1.weaponOfChoice = choice
-        match.playMatch()
+        match.playMatch(wop: choice)
     }
     
     func updateStreakAfterAdCompletion() {

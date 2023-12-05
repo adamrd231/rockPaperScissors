@@ -21,7 +21,6 @@ struct GameHeaderView: View {
     
     var returnFunction: () -> Void
     var currentStreak: Int
-    var gamesPlayed: Int
     var rightHandFunction: () -> Void
     var showRewardedAd: () -> Void
     @Binding var isResettingStreak: Bool
@@ -48,10 +47,6 @@ struct GameHeaderView: View {
                             .fontWeight(.heavy)
                         Text(currentStreak, format: .number)
                             .font(.largeTitle)
-                        Text("games played: \(gamesPlayed)")
-                            .font(.caption2)
-                            .textCase(.uppercase)
-                            .fontWeight(.heavy)
                     }
                     .foregroundColor(Color.theme.text)
 
@@ -74,7 +69,6 @@ struct GameHeaderView_Previews: PreviewProvider {
         GameHeaderView(
             returnFunction: { print("") },
             currentStreak: 1,
-            gamesPlayed: 1,
             rightHandFunction: { print("") },
             showRewardedAd: {},
             isResettingStreak: .constant(false)

@@ -1,13 +1,16 @@
 import SwiftUI
 import GameKit
 
-
-
 struct RPSvsComputerView: View {
     @ObservedObject var vsComputerViewModel: VsComputerViewModel
     @ObservedObject var vsPersonViewModel: VsPersonViewModel
     @ObservedObject var adsVM: AdsViewModel
     @ObservedObject var storeManager: StoreManager
+    
+    func returnChoice(_ choice: WeaponOfChoice) {
+        print("Chose: \(choice)")
+        vsComputerViewModel.makeSelection(choice: choice)
+    }
     
     var body: some View {
         GeometryReader { geo in
@@ -18,17 +21,11 @@ struct RPSvsComputerView: View {
                         
                     },
                     currentStreak: vsComputerViewModel.streak,
-                    gamesPlayed: vsComputerViewModel.matchesPlayed.count,
                     rightHandFunction: { vsComputerViewModel.isResettingStreak.toggle() },
                     showRewardedAd: { vsComputerViewModel.showRewardedAd() },
                     isResettingStreak: $vsComputerViewModel.isResettingStreak
                 )
                 .frame(maxHeight: 120)
-                .onChange(of: vsComputerViewModel.match.player1.weaponOfChoice) { newValue in
-                    if let choice = newValue {
-        
-                    }
-                }
                 .alert("Watch ad to reset streak?", isPresented: $vsComputerViewModel.isResettingStreak) {
                     Button {
                         vsComputerViewModel.showRewardedAd()
@@ -44,10 +41,22 @@ struct RPSvsComputerView: View {
                     Text("Are you sure, this can not be un-done?")
                 }
                 // MARK: Playing game
-                RockPaperScissorsView(
-                    storeManager: storeManager
-                )
-                .environmentObject(vsComputerViewModel)
+                ZStack {
+                    RockPaperScissorsView(
+                        chooseWeapon: { choice in
+                            returnChoice(choice)
+                        },
+                        isDisabled: vsComputerViewModel.match.result != nil,
+                        storeManager: storeManager
+                    )
+                    .environmentObject(vsComputerViewModel)
+                    // Game result overlay
+                    if let result = vsComputerViewModel.match.result {
+                        EndGameView(result: result)
+                            .environmentObject(vsComputerViewModel)
+                    }
+                }
+
             }
             .onAppear {
                 vsComputerViewModel.loadRewardedAd()

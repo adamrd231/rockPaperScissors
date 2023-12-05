@@ -1,37 +1,12 @@
-//
-//  RockPaperScissorsView.swift
-//  RockPaperScissors
-//
-//  Created by Adam Reed on 11/27/23.
-//
 import SwiftUI
 
-struct RPSGraphic: View {
-    let playerChoice: WeaponOfChoice
-    
-    var body: some View {
-        ZStack {
-            Capsule()
-                .foregroundColor(Color.theme.backgroundColor)
-            VStack(spacing: 0) {
-                Image(playerChoice.description)
-                    .resizable()
-                    .frame(maxWidth: 50, maxHeight: 50)
-                    .font(.largeTitle)
-                Text(playerChoice.description)
-                    .foregroundColor(Color.theme.text)
-            }
-            .padding(25)
-            .padding(.horizontal, 25)
-        }
-        .fixedSize()
-    }
-}
-
 struct RockPaperScissorsView: View {
-    
+    // Static choices
     let choices:[WeaponOfChoice] = [.rock, .paper, .scissors]
-    @EnvironmentObject var computerVM: VsComputerViewModel
+    // Function for selecting choice left vague so either vs computer or vs person can use this component.
+    let chooseWeapon: (WeaponOfChoice) -> Void
+    let isDisabled: Bool
+    // Needed to check if should be playing advertising
     let storeManager: StoreManager
     
     var body: some View {
@@ -40,25 +15,17 @@ struct RockPaperScissorsView: View {
                 Spacer(minLength: 0)
                 ForEach(choices, id: \.self) { choice in
                     Button {
-                        // Play game
-                        print("Making choice")
-                        computerVM.makeSelection(choice: choice)
+                        chooseWeapon(choice)
                     } label: {
                         RPSGraphic(playerChoice: choice)
                     }
-                    //                .disabled(computerVM.gameResult != nil)
+                    .disabled(isDisabled)
                 }
                 Spacer(minLength: 0)
                 if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
                     Banner()
                 }
             }
-            
-            if let result = computerVM.match.result {
-                EndGameView(result: result)
-                    .environmentObject(computerVM)
-            }
-
         }
     }
 }
@@ -66,6 +33,8 @@ struct RockPaperScissorsView: View {
 struct RockPaperScissorsView_Previews: PreviewProvider {
     static var previews: some View {
         RockPaperScissorsView(
+            chooseWeapon: { _ in },
+            isDisabled: true,
             storeManager: StoreManager()
         )
         .environmentObject(VsComputerViewModel())

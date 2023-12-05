@@ -72,7 +72,6 @@ struct EndGameView: View {
             .foregroundColor(Color.theme.backgroundColor)
         }
         .fixedSize()
-        .offset(y: -50)
     }
 }
 

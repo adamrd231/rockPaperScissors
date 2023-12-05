@@ -9,15 +9,23 @@ class VsPersonViewModel: NSObject, ObservableObject {
     @Published var authenticationState = PlayerAuthState.unauthenticated
     var localPlayer = GKLocalPlayer.local
     var playerUUIDKey = UUID().uuidString
-    // Game controls
-    @Published var lastReceivedData: WeaponOfChoice? = nil
-    @Published var playAgain: Bool = false
-    @Published var playerWantsToPlayAgain: Bool = false
-    // Game Center
+
+    // RPS Game
+    @Published var gameMatch = RPSMatch(
+        id: UUID().uuidString,
+        player1: PlayerModel(id: UUID().uuidString, name: ""),
+        player2: PlayerModel(id: UUID().uuidString, name: "")
+    )
+
     @Published var inGame = false
     @Published var isGameOver = false
     @Published var isRoundOver = false
     @Published var isShowingAlert = false
+    
+    // Game controls
+    @Published var lastReceivedData: WeaponOfChoice? = nil
+    @Published var playAgain: Bool = false
+    @Published var playerWantsToPlayAgain: Bool = false
     
     // Leaderboard
     @Published var playersList: [GKPlayer] = []

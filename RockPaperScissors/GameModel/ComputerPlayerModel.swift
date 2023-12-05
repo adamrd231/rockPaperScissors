@@ -12,11 +12,11 @@ struct RPSMatch {
     var player2: PlayerModel
     var result: GameResult? = nil
     
-    mutating func playMatch() {
+    mutating func playMatch(wop: WeaponOfChoice) {
         print("play match")
-        if let player1Choice = player1.weaponOfChoice,
-           let player2Choice = player2.weaponOfChoice {
-            result = rockPaperScissors(player1Choice, player2Choice)
+        player1.weaponOfChoice = wop
+        if let player2Choice = player2.weaponOfChoice {
+            result = rockPaperScissors(wop, player2Choice)
         }
     }
     
