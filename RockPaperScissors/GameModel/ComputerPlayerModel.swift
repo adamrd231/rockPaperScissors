@@ -10,18 +10,18 @@ struct RPSMatch {
     var id: String
     var player1: PlayerModel
     var player2: PlayerModel
-    var result: GameResult? = nil
+    var result: GameResult?
     
-    mutating func playMatch(wop: WeaponOfChoice) {
-        print("play match")
+    mutating func playMatch(wop: WeaponOfChoice) -> GameResult? {
         player1.weaponOfChoice = wop
         if let player2Choice = player2.weaponOfChoice {
             result = rockPaperScissors(wop, player2Choice)
+            return result
         }
+        return nil
     }
     
     func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) -> GameResult {
-        print("You chocse \(playerChoice.description) computer: \(computerChoice.description)")
         switch (playerChoice, computerChoice) {
             case (.rock, .rock): return .tie
             case (.rock, .scissors): return  .win

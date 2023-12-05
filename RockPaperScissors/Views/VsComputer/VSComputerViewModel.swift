@@ -11,17 +11,7 @@ class VsComputerViewModel: ObservableObject {
     
     @Published var matchesPlayed:[RPSMatch] = []
     
-    var matchesWon: Int {
-        return matchesPlayed.filter({ $0.result == .win }).count
-    }
-    
-    var matchesLost: Int {
-        return matchesPlayed.filter({ $0.result == .lose }).count
-    }
-    
-    var streak: Int {
-        return matchesWon - matchesLost
-    }
+    @Published var streak: Int = 0
 
     @Published var isGameOver: Bool = false
     
@@ -49,13 +39,18 @@ class VsComputerViewModel: ObservableObject {
     }
     
     func makeSelection(choice: WeaponOfChoice) {
-        print("Made selection")
-        match.player1.weaponOfChoice = choice
-        match.playMatch(wop: choice)
+        let result = match.playMatch(wop: choice)
+        switch result {
+            case .win: streak += 1
+            case .tie: print("Good luck!")
+            case .lose: streak = 0
+            default: print("Default I guess")
+        }
+        matchesPlayed.append(match)
     }
     
     func updateStreakAfterAdCompletion() {
-        
+        matchesPlayed = []
     }
     
     func loadRewardedAd() {
@@ -67,7 +62,6 @@ class VsComputerViewModel: ObservableObject {
     }
     
     func startNewGame() {
-        matchesPlayed.append(match)
         let player1 = match.player1
         let player2 = match.player2
         match = RPSMatch(
