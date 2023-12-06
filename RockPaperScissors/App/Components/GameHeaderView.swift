@@ -18,11 +18,12 @@ struct HeaderButton: View {
 }
 
 struct GameHeaderView: View {
+    var title: String
     var returnFunction: () -> Void
     var currentStreak: Int
     var rightHandFunction: () -> Void
     var showRewardedAd: () -> Void
-    
+
     var body: some View {
         ZStack {
             // Background layer
@@ -38,7 +39,7 @@ struct GameHeaderView: View {
                     )
                     Spacer()
                     VStack {
-                        Text("streak")
+                        Text(title)
                             .font(.caption2)
                             .textCase(.uppercase)
                             .fontWeight(.heavy)
@@ -64,6 +65,7 @@ struct GameHeaderView: View {
 struct GameHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         GameHeaderView(
+            title: "Header",
             returnFunction: { print("") },
             currentStreak: 1,
             rightHandFunction: { print("") },

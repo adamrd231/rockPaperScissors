@@ -14,9 +14,10 @@ struct RPSvsComputerView: View {
     @State var isShowingExplanation: Bool = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             // Header with high score, controls
             GameHeaderView(
+                title: "Streak",
                 returnFunction: {
                     vsComputerViewModel.inGame = false
                 },
@@ -31,39 +32,22 @@ struct RPSvsComputerView: View {
                 Text("Watching ad will preserve your streak and let you try again.")
             }
             .sheet(isPresented: $isShowingExplanation) {
-                VStack {
-                    VStack {
-                        Text("It's the rock, the paper, the scissors!")
-                            .font(.title)
-                        Text("Pick a option, and the computer will randomly pick one as well. Try to get as many wins in a row as possible!")
-                    }
-                    .frame(height: UIScreen.main.bounds.height * 0.3)
-           
-                    Divider()
-                    ScrollView {
-                        HStack {
-                            Text("Record")
-                                .bold()
-                            Spacer()
-                        }
-                        ForEach(Array(zip(vsComputerViewModel.matchesPlayed.indices, vsComputerViewModel.matchesPlayed)), id: \.0) { index, match in
-                            HStack {
-                                Text(index + 1, format: .number)
-                                Text("Vs \(match.player2.name)")
-                                Spacer()
-                                Text(match.player1.result?.description ?? "N/A")
-                            }
-                        }
-                    }
-                    
-                }
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.75)
-                
-                .multilineTextAlignment(.center)
-                .padding()
+                ExplanationView(
+                    matchesPlayed: vsComputerViewModel.matchesPlayed
+                )
             }
-
+            
+            // opponent player bio
+            PlayerBioRowView(
+                player1: PlayerBio(
+                    name: vsComputerViewModel.match.player1.name, image: "",
+                    count: vsComputerViewModel.matchesPlayed.filter({ $0.player1.result == .win }).count
+                ),
+                player2: PlayerBio(
+                    name: vsComputerViewModel.match.player2.name, image: "",
+                    count: vsComputerViewModel.matchesPlayed.filter({ $0.player2.result == .win }).count
+                )
+            )
             ZStack {
                 // Game View
                 RockPaperScissorsView(
@@ -82,10 +66,14 @@ struct RPSvsComputerView: View {
                         result: playerOneResult,
                         playerOneChoice: playerOneChoice,
                         playerTwoChoice: playerTwoChoice,
+                        
                         buttonFunction: { vsComputerViewModel.startNewGame() },
                         computerRetryFunc: { isRequestingAds.toggle() }
                     )
                 }
+            }
+            if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
+                Banner()
             }
         }
         .onAppear {

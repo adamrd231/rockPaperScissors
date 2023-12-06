@@ -6,8 +6,16 @@ struct RockPaperScissorsView: View {
     // Function for selecting choice left vague so either vs computer or vs person can use this component.
     let chooseWeapon: (WeaponOfChoice) -> Void
     let isDisabled: Bool
+    let isSelected: WeaponOfChoice?
     // Needed to check if should be playing advertising
     let storeManager: StoreManager
+    
+    init(chooseWeapon: @escaping (WeaponOfChoice) -> Void, isDisabled: Bool, isSelected: WeaponOfChoice? = nil, storeManager: StoreManager) {
+        self.chooseWeapon = chooseWeapon
+        self.isDisabled = isDisabled
+        self.isSelected = isSelected
+        self.storeManager = storeManager
+    }
     
     var body: some View {
         ZStack {
@@ -17,14 +25,14 @@ struct RockPaperScissorsView: View {
                     Button {
                         chooseWeapon(choice)
                     } label: {
-                        RPSGraphic(playerChoice: choice)
+                        RPSGraphic(
+                            playerChoice: choice,
+                            isSelected: isSelected == choice ? true : false
+                        )
                     }
                     .disabled(isDisabled)
                 }
                 Spacer(minLength: 0)
-                if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
-                    Banner()
-                }
             }
         }
     }
@@ -35,6 +43,7 @@ struct RockPaperScissorsView_Previews: PreviewProvider {
         RockPaperScissorsView(
             chooseWeapon: { _ in },
             isDisabled: true,
+            isSelected: .rock,
             storeManager: StoreManager()
         )
         .environmentObject(VsComputerViewModel())

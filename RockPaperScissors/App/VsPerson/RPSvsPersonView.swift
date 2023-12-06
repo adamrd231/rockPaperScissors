@@ -44,6 +44,7 @@ struct RPSvsPersonView: View {
     var body: some View {
         VStack {
             GameHeaderView(
+                title: "Games",
                 returnFunction: {
                     isBackingOut.toggle()
                 },
@@ -57,13 +58,23 @@ struct RPSvsPersonView: View {
             } message: {
                 Text("You will forfeit the game, this can not be un-done")
             }
-            Text(vsPersonViewModel.gameMatch.player2.weaponOfChoice == nil ? "User is selecting" : "User is waiting")
-                .foregroundColor(Color.theme.backgroundColor)
-
+            
+            PlayerBioRowView(
+                player1: PlayerBio(
+                    name: vsPersonViewModel.localPlayer.displayName, image: "",
+                    count: vsPersonViewModel.matchesPlayed.filter({ $0.player1.result == .win }).count
+                ),
+                player2: PlayerBio(
+                    name: vsPersonViewModel.otherPlayer?.displayName ?? "N/A", image: "",
+                    count: vsPersonViewModel.matchesPlayed.filter({ $0.player2.result == .win }).count
+                )
+            )
+            
             ZStack {
                 RockPaperScissorsView(
                     chooseWeapon: self.localPlayerChoseWOP,
                     isDisabled: vsPersonViewModel.gameMatch.player1.result != nil,
+                    isSelected: vsPersonViewModel.gameMatch.player1.weaponOfChoice,
                     storeManager: storeManager
                )
                 .onChange(of: vsPersonViewModel.gameMatch.player1.weaponOfChoice) { newValue in
@@ -77,8 +88,6 @@ struct RPSvsPersonView: View {
                    let playerOneChoice = vsPersonViewModel.gameMatch.player1.weaponOfChoice,
                    let playerTwoChoice = vsPersonViewModel.gameMatch.player2.weaponOfChoice {
                     VStack {
-                        Text(vsPersonViewModel.playerWantsToPlayAgain == false ? "waiting for user" : "user wants to play again")
-                            .foregroundColor(Color.theme.backgroundColor)
                         EndGameView(
                             result: result,
                             playerOneChoice: playerOneChoice,
@@ -100,6 +109,9 @@ struct RPSvsPersonView: View {
                     }
                    
                 }
+            }
+            if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
+                Banner()
             }
         }
     }

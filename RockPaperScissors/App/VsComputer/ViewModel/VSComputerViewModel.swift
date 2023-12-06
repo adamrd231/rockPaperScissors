@@ -62,7 +62,7 @@ class VsComputerViewModel: ObservableObject {
         let player2 = match.player2
         match = RPSMatch(
             id: UUID().uuidString,
-            player1: PlayerModel(id: player1.id, name: player2.name, weaponOfChoice: nil),
+            player1: PlayerModel(id: player1.id, name: player1.name, weaponOfChoice: nil),
             player2: PlayerModel(id: player2.id, name: player2.name, weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
         )
     }
