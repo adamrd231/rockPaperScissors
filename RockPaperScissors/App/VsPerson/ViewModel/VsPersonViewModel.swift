@@ -168,10 +168,13 @@ class VsPersonViewModel: NSObject, ObservableObject {
         // Handle guesses from the other player
         case WeaponOfChoice.scissors.description:
             print("Scissors")
+            gameMatch.player2.weaponOfChoice = .scissors
         case WeaponOfChoice.rock.description:
             print("Rock")
+            gameMatch.player2.weaponOfChoice = .rock
         case WeaponOfChoice.paper.description:
             print("Paper")
+            gameMatch.player2.weaponOfChoice = .paper
         case "strData:":
             break
             
