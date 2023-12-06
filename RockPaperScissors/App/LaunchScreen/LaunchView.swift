@@ -13,22 +13,25 @@ struct LaunchView: View {
                 .frame(width: 150, height: 200)
                 .padding()
 
-            LaunchButtonView(
+            BasicMainButton(
                 title: "Play Computer",
                 icon: "play.fill",
+                background: Color.theme.backgroundColor,
                 function: { vsComputerViewModel.inGame = true }
             )
-            LaunchButtonView(
+            BasicMainButton(
                 title: "Matchmaking",
                 icon: "play",
+                background: Color.theme.backgroundColor,
                 function: { vsPersonViewModel.startMatchmaking() }
             )
             .disabled(vsPersonViewModel.authenticationState != .authenticated || vsPersonViewModel.inGame)
             .opacity(vsPersonViewModel.authenticationState != .authenticated ? 0.66 : 1.0)
             
-            LaunchButtonView(
+            BasicMainButton(
                 title: "Leaderboard",
                 icon: "star.leadinghalf.filled",
+                background: Color.theme.backgroundColor,
                 function: { vsPersonViewModel.showLeaderboards() }
             )
             .disabled(vsPersonViewModel.authenticationState != .authenticated || vsPersonViewModel.inGame)
