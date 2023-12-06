@@ -15,7 +15,7 @@ struct RPSGraphic: View {
                 Text(playerChoice.description)
                     .foregroundColor(Color.theme.text)
             }
-            .padding(25)
+            .padding()
             .padding(.horizontal, 25)
         }
         .fixedSize()

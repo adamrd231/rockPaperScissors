@@ -16,14 +16,12 @@ class VsPersonViewModel: NSObject, ObservableObject {
         player1: PlayerModel(id: UUID().uuidString, name: ""),
         player2: PlayerModel(id: UUID().uuidString, name: "")
     )
-
     @Published var inGame = false
     @Published var isGameOver = false
     @Published var isRoundOver = false
     @Published var isShowingAlert = false
     
     @Published var matchesPlayed: [RPSMatch] = []
-
     
     // Game controls
     @Published var lastReceivedData: WeaponOfChoice? = nil
@@ -37,7 +35,6 @@ class VsPersonViewModel: NSObject, ObservableObject {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         return windowScene?.windows.first?.rootViewController
     }
-    
     
     func showLeaderboards() {
         let gameCenterVC = GKGameCenterViewController(state: .leaderboards)

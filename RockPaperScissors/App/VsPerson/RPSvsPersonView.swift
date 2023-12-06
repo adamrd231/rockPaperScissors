@@ -83,6 +83,7 @@ struct RPSvsPersonView: View {
                             result: result,
                             playerOneChoice: playerOneChoice,
                             playerTwoChoice: playerTwoChoice,
+                            playerStatus: vsPersonViewModel.playerWantsToPlayAgain,
                             buttonFunction: {
                                 vsPersonViewModel.playAgain = true
                                 vsPersonViewModel.sendString("restart")

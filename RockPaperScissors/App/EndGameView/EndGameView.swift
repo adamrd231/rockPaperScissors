@@ -4,8 +4,24 @@ struct EndGameView: View {
     let result: GameResult
     let playerOneChoice: WeaponOfChoice
     let playerTwoChoice: WeaponOfChoice
+    let playerStatus: Bool?
     let buttonFunction: () -> Void
-    let computerRetryFunc: () -> Void?
+    let computerRetryFunc: () -> Void
+    
+    init(
+        result: GameResult,
+        playerOneChoice: WeaponOfChoice,
+        playerTwoChoice: WeaponOfChoice,
+        playerStatus: Bool? = nil,
+        buttonFunction: @escaping () -> Void,
+        computerRetryFunc: @escaping () -> Void ) {
+            self.result = result
+            self.playerOneChoice = playerOneChoice
+            self.playerTwoChoice = playerTwoChoice
+            self.playerStatus = playerStatus
+            self.buttonFunction = buttonFunction
+            self.computerRetryFunc = computerRetryFunc
+    }
     
     var body: some View {
         ZStack {
@@ -27,15 +43,28 @@ struct EndGameView: View {
                 }
                 .foregroundColor(Color.theme.blue)
                 
-                HStack {
+                HStack(spacing: 0) {
                     RPSGraphic(playerChoice: playerOneChoice)
-                    Text("VS")
-                        .foregroundColor(Color.theme.text)
-                        .font(.callout)
-                        .fontWeight(.heavy)
+                    switch result {
+                        case .win:
+                        switch playerOneChoice {
+                        case .rock: Text("crushes")
+                        case .paper: Text("covers")
+                        case .scissors: Text("cuts")
+                        }
+                        case .lose:
+                        switch playerOneChoice {
+                        case .rock: Text("covered")
+                        case .paper: Text("split")
+                        case .scissors: Text("crushed")
+                        }
+                        case .tie: Text("push")
+                    }
                     RPSGraphic(playerChoice: playerTwoChoice)
                 }
                 .foregroundColor(Color.theme.text)
+                .font(.callout)
+                .fontWeight(.heavy)
                 
                 VStack {
                     BasicMainButton(
@@ -55,6 +84,10 @@ struct EndGameView: View {
                             function: {  computerRetryFunc() }
                         )
                     }
+                    
+                    if let ready = playerStatus {
+                        Text(ready ? "Other player ready" : "Waiting for other player")
+                    }
                 }
                 .padding(.horizontal)
                 .padding(.bottom)
@@ -71,6 +104,7 @@ struct EndGameView_Previews: PreviewProvider {
             result: .win,
             playerOneChoice: .rock,
             playerTwoChoice: .paper,
+            playerStatus: true,
             buttonFunction: {},
             computerRetryFunc: {}
         )
