@@ -17,12 +17,45 @@ struct HeaderButton: View {
     }
 }
 
+struct HeaderCategory: View {
+    let title: String
+    let number: Int
+    var body: some View {
+        VStack {
+            Text(title)
+                .font(.caption2)
+                .textCase(.uppercase)
+                .fontWeight(.heavy)
+            Text(number, format: .number)
+                .font(.largeTitle)
+        }
+        .foregroundColor(Color.theme.text)
+    }
+}
+
 struct GameHeaderView: View {
     var title: String
     var returnFunction: () -> Void
-    var currentStreak: Int
+    var currentStreak: Int?
+    var bestStreak: Int?
     var rightHandFunction: () -> Void
-    var showRewardedAd: () -> Void
+    var showRewardedAd: (() -> Void)?
+    
+    init(
+        title: String,
+        returnFunction: @escaping () -> Void,
+        currentStreak: Int? = nil,
+        bestStreak: Int? = nil,
+        rightHandFunction: @escaping () -> Void,
+        showRewardedAd: (() -> Void)? = nil
+    ) {
+        self.title = title
+        self.returnFunction = returnFunction
+        self.currentStreak = currentStreak
+        self.bestStreak = bestStreak
+        self.rightHandFunction = rightHandFunction
+        self.showRewardedAd = showRewardedAd
+    }
 
     var body: some View {
         ZStack {
@@ -38,16 +71,14 @@ struct GameHeaderView: View {
                         icon: "arrowtriangle.backward.fill"
                     )
                     Spacer()
-                    VStack {
-                        Text(title)
-                            .font(.caption2)
-                            .textCase(.uppercase)
-                            .fontWeight(.heavy)
-                        Text(currentStreak, format: .number)
-                            .font(.largeTitle)
+                    HStack {
+                        if let currentS = currentStreak {
+                            HeaderCategory(title: "Streak", number: currentS)
+                        }
+                        if let best = bestStreak {
+                            HeaderCategory(title: "Best", number: best)
+                        }
                     }
-                    .foregroundColor(Color.theme.text)
-
                     Spacer()
                     HeaderButton(
                         function: { rightHandFunction() },

@@ -25,6 +25,24 @@ class VsComputerViewModel: ObservableObject {
         }
         return consecutiveWins
     }
+    
+    var bestStreak: Int {
+        var consecutiveWins = 0
+        var longestStreak = 0
+        for match in matchesPlayed {
+            
+            if match.player1.result == .win {
+                consecutiveWins += 1
+                if consecutiveWins > longestStreak {
+                    longestStreak = consecutiveWins
+                }
+                
+            } else if match.player1.result == .lose {
+                consecutiveWins = 0
+            }
+        }
+        return longestStreak
+    }
     @Published var isGameOver: Bool = false
     @Published var inGame: Bool = false
 
