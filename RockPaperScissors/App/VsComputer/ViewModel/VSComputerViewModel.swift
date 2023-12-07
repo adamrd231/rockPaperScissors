@@ -7,8 +7,8 @@ class VsComputerViewModel: ObservableObject {
         player1: PlayerModel(id: UUID().uuidString, name: "Player"),
         player2: PlayerModel(id: UUID().uuidString, name: "Computer", weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
     )
-    
     @Published var matchesPlayed:[RPSMatch] = []
+    
     var player1Record: Int {
         return matchesPlayed.filter({ $0.result == .win }).count - matchesPlayed.filter({ $0.result == .lose }).count
     }
@@ -16,7 +16,6 @@ class VsComputerViewModel: ObservableObject {
     var player2Record: Int {
         return matchesPlayed.filter({ $0.result == .lose }).count - matchesPlayed.filter({ $0.result == .win }).count
     }
-    
     
     var streak: Int {
         var consecutiveWins = 0

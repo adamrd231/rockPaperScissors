@@ -1,25 +1,29 @@
 import SwiftUI
 
+enum EndGameOverlayUsedFor {
+    case matchmaking
+    case computer
+}
+
 struct EndGameView: View {
     let result: GameOutcome
     let playerOneChoice: WeaponOfChoice
     let playerTwoChoice: WeaponOfChoice
-    let playerStatus: Bool?
+    let isBeingUsedFor: EndGameOverlayUsedFor
+    let isOtherPlayerReady: Bool?
     let buttonFunction: () -> Void
+    let secondButtonFunc: () -> Void?
     let computerRetryFunc: () -> Void
     
-    init(
-        result: GameOutcome,
-        playerOneChoice: WeaponOfChoice,
-        playerTwoChoice: WeaponOfChoice,
-        playerStatus: Bool? = nil,
-        buttonFunction: @escaping () -> Void,
+    init(result: GameOutcome, playerOneChoice: WeaponOfChoice, playerTwoChoice: WeaponOfChoice, isBeingUsedFor: EndGameOverlayUsedFor, isOtherPlayerReady: Bool? = nil, buttonFunction: @escaping () -> Void, secondButtonFunc: (() -> Void)? = nil,
         computerRetryFunc: @escaping () -> Void ) {
             self.result = result
             self.playerOneChoice = playerOneChoice
             self.playerTwoChoice = playerTwoChoice
-            self.playerStatus = playerStatus
+            self.isBeingUsedFor = isBeingUsedFor
+            self.isOtherPlayerReady = isOtherPlayerReady
             self.buttonFunction = buttonFunction
+            self.secondButtonFunc = secondButtonFunc ?? {}
             self.computerRetryFunc = computerRetryFunc
     }
     
@@ -33,60 +37,56 @@ struct EndGameView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 15)
                     Rectangle()
-                        .offset(y: 10)
+                        .offset(y: 15)
                     Text("You \(result.description)")
                         .padding()
                         .textCase(.uppercase)
                         .font(.title2)
                         .fontWeight(.heavy)
                         .foregroundColor(Color.theme.backgroundColor)
+                        .offset(y: 10)
                 }
                 .foregroundColor(Color.theme.blue)
                 
                 HStack(spacing: 0) {
                     RPSGraphic(playerChoice: playerOneChoice)
-                    switch result {
-                        case .win:
-                        switch playerOneChoice {
-                        case .rock: Text("crushes")
-                        case .paper: Text("covers")
-                        case .scissors: Text("cuts")
-                        }
-                        case .lose:
-                        switch playerOneChoice {
-                        case .rock: Text("covered")
-                        case .paper: Text("split")
-                        case .scissors: Text("crushed")
-                        }
-                        case .tie: Text("push")
-                    }
+                    ResultMessage(result: result, choice: playerOneChoice)
                     RPSGraphic(playerChoice: playerTwoChoice)
                 }
                 .foregroundColor(Color.theme.text)
                 .font(.callout)
                 .fontWeight(.heavy)
                 
-                VStack {
+                if isBeingUsedFor == .matchmaking {
+                    if let ready = isOtherPlayerReady {
+                        Text(ready ? "Rematch requested" : "Waiting for rematch request")
+                    }
+                }
+                
+                VStack(spacing: 7) {
                     BasicMainButton(
-                        title: "Play Again",
+                        title: "Rematch",
                         icon: "goforward",
                         textColor: Color.theme.backgroundColor,
                         background: Color.theme.blue,
                         function: { buttonFunction() }
                     )
-                
-                    if result == .lose {
+
+                    if result == .lose && isBeingUsedFor == .computer {
                         BasicMainButton(
-                            title: "Retry",
+                            title: "Retry match",
                             icon: "play.square",
                             textColor: Color.theme.backgroundColor,
                             background: Color.theme.orange,
                             function: {  computerRetryFunc() }
                         )
-                    }
-                    
-                    if let ready = playerStatus {
-                        Text(ready ? "Other player ready" : "Waiting for other player")
+                    } else {
+                        BasicMainButton(
+                            title: "Done",
+                            icon: "xmark.circle",
+                            background: Color.theme.text.opacity(0.1),
+                            function: { secondButtonFunc() }
+                        )
                     }
                 }
                 .padding(.horizontal)
@@ -101,11 +101,13 @@ struct EndGameView: View {
 struct EndGameView_Previews: PreviewProvider {
     static var previews: some View {
         EndGameView(
-            result: .win,
+            result: .lose,
             playerOneChoice: .rock,
             playerTwoChoice: .paper,
-            playerStatus: true,
+            isBeingUsedFor: .matchmaking,
+            isOtherPlayerReady: true,
             buttonFunction: {},
+            secondButtonFunc: {},
             computerRetryFunc: {}
         )
     }

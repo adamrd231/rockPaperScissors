@@ -21,6 +21,7 @@
 		6609830A2AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660983092AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift */; };
 		6609830E2B008D2500A7D0D0 /* RPSvsPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */; };
 		667600D62B210AB50018E3A2 /* PlayerBioRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667600D52B210AB50018E3A2 /* PlayerBioRowView.swift */; };
+		667600D82B227AC40018E3A2 /* ResultMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667600D72B227AC40018E3A2 /* ResultMessage.swift */; };
 		66952CA22B02F47400F091F4 /* VSComputerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CA12B02F47400F091F4 /* VSComputerViewModel.swift */; };
 		66952CA62B03285A00F091F4 /* BasicMainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CA52B03285A00F091F4 /* BasicMainButton.swift */; };
 		66952CAC2B07BDE100F091F4 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66952CAB2B07BDE100F091F4 /* StoreManager.swift */; };
@@ -59,6 +60,7 @@
 		660983092AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+GKMatchDelegate.swift"; sourceTree = "<group>"; };
 		6609830D2B008D2500A7D0D0 /* RPSvsPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPSvsPersonView.swift; sourceTree = "<group>"; };
 		667600D52B210AB50018E3A2 /* PlayerBioRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerBioRowView.swift; sourceTree = "<group>"; };
+		667600D72B227AC40018E3A2 /* ResultMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultMessage.swift; sourceTree = "<group>"; };
 		66952CA12B02F47400F091F4 /* VSComputerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSComputerViewModel.swift; sourceTree = "<group>"; };
 		66952CA52B03285A00F091F4 /* BasicMainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicMainButton.swift; sourceTree = "<group>"; };
 		66952CAB2B07BDE100F091F4 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				66C8BD892B1F917C009834DB /* RPSGraphic.swift */,
 				66C8BD902B20E82F009834DB /* PlayerBioView.swift */,
 				667600D52B210AB50018E3A2 /* PlayerBioRowView.swift */,
+				667600D72B227AC40018E3A2 /* ResultMessage.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				66C8BD792B14DFB8009834DB /* RockPaperScissorsView.swift in Sources */,
 				66C8BD772B0D0E6A009834DB /* Color.swift in Sources */,
 				66952CAC2B07BDE100F091F4 /* StoreManager.swift in Sources */,
+				667600D82B227AC40018E3A2 /* ResultMessage.swift in Sources */,
 				6609830A2AFFE69E00A7D0D0 /* ViewModel+GKMatchDelegate.swift in Sources */,
 				667600D62B210AB50018E3A2 /* PlayerBioRowView.swift in Sources */,
 				660982FC2AFFCB0800A7D0D0 /* WeaponOfChoice.swift in Sources */,

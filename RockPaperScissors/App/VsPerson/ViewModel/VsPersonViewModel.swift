@@ -73,6 +73,18 @@ class VsPersonViewModel: NSObject, ObservableObject {
         }
     }
     
+    func stopMatchmaking() {
+        if gameMatch.result != nil {
+            matchesPlayed.append(gameMatch)
+        }
+        gameMatch = RPSMatch(
+            id: UUID().uuidString,
+            player1: PlayerModel(id: UUID().uuidString, name: ""),
+            player2: PlayerModel(id: UUID().uuidString, name: "")
+        )
+        
+    }
+    
     func goToGameCenter() {
         if let gameCenterURL = URL(string: "gamecenter:")  {
             if UIApplication.shared.canOpenURL(gameCenterURL) {

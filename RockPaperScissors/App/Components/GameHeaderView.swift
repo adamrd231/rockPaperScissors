@@ -20,6 +20,7 @@ struct HeaderButton: View {
 struct HeaderCategory: View {
     let title: String
     let number: Int
+
     var body: some View {
         VStack {
             Text(title)
@@ -71,7 +72,10 @@ struct GameHeaderView: View {
                     Spacer()
                     HStack {
                         if let currentS = currentStreak {
-                            HeaderCategory(title: "Streak", number: currentS)
+                            HeaderCategory(
+                                title: "Streak",
+                                number: currentS
+                            )
                         }
                     }
                     Spacer()

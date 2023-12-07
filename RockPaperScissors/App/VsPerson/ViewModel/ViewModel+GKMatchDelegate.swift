@@ -21,7 +21,6 @@ extension VsPersonViewModel: GKMatchDelegate {
     func sendString(_ message: String) {
         guard let encoded = "strData:\(message)".data(using: .utf8) else { return }
         sendData(encoded, mode: .reliable)
-                
     }
     
     func sendData(_ data: Data, mode: GKMatch.SendDataMode) {

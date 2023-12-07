@@ -42,7 +42,7 @@ struct RPSvsPersonView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             GameHeaderView(
                 title: "Games",
                 returnFunction: {
@@ -52,12 +52,14 @@ struct RPSvsPersonView: View {
                 rightHandFunction: { },
                 showRewardedAd: { }
             )
+
             .alert("Do you want to leave this game?", isPresented: $isBackingOut) {
                 Button { vsPersonViewModel.inGame = false } label: { Text("Im sure") }
                 Button { } label: { Text("Cancel") }
             } message: {
                 Text("You will forfeit the game, this can not be un-done")
             }
+ 
             
             PlayerBioRowView(
                 player1: PlayerBio(
@@ -69,6 +71,7 @@ struct RPSvsPersonView: View {
                     count: vsPersonViewModel.matchesPlayed.filter({ $0.result == .win }).count
                 )
             )
+
             
             ZStack {
                 RockPaperScissorsView(
@@ -92,12 +95,14 @@ struct RPSvsPersonView: View {
                             result: result,
                             playerOneChoice: playerOneChoice,
                             playerTwoChoice: playerTwoChoice,
-                            playerStatus: vsPersonViewModel.playerWantsToPlayAgain,
+                            isBeingUsedFor: .computer,
+                            isOtherPlayerReady: vsPersonViewModel.playerWantsToPlayAgain,
                             buttonFunction: {
                                 vsPersonViewModel.playAgain = true
                                 vsPersonViewModel.sendString("restart")
                                 
                             },
+                            secondButtonFunc: { vsPersonViewModel.stopMatchmaking() },
                             computerRetryFunc: {}
                         )
                         .onChange(of: vsPersonViewModel.playAgain) { newValue in
@@ -116,6 +121,7 @@ struct RPSvsPersonView: View {
             }
       
         }
+ 
     }
 }
 
