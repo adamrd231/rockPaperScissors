@@ -95,14 +95,14 @@ struct RPSvsPersonView: View {
                             result: result,
                             playerOneChoice: playerOneChoice,
                             playerTwoChoice: playerTwoChoice,
-                            isBeingUsedFor: .computer,
+                            isBeingUsedFor: .matchmaking,
                             isOtherPlayerReady: vsPersonViewModel.playerWantsToPlayAgain,
                             buttonFunction: {
                                 vsPersonViewModel.playAgain = true
                                 vsPersonViewModel.sendString("restart")
                                 
                             },
-                            secondButtonFunc: { vsPersonViewModel.stopMatchmaking() },
+                            secondButtonFunc: { isBackingOut.toggle() },
                             computerRetryFunc: {}
                         )
                         .onChange(of: vsPersonViewModel.playAgain) { newValue in

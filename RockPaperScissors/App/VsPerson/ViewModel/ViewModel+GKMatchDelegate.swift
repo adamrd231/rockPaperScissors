@@ -33,6 +33,7 @@ extension VsPersonViewModel: GKMatchDelegate {
     
     func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) { 
         DispatchQueue.main.async {
+            print("Match did change state \(state)")
             self.inGame = false
             self.isShowingAlert = true
         }
