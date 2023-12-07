@@ -25,11 +25,9 @@ struct RPSMatch {
             case (.rock, .rock): return .tie
             case (.rock, .scissors): return  .win
             case (.rock, .paper): return .lose
-                
             case (.paper, .rock): return .win
             case (.paper, .scissors): return .lose
             case (.paper, .paper): return .tie
-                
             case (.scissors, .scissors): return .tie
             case (.scissors, .rock): return .lose
             case (.scissors, .paper): return .win

@@ -1,7 +1,5 @@
 import SwiftUI
 
-
-
 class VsComputerViewModel: ObservableObject {
     // Game
     @Published var match = RPSMatch(
@@ -11,8 +9,6 @@ class VsComputerViewModel: ObservableObject {
     )
     
     @Published var matchesPlayed:[RPSMatch] = []
-    
-    // I want to keep track of the person vs person record for the matches list
     var player1Record: Int {
         return matchesPlayed.filter({ $0.result == .win }).count - matchesPlayed.filter({ $0.result == .lose }).count
     }
@@ -24,13 +20,12 @@ class VsComputerViewModel: ObservableObject {
     
     var streak: Int {
         var consecutiveWins = 0
-        // Iterate through the matches played
+
         for match in matchesPlayed.reversed() {
-            // Check if player1 wins the match
             if match.result == .win {
                 consecutiveWins += 1
             } else if match.result == .tie {
-                
+                // Do nothing
             } else {
                 // If player1 doesn't win, break the streak
                 break
@@ -42,20 +37,14 @@ class VsComputerViewModel: ObservableObject {
     var bestStreak: Int {
         var consecutiveWins = 0
         var longestStreak = 0
+
         for match in matchesPlayed {
-            
-            if match.result == .win {
-                consecutiveWins += 1
-                if consecutiveWins > longestStreak {
-                    longestStreak = consecutiveWins
-                }
-                
-            } else if match.result == .lose {
-                consecutiveWins = 0
-            }
+            match.result == .win ? (consecutiveWins += 1) : (consecutiveWins = 0)
+            longestStreak = max(longestStreak, consecutiveWins)
         }
         return longestStreak
     }
+    
     @Published var isGameOver: Bool = false
     @Published var inGame: Bool = false
 
