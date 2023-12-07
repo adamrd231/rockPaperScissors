@@ -18,7 +18,7 @@ struct RPSGraphic: View {
             VStack(spacing: 0) {
                 Image(playerChoice.description)
                     .resizable()
-                    .frame(maxWidth: 50, maxHeight: 50)
+                    .frame(maxWidth: 66, maxHeight: 66)
                     .font(.largeTitle)
                 Text(playerChoice.description)
                     .foregroundColor(Color.theme.text)

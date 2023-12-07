@@ -68,6 +68,7 @@ struct RPSvsComputerView: View {
                         playerTwoChoice: playerTwoChoice,
                         isBeingUsedFor: .computer,
                         buttonFunction: { vsComputerViewModel.startNewGame() },
+                        secondButtonFunc: { vsComputerViewModel.startNewGame() },
                         computerRetryFunc: { isRequestingAds.toggle() }
                     )
                 }
