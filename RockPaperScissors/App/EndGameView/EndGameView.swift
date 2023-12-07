@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct EndGameView: View {
-    let result: GameResult
+    let result: GameOutcome
     let playerOneChoice: WeaponOfChoice
     let playerTwoChoice: WeaponOfChoice
     let playerStatus: Bool?
@@ -9,7 +9,7 @@ struct EndGameView: View {
     let computerRetryFunc: () -> Void
     
     init(
-        result: GameResult,
+        result: GameOutcome,
         playerOneChoice: WeaponOfChoice,
         playerTwoChoice: WeaponOfChoice,
         playerStatus: Bool? = nil,

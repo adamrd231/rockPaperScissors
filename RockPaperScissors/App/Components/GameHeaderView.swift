@@ -37,7 +37,6 @@ struct GameHeaderView: View {
     var title: String
     var returnFunction: () -> Void
     var currentStreak: Int?
-    var bestStreak: Int?
     var rightHandFunction: () -> Void
     var showRewardedAd: (() -> Void)?
     
@@ -52,7 +51,6 @@ struct GameHeaderView: View {
         self.title = title
         self.returnFunction = returnFunction
         self.currentStreak = currentStreak
-        self.bestStreak = bestStreak
         self.rightHandFunction = rightHandFunction
         self.showRewardedAd = showRewardedAd
     }
@@ -74,9 +72,6 @@ struct GameHeaderView: View {
                     HStack {
                         if let currentS = currentStreak {
                             HeaderCategory(title: "Streak", number: currentS)
-                        }
-                        if let best = bestStreak {
-                            HeaderCategory(title: "Best", number: best)
                         }
                     }
                     Spacer()

@@ -53,9 +53,11 @@ struct LaunchView: View {
                     .foregroundColor(Color.black.opacity(0.8))
             }
             Spacer()
+#if !DEBUG
             if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
                 Banner()
             }
+#endif
         }
         .onAppear {
             vsPersonViewModel.authenticateUser()

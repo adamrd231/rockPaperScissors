@@ -22,7 +22,6 @@ struct RPSvsComputerView: View {
                     vsComputerViewModel.inGame = false
                 },
                 currentStreak: vsComputerViewModel.streak,
-                bestStreak: vsComputerViewModel.bestStreak,
                 rightHandFunction: { isShowingExplanation.toggle() },
                 showRewardedAd: { vsComputerViewModel.showRewardedAd() }
             )
@@ -42,11 +41,11 @@ struct RPSvsComputerView: View {
             PlayerBioRowView(
                 player1: PlayerBio(
                     name: vsComputerViewModel.match.player1.name, image: "",
-                    count: vsComputerViewModel.matchesPlayed.filter({ $0.player1.result == .win }).count
+                    count: vsComputerViewModel.player1Record
                 ),
                 player2: PlayerBio(
                     name: vsComputerViewModel.match.player2.name, image: "",
-                    count: vsComputerViewModel.matchesPlayed.filter({ $0.player2.result == .win }).count
+                    count: vsComputerViewModel.player2Record
                 )
             )
             ZStack {
@@ -55,16 +54,16 @@ struct RPSvsComputerView: View {
                     chooseWeapon: { choice in
                         returnChoice(choice)
                     },
-                    isDisabled: vsComputerViewModel.match.player1.result != nil,
+                    isDisabled: vsComputerViewModel.match.result != nil,
                     storeManager: storeManager
                 )
 
                 // Game Result overlay
-                if let playerOneResult = vsComputerViewModel.match.player1.result,
+                if let result = vsComputerViewModel.match.result,
                    let playerOneChoice = vsComputerViewModel.match.player1.weaponOfChoice,
                    let playerTwoChoice = vsComputerViewModel.match.player2.weaponOfChoice {
                     EndGameView(
-                        result: playerOneResult,
+                        result: result,
                         playerOneChoice: playerOneChoice,
                         playerTwoChoice: playerTwoChoice,
                         
@@ -73,6 +72,7 @@ struct RPSvsComputerView: View {
                     )
                 }
             }
+
             if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
                 Banner()
             }

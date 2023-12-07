@@ -30,7 +30,7 @@ struct ExplanationView: View {
                         Text(index + 1, format: .number)
                         Text("Vs \(match.player2.name)")
                         Spacer()
-                        Text(match.player1.result?.description ?? "N/A")
+                        Text(match.player1.name)
                     }
                 }
             }

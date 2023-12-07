@@ -62,18 +62,18 @@ struct RPSvsPersonView: View {
             PlayerBioRowView(
                 player1: PlayerBio(
                     name: vsPersonViewModel.localPlayer.displayName, image: "",
-                    count: vsPersonViewModel.matchesPlayed.filter({ $0.player1.result == .win }).count
+                    count: vsPersonViewModel.matchesPlayed.filter({ $0.result == .win }).count
                 ),
                 player2: PlayerBio(
                     name: vsPersonViewModel.otherPlayer?.displayName ?? "N/A", image: "",
-                    count: vsPersonViewModel.matchesPlayed.filter({ $0.player2.result == .win }).count
+                    count: vsPersonViewModel.matchesPlayed.filter({ $0.result == .win }).count
                 )
             )
             
             ZStack {
                 RockPaperScissorsView(
                     chooseWeapon: self.localPlayerChoseWOP,
-                    isDisabled: vsPersonViewModel.gameMatch.player1.result != nil,
+                    isDisabled: vsPersonViewModel.gameMatch.result != nil,
                     isSelected: vsPersonViewModel.gameMatch.player1.weaponOfChoice,
                     storeManager: storeManager
                )
@@ -84,7 +84,7 @@ struct RPSvsPersonView: View {
                     timeToPlayRPS()
                 }
                 
-                if let result = vsPersonViewModel.gameMatch.player1.result,
+                if let result = vsPersonViewModel.gameMatch.result,
                    let playerOneChoice = vsPersonViewModel.gameMatch.player1.weaponOfChoice,
                    let playerTwoChoice = vsPersonViewModel.gameMatch.player2.weaponOfChoice {
                     VStack {
@@ -110,9 +110,11 @@ struct RPSvsPersonView: View {
                    
                 }
             }
+      
             if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
                 Banner()
             }
+      
         }
     }
 }
