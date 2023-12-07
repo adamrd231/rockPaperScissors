@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ExplanationView: View {
-    let matchesPlayed:[RPSMatch]
+    let bestStreak: Int
     var body: some View {
         VStack {
             VStack {
@@ -19,20 +19,9 @@ struct ExplanationView: View {
             .frame(height: UIScreen.main.bounds.height * 0.3)
    
             Divider()
-            ScrollView {
-                HStack {
-                    Text("Record")
-                        .bold()
-                    Spacer()
-                }
-                ForEach(Array(zip(matchesPlayed.indices, matchesPlayed)), id: \.0) { index, match in
-                    HStack {
-                        Text(index + 1, format: .number)
-                        Text("Vs \(match.player2.name)")
-                        Spacer()
-                        Text(match.player1.name)
-                    }
-                }
+            VStack(alignment: .leading) {
+                Text("Best streak")
+                Text(bestStreak, format: .number)
             }
             
         }
@@ -46,6 +35,8 @@ struct ExplanationView: View {
 
 struct ExplanationView_Previews: PreviewProvider {
     static var previews: some View {
-        ExplanationView(matchesPlayed: [])
+        ExplanationView(
+            bestStreak: 0
+        )
     }
 }
