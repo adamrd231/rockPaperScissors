@@ -1,7 +1,7 @@
 import Foundation
 import GameKit
 
-extension ViewModel: GKMatchDelegate {
+extension VsPersonViewModel: GKMatchDelegate {
     func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
         let content = String(decoding: data, as: UTF8.self)
         
@@ -21,7 +21,6 @@ extension ViewModel: GKMatchDelegate {
     func sendString(_ message: String) {
         guard let encoded = "strData:\(message)".data(using: .utf8) else { return }
         sendData(encoded, mode: .reliable)
-                
     }
     
     func sendData(_ data: Data, mode: GKMatch.SendDataMode) {
@@ -34,6 +33,7 @@ extension ViewModel: GKMatchDelegate {
     
     func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) { 
         DispatchQueue.main.async {
+            print("Match did change state \(state)")
             self.inGame = false
             self.isShowingAlert = true
         }

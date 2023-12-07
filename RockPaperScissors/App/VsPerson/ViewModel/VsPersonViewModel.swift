@@ -1,59 +1,32 @@
 import Foundation
 import SwiftUI
 import GameKit
-import Combine
 
-protocol RPSgamePlayer {
-    var id: String { get set }
-    var name: String { get set }
-}
-
-struct PersonPlayer: RPSgamePlayer {
-    var id: String
-    var name: String
-    var weaponOfChoice: WeaponOfChoice? = nil
-}
-
-struct ComputerPlayer: RPSgamePlayer {
-    var id: String
-    var name: String
-    var weaponOfChoice: WeaponOfChoice = WeaponOfChoice.allCases[Int.random(in: 0..<3)]
-}
-
-
-struct RockPaperScissorsGameModel {
-    var player = PersonPlayer(id: UUID().uuidString, name: "Player")
-    var computerPlayer = ComputerPlayer(id: UUID().uuidString, name: "Computer")
-    var streak: Int = 0
-    var gameResult: GameResult? = nil
-}
-
-class ViewModel: NSObject, ObservableObject {
-    
-    // Game Center
-    @Published var inGame = false
-    @Published var isGameOver = false
-    @Published var isRoundOver = false
-    @Published var authenticationState = PlayerAuthState.unauthenticated
-    @Published var isShowingAlert = false
-    
-    // Game
-    @Published var gameModel = RockPaperScissorsGameModel()
-//    @Published var gameResult: GameResult? = nil
-//    @Published var computerChoice: WeaponOfChoice? = nil
-//    @Published var userChoice: WeaponOfChoice? = nil
-//    @Published var streak: Int = 0
-    @Published var lastReceivedData: WeaponOfChoice? = nil
-    
-    @Published var playAgain: Bool = false
-    @Published var playerWantsToPlayAgain: Bool = false
-    private var cancellable = Set<AnyCancellable>()
-    
+class VsPersonViewModel: NSObject, ObservableObject {
     // GameKit
     var match: GKMatch?
     var otherPlayer: GKPlayer?
+    @Published var authenticationState = PlayerAuthState.unauthenticated
     var localPlayer = GKLocalPlayer.local
     var playerUUIDKey = UUID().uuidString
+
+    // RPS Game
+    @Published var gameMatch = RPSMatch(
+        id: UUID().uuidString,
+        player1: PlayerModel(id: UUID().uuidString, name: ""),
+        player2: PlayerModel(id: UUID().uuidString, name: "")
+    )
+    @Published var inGame = false
+    @Published var isGameOver = false
+    @Published var isRoundOver = false
+    @Published var isShowingAlert = false
+    
+    @Published var matchesPlayed: [RPSMatch] = []
+    
+    // Game controls
+    @Published var lastReceivedData: WeaponOfChoice? = nil
+    @Published var playAgain: Bool = false
+    @Published var playerWantsToPlayAgain: Bool = false
     
     // Leaderboard
     @Published var playersList: [GKPlayer] = []
@@ -63,46 +36,10 @@ class ViewModel: NSObject, ObservableObject {
         return windowScene?.windows.first?.rootViewController
     }
     
-    
-    override init() {
-        super.init()
-        addSubscribers()
-    }
-    
-    
-    func loadAchievements(gamesPlayed: Int) {
-        GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in
-            let achievementID = "PlayFirstGame"
-            var achievement: GKAchievement? = nil
-            achievement = achievements?.first(where: { $0.identifier == achievementID })
-            
-            if achievement == nil {
-                achievement = GKAchievement(identifier: achievementID)
-                if gamesPlayed > 0 {
-                    achievement?.percentComplete = 100
-                    let achievementsToReport: [GKAchievement] = [achievement!]
-                    GKAchievement.report(achievementsToReport, withCompletionHandler: {(error: Error?) in
-                        if error != nil {
-                            print("Error reporting achievement: \(String(describing: error))")
-                        }
-                    })
-                }
-            }
-            if error != nil {
-                print("Error get achievement: \(String(describing: error))")
-            }
-        })
-    }
-    
-    func updateAchievement() {
-        
-    }
-    
     func showLeaderboards() {
         let gameCenterVC = GKGameCenterViewController(state: .leaderboards)
         gameCenterVC.gameCenterDelegate = self
         rootViewController?.present(gameCenterVC, animated: true, completion: nil)
-        
     }
     
     func submitScoreToLeaderBoard(newHighScore: Int) {
@@ -120,7 +57,6 @@ class ViewModel: NSObject, ObservableObject {
                 } catch let error {
                     print("Error submitting leaderboard scores: \(error.localizedDescription)")
                 }
-                
             }
         }
     }
@@ -137,14 +73,16 @@ class ViewModel: NSObject, ObservableObject {
         }
     }
     
-    func addSubscribers() {
-        $gameModel
-            .sink { [weak self] game in
-                if let playerChoice = game.player.weaponOfChoice {
-                    self?.rockPaperScissors(playerChoice, game.computerPlayer.weaponOfChoice)
-                }
-            }
-            .store(in: &cancellable)
+    func stopMatchmaking() {
+        if gameMatch.result != nil {
+            matchesPlayed.append(gameMatch)
+        }
+        gameMatch = RPSMatch(
+            id: UUID().uuidString,
+            player1: PlayerModel(id: UUID().uuidString, name: ""),
+            player2: PlayerModel(id: UUID().uuidString, name: "")
+        )
+        
     }
     
     func goToGameCenter() {
@@ -191,44 +129,32 @@ class ViewModel: NSObject, ObservableObject {
         sendString("began: \(playerUUIDKey)")
     }
     
-    // Functions
-    func playerWon() {
-        gameModel.gameResult = .win
-    }
-    
-    func playerLost() {
-        gameModel.gameResult = .lose
-    }
-    
-    func playerTie() {
-        gameModel.gameResult = .tie
-    }
-    
-    func resetGame() {
-        sendString("restart:")
-        playAgain = true
+    func loadAchievements(gamesPlayed: Int) {
+        GKAchievement.loadAchievements(completionHandler: { (achievements: [GKAchievement]?, error: Error?) in
+            let achievementID = "PlayFirstGame"
+            var achievement: GKAchievement? = nil
+            achievement = achievements?.first(where: { $0.identifier == achievementID })
+            
+            if achievement == nil {
+                achievement = GKAchievement(identifier: achievementID)
+                if gamesPlayed > 0 {
+                    achievement?.percentComplete = 100
+                    let achievementsToReport: [GKAchievement] = [achievement!]
+                    GKAchievement.report(achievementsToReport, withCompletionHandler: {(error: Error?) in
+                        if error != nil {
+                            print("Error reporting achievement: \(String(describing: error))")
+                        }
+                    })
+                }
+            }
+            if error != nil {
+                print("Error get achievement: \(String(describing: error))")
+            }
+        })
     }
  
-    
-    func rockPaperScissors(_ playerChoice: WeaponOfChoice, _ computerChoice: WeaponOfChoice) {
-        switch (playerChoice, computerChoice) {
-        case (.rock, .rock): playerTie()
-        case (.rock, .scissors): playerWon()
-        case (.rock, .paper): playerLost()
-            
-        case (.paper, .rock): playerWon()
-        case (.paper, .scissors): playerLost()
-        case (.paper, .paper): playerTie()
-            
-        case (.scissors, .scissors): playerTie()
-        case (.scissors, .rock): playerLost()
-        case (.scissors, .paper): playerWon()
-        }
-    }
-    
     func playGame(playerChoice: WeaponOfChoice) {
         sendString(playerChoice.description)
-        userChoice = playerChoice
     }
     
     func receivedString(_ message: String) {
@@ -245,18 +171,19 @@ class ViewModel: NSObject, ObservableObject {
                 break
             }
             inGame = true
-   
         case "restart":
             // Received request from user to re-start the game
             playerWantsToPlayAgain = true
-
         // Handle guesses from the other player
         case WeaponOfChoice.scissors.description:
-            computerChoice = .scissors
+            print("Scissors")
+            gameMatch.player2.weaponOfChoice = .scissors
         case WeaponOfChoice.rock.description:
-            computerChoice = .rock
+            print("Rock")
+            gameMatch.player2.weaponOfChoice = .rock
         case WeaponOfChoice.paper.description:
-            computerChoice = .paper
+            print("Paper")
+            gameMatch.player2.weaponOfChoice = .paper
         case "strData:":
             break
             
@@ -266,6 +193,5 @@ class ViewModel: NSObject, ObservableObject {
         default:
             break
         }
-        
     }
 }

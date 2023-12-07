@@ -28,8 +28,10 @@ private struct BannerVC: UIViewControllerRepresentable  {
 
 struct Banner:View{
     var body: some View{
+        #if !DEBUG
         BannerVC()
             .frame(width: 320, height: 70, alignment: .center)
+        #endif
     }
 }
 

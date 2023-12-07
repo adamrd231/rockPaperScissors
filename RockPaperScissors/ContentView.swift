@@ -2,10 +2,10 @@ import SwiftUI
 import GoogleMobileAds
 
 struct ContentView: View {
-    @StateObject var vm = ViewModel()
-    @StateObject var computerVM = VsComputerViewModel()
+    @StateObject var vsPersonViewModel = VsPersonViewModel()
+    @StateObject var vsComputerViewModel = VsComputerViewModel()
     @StateObject var storeManager = StoreManager()
-    @StateObject var admobVM = AdsViewModel()
+    @StateObject var adsVM = AdsViewModel()
     
     init() {
         UITabBar.appearance().backgroundColor = UIColor(Color.theme.tabViewBackground)
@@ -17,23 +17,27 @@ struct ContentView: View {
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
+                .frame(maxWidth:UIScreen.main.bounds.width,
+                       maxHeight: UIScreen.main.bounds.height - 30
+                )
             
-            if vm.isGameOver {
-                Text("Game Over")
-            } else if vm.inGame {
-                RPSvsPersonView(vm: vm)
-            } else if computerVM.inGame {
+            if vsPersonViewModel.inGame {
+                RPSvsPersonView(
+                    vsPersonViewModel: vsPersonViewModel,
+                    adsVM: adsVM,
+                    storeManager: storeManager
+                )
+            } else if vsComputerViewModel.inGame {
                 RPSvsComputerView(
-                    computerVM: computerVM,
-                    vm: vm,
-                    admobVM: admobVM,
+                    vsComputerViewModel: vsComputerViewModel,
+                    adsVM: adsVM,
                     storeManager: storeManager
                 )
             } else {
                 TabView {
                     LaunchView(
-                        vm: vm,
-                        computerVM: computerVM,
+                        vsPersonViewModel: vsPersonViewModel,
+                        vsComputerViewModel: vsComputerViewModel,
                         storeManager: storeManager
                     )
                     .background(BackgroundHelper())

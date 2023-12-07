@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum GameResult: CustomStringConvertible {
+enum GameOutcome: CustomStringConvertible {
     case win
     case lose
     case tie
