@@ -33,7 +33,7 @@ struct RPSvsComputerView: View {
             }
             .sheet(isPresented: $isShowingExplanation) {
                 ExplanationView(
-                    bestStreak: vsComputerViewModel.bestStreak
+                    bestStreak: vsComputerViewModel.gameDataService.bestStreak
                 )
             }
             

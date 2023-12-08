@@ -8,6 +8,19 @@ class GameDataService {
     
     @Published var savedGameEntities: [GameHistory] = []
     
+    init() {
+        container = NSPersistentContainer(name: containerName)
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                print("""
+                    Error loading core data:
+                    \(error)
+                """)
+            }
+        }
+        getGameHistory()
+    }
+    
     var streak: Int {
         var consecutiveWins = 0
         for match in savedGameEntities.reversed() {
@@ -23,18 +36,15 @@ class GameDataService {
         return consecutiveWins
     }
     
-    
-    init() {
-        container = NSPersistentContainer(name: containerName)
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                print("""
-                    Error loading core data:
-                    \(error)
-                """)
-            }
+    var bestStreak: Int {
+        var consecutiveWins = 0
+        var longestStreak = 0
+
+        for match in savedGameEntities {
+            match.result == GameOutcome.win.description ? (consecutiveWins += 1) : (consecutiveWins = 0)
+            longestStreak = max(longestStreak, consecutiveWins)
         }
-        getGameHistory()
+        return longestStreak
     }
     
     func getGameHistory() {

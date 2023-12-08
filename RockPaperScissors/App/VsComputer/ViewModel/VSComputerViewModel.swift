@@ -2,8 +2,10 @@ import SwiftUI
 import Combine
 
 class VsComputerViewModel: ObservableObject {
+    @Published var isGameOver: Bool = false
+    @Published var inGame: Bool = false
+    
     @Published var gameDataService = GameDataService()
-    private var cancellable = Set<AnyCancellable>()
     // Game
     @Published var match = RPSMatch(
         id: UUID().uuidString,
@@ -11,6 +13,25 @@ class VsComputerViewModel: ObservableObject {
         player2: PlayerModel(id: UUID().uuidString, name: "Computer", weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
     )
     @Published var matchesPlayed:[RPSMatch] = []
+    
+    // AdsViewController
+    var rewardedAdVC: AdsViewController
+    
+    var rootViewController: UIViewController? {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        return windowScene?.windows.first?.rootViewController
+    }
+    
+    init() {
+        rewardedAdVC = AdsViewController()
+        // This runs when rewarded advertising is completed
+        rewardedAdVC.adCompletionHandler = { [weak self] in
+            self?.retryCurrentGame()
+        }
+        addSubscribers()
+    }
+    
+    private var cancellable = Set<AnyCancellable>()
     
     var player1Record: Int {
         return matchesPlayed.filter({ $0.result == .win }).count - matchesPlayed.filter({ $0.result == .lose }).count
@@ -23,7 +44,6 @@ class VsComputerViewModel: ObservableObject {
     func addSubscribers() {
         gameDataService.$savedGameEntities
             .sink { [weak self] savedGames in
-                print("Saved game entities being accessed")
                 var savedMatches:[RPSMatch] = []
                 for match in savedGames {
                     let newRPSMatch = RPSMatch(
@@ -45,7 +65,6 @@ class VsComputerViewModel: ObservableObject {
             .store(in: &cancellable)
     }
     
-    
     func getResultFromString(_ string: String) -> GameOutcome? {
         switch string {
         case GameOutcome.win.description: return .win
@@ -62,52 +81,6 @@ class VsComputerViewModel: ObservableObject {
         case WeaponOfChoice.rock.description: return .rock
         default: return nil
         }
-    }
-    
-    var streak: Int {
-        var consecutiveWins = 0
-        for match in matchesPlayed.reversed() {
-            if match.result == .win {
-                consecutiveWins += 1
-            } else if match.result == .tie {
-                // Do nothing
-            } else {
-                // If player1 doesn't win, break the streak
-                break
-            }
-        }
-        return consecutiveWins
-    }
-    
-    var bestStreak: Int {
-        var consecutiveWins = 0
-        var longestStreak = 0
-
-        for match in matchesPlayed {
-            match.result == .win ? (consecutiveWins += 1) : (consecutiveWins = 0)
-            longestStreak = max(longestStreak, consecutiveWins)
-        }
-        return longestStreak
-    }
-    
-    @Published var isGameOver: Bool = false
-    @Published var inGame: Bool = false
-
-    // AdsViewController
-    var rewardedAdVC: AdsViewController
-    
-    var rootViewController: UIViewController? {
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        return windowScene?.windows.first?.rootViewController
-    }
-    
-    init() {
-        rewardedAdVC = AdsViewController()
-        // This runs when rewarded advertising is completed
-        rewardedAdVC.adCompletionHandler = { [weak self] in
-            self?.retryCurrentGame()
-        }
-        addSubscribers()
     }
     
     func makeSelection(choice: WeaponOfChoice) {
@@ -131,7 +104,6 @@ class VsComputerViewModel: ObservableObject {
             player1: PlayerModel(id: player1.id, name: player1.name, weaponOfChoice: nil),
             player2: PlayerModel(id: player2.id, name: player2.name, weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
         )
-   
     }
     
     func retryCurrentGame() {
