@@ -21,7 +21,7 @@ struct RPSvsComputerView: View {
                 returnFunction: {
                     vsComputerViewModel.inGame = false
                 },
-                currentStreak: vsComputerViewModel.streak,
+                currentStreak: vsComputerViewModel.gameDataService.streak,
                 rightHandFunction: { isShowingExplanation.toggle() },
                 showRewardedAd: { vsComputerViewModel.showRewardedAd() }
             )

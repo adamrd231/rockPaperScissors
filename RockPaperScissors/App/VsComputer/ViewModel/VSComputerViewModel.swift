@@ -1,8 +1,9 @@
 import SwiftUI
-
-
+import Combine
 
 class VsComputerViewModel: ObservableObject {
+    @Published var gameDataService = GameDataService()
+    private var cancellable = Set<AnyCancellable>()
     // Game
     @Published var match = RPSMatch(
         id: UUID().uuidString,
@@ -19,9 +20,52 @@ class VsComputerViewModel: ObservableObject {
         return matchesPlayed.filter({ $0.result == .lose }).count - matchesPlayed.filter({ $0.result == .win }).count
     }
     
+    func addSubscribers() {
+        gameDataService.$savedGameEntities
+            .sink { [weak self] savedGames in
+                print("Saved game entities being accessed")
+                var savedMatches:[RPSMatch] = []
+                for match in savedGames {
+                    let newRPSMatch = RPSMatch(
+                        id: match.id ?? "N/A",
+                        player1: PlayerModel(
+                            id: match.playerOneID ?? "",
+                            name: match.playerOneName ?? "N/A",
+                            weaponOfChoice: self?.getWeaponOfChoiceFromString(match.playerOneChoice ?? "")),
+                        player2: PlayerModel(
+                            id: match.playerTwoID ?? "",
+                            name: match.playerTwoName ?? "N/A",
+                            weaponOfChoice: self?.getWeaponOfChoiceFromString(match.playerTwoChoice ?? "")),
+                        result: self?.getResultFromString(match.result ?? "")
+                    )
+                    savedMatches.append(newRPSMatch)
+                }
+                self?.matchesPlayed = savedMatches
+            }
+            .store(in: &cancellable)
+    }
+    
+    
+    func getResultFromString(_ string: String) -> GameOutcome? {
+        switch string {
+        case GameOutcome.win.description: return .win
+        case GameOutcome.lose.description: return .lose
+        case GameOutcome.tie.description: return .tie
+        default: return nil
+        }
+    }
+    
+    func getWeaponOfChoiceFromString(_ string: String) -> WeaponOfChoice? {
+        switch string {
+        case WeaponOfChoice.paper.description: return .paper
+        case WeaponOfChoice.scissors.description: return .scissors
+        case WeaponOfChoice.rock.description: return .rock
+        default: return nil
+        }
+    }
+    
     var streak: Int {
         var consecutiveWins = 0
-
         for match in matchesPlayed.reversed() {
             if match.result == .win {
                 consecutiveWins += 1
@@ -63,6 +107,7 @@ class VsComputerViewModel: ObservableObject {
         rewardedAdVC.adCompletionHandler = { [weak self] in
             self?.retryCurrentGame()
         }
+        addSubscribers()
     }
     
     func makeSelection(choice: WeaponOfChoice) {
@@ -78,7 +123,7 @@ class VsComputerViewModel: ObservableObject {
     }
     
     func startNewGame() {
-        matchesPlayed.append(match)
+        gameDataService.addGameToHistory(match: match)
         let player1 = match.player1
         let player2 = match.player2
         match = RPSMatch(
@@ -86,6 +131,7 @@ class VsComputerViewModel: ObservableObject {
             player1: PlayerModel(id: player1.id, name: player1.name, weaponOfChoice: nil),
             player2: PlayerModel(id: player2.id, name: player2.name, weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
         )
+   
     }
     
     func retryCurrentGame() {

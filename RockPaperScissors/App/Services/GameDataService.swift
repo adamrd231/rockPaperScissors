@@ -8,6 +8,22 @@ class GameDataService {
     
     @Published var savedGameEntities: [GameHistory] = []
     
+    var streak: Int {
+        var consecutiveWins = 0
+        for match in savedGameEntities.reversed() {
+            if match.result == GameOutcome.win.description {
+                consecutiveWins += 1
+            } else if match.result == GameOutcome.tie.description {
+                // Do nothing
+            } else {
+                // If player1 doesn't win, break the streak
+                break
+            }
+        }
+        return consecutiveWins
+    }
+    
+    
     init() {
         container = NSPersistentContainer(name: containerName)
         container.loadPersistentStores { _, error in
@@ -18,6 +34,7 @@ class GameDataService {
                 """)
             }
         }
+        getGameHistory()
     }
     
     func getGameHistory() {
@@ -38,8 +55,9 @@ class GameDataService {
     }
     
     func addGameToHistory(match: RPSMatch) {
-        if let existingEntity = savedGameEntities.first(where: ({ $0.id?.uuidString == match.id })) {
+        if let existingEntity = savedGameEntities.first(where: ({ $0.id == match.id })) {
             // TODO: Maybe we allow the games to be updated or rematched somehow?
+            print("Existing entity: \(existingEntity)")
         } else {
             let newGame = GameHistory(context: container.viewContext)
             // Update the model with info from game
