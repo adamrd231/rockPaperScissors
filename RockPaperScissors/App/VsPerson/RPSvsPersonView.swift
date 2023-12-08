@@ -68,7 +68,7 @@ struct RPSvsPersonView: View {
                 ),
                 player2: PlayerBio(
                     name: vsPersonViewModel.otherPlayer?.displayName ?? "N/A", image: "",
-                    count: vsPersonViewModel.matchesPlayed.filter({ $0.result == .win }).count
+                    count: vsPersonViewModel.matchesPlayed.filter({ $0.result == .lose }).count
                 )
             )
 

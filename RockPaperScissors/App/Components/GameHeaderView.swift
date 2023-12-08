@@ -73,7 +73,7 @@ struct GameHeaderView: View {
                     HStack {
                         if let currentS = currentStreak {
                             HeaderCategory(
-                                title: "Streak",
+                                title: title,
                                 number: currentS
                             )
                         }
