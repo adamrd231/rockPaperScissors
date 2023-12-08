@@ -41,8 +41,16 @@ class GameDataService {
         var longestStreak = 0
 
         for match in savedGameEntities {
-            match.result == GameOutcome.win.description ? (consecutiveWins += 1) : (consecutiveWins = 0)
-            longestStreak = max(longestStreak, consecutiveWins)
+            if match.result == GameOutcome.win.description {
+                consecutiveWins += 1
+                if consecutiveWins >= longestStreak {
+                    longestStreak = consecutiveWins
+                }
+            } else if match.result == GameOutcome.tie.description {
+                
+            } else {
+                consecutiveWins = 0
+            }
         }
         return longestStreak
     }
