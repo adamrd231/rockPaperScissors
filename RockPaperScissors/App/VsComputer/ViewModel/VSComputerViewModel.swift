@@ -46,6 +46,7 @@ class VsComputerViewModel: ObservableObject {
             .sink { [weak self] savedGames in
                 var savedMatches:[RPSMatch] = []
                 for match in savedGames {
+                    print("match id: \(match.id)")
                     let newRPSMatch = RPSMatch(
                         id: match.id ?? "N/A",
                         player1: PlayerModel(

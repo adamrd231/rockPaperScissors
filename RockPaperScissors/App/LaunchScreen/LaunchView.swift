@@ -63,6 +63,7 @@ struct LaunchView: View {
             vsPersonViewModel.authenticateUser()
         }
         .padding()
+        .frame(maxWidth: UIScreen.main.bounds.width * 0.8)
         .alert("Opponent left game", isPresented: $vsPersonViewModel.isShowingAlert) {
             Button("OK", role: .cancel) { }
         }

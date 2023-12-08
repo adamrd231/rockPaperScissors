@@ -79,6 +79,7 @@ class GameDataService {
         } else {
             let newGame = GameHistory(context: container.viewContext)
             // Update the model with info from game
+            newGame.id = match.id
             newGame.playerOneName = match.player1.name
             newGame.playerOneChoice = match.player1.weaponOfChoice?.description
             newGame.playerTwoName = match.player2.name
