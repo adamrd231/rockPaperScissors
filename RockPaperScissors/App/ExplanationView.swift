@@ -17,12 +17,6 @@ struct ExplanationView: View {
                 Text("Pick a option, and the computer will randomly pick one as well. Try to get as many wins in a row as possible!")
             }
             .frame(height: UIScreen.main.bounds.height * 0.3)
-   
-            Divider()
-            VStack(alignment: .leading) {
-                Text("Best streak")
-                Text(bestStreak, format: .number)
-            }
             
         }
         .fixedSize(horizontal: false, vertical: true)

@@ -6,6 +6,7 @@ struct ContentView: View {
     @StateObject var vsComputerViewModel = VsComputerViewModel()
     @StateObject var storeManager = StoreManager()
     @StateObject var adsVM = AdsViewModel()
+
     
     init() {
         UITabBar.appearance().backgroundColor = UIColor(Color.theme.tabViewBackground)
@@ -52,48 +53,9 @@ struct ContentView: View {
                         }
                     }
                     
-                    VStack {
-                        List {
-                            Section("Vs Computer") {
-                                HStack {
-                                    Text("Best Streak")
-                                    Spacer()
-                                    Text(vsComputerViewModel.gameDataService.bestStreak, format: .number)
-                                }
-                                HStack {
-                                    Text("Current Streak")
-                                    Spacer()
-                                    Text(vsComputerViewModel.gameDataService.streak, format: .number)
-                                }
-                            }
-                            Section("History") {
-                                Button("Clear history") {
-                                    vsComputerViewModel.gameDataService.deleteGameHistory()
-                                }
-                                ForEach(vsComputerViewModel.matchesPlayed, id: \.id) { match in
-                                    HStack {
-                                        Text(match.date, format: .dateTime)
-                                        Spacer()
-                                        VStack {
-                                            Text(match.player1.name)
-                                            Text(match.player1.weaponOfChoice?.description ?? "N/A")
-                                        }
-                                        Spacer()
-                                        Text("vs")
-                                        Spacer()
-                                        VStack {
-                                            Text(match.player2.name)
-                                            Text(match.player2.weaponOfChoice?.description ?? "N/A")
-                                        }
-                                        Spacer()
-                                        Text(match.result?.description ?? "N/A")
-                                        
-                                    }
-                                    .font(.caption)
-                                }
-                            }
-                        }
-                    }
+                    GameOverviewView(
+                        vsComputerViewModel: vsComputerViewModel
+                    )
                     .tabItem {
                         VStack {
                             Image(systemName: "house.fill")

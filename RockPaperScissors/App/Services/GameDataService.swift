@@ -21,6 +21,18 @@ class GameDataService {
         getGameHistory()
     }
     
+    var winPercentage: Double {
+        let wins = savedGameEntities.filter({ $0.result == GameOutcome.win.description }).count
+        let totalGames = savedGameEntities.count
+        return Double(wins) / Double(totalGames)
+    }
+    
+    var tiePercentage: Double {
+        let ties = savedGameEntities.filter({ $0.result == GameOutcome.tie.description }).count
+        let totalGames = savedGameEntities.count
+        return Double(ties) / Double(totalGames)
+    }
+    
     var streak: Int {
         var consecutiveWins = 0
         for match in savedGameEntities.reversed() {

@@ -69,13 +69,11 @@ struct RPSvsComputerView: View {
                         isBeingUsedFor: .computer,
                         buttonFunction: { vsComputerViewModel.startNewGame() },
                         secondButtonFunc: { vsComputerViewModel.startNewGame() },
-                        computerRetryFunc: { isRequestingAds.toggle() }
+                        computerRetryFunc: { isRequestingAds.toggle() },
+                        adsVM: adsVM,
+                        storeManager: storeManager
                     )
                 }
-            }
-
-            if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
-                Banner()
             }
         }
         .onAppear {

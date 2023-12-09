@@ -38,7 +38,7 @@ struct LaunchView: View {
             .opacity(vsPersonViewModel.authenticationState != .authenticated ? 0.66 : 1.0)
             
             if vsPersonViewModel.authenticationState == .unauthenticated || vsPersonViewModel.authenticationState == .authenticating || vsPersonViewModel.authenticationState == .error {
-                Button(vsPersonViewModel.authenticationState == .error ?  "Use phone to login to game center" : "Log into Game Center") {
+                Button(vsPersonViewModel.authenticationState == .error ?  "Try login on settings" : "Log into Game Center") {
                     if vsPersonViewModel.authenticationState == .error {
                         vsPersonViewModel.goToGameCenter()
                     } else {
@@ -53,11 +53,9 @@ struct LaunchView: View {
                     .foregroundColor(Color.black.opacity(0.8))
             }
             Spacer()
-#if !DEBUG
             if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
                 Banner()
             }
-#endif
         }
         .onAppear {
             vsPersonViewModel.authenticateUser()

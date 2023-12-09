@@ -14,9 +14,11 @@ struct EndGameView: View {
     let buttonFunction: () -> Void
     let secondButtonFunc: () -> Void?
     let computerRetryFunc: () -> Void
+    @ObservedObject var adsVM: AdsViewModel
+    @ObservedObject var storeManager: StoreManager
     
     init(result: GameOutcome, playerOneChoice: WeaponOfChoice, playerTwoChoice: WeaponOfChoice, isBeingUsedFor: EndGameOverlayUsedFor, isOtherPlayerReady: Bool? = nil, buttonFunction: @escaping () -> Void, secondButtonFunc: (() -> Void)? = nil,
-        computerRetryFunc: @escaping () -> Void ) {
+         computerRetryFunc: @escaping () -> Void, adsVM: AdsViewModel, storeManager: StoreManager ) {
             self.result = result
             self.playerOneChoice = playerOneChoice
             self.playerTwoChoice = playerTwoChoice
@@ -25,6 +27,8 @@ struct EndGameView: View {
             self.buttonFunction = buttonFunction
             self.secondButtonFunc = secondButtonFunc ?? {}
             self.computerRetryFunc = computerRetryFunc
+            self.adsVM = adsVM
+            self.storeManager = storeManager
     }
     
     var body: some View {
@@ -80,13 +84,10 @@ struct EndGameView: View {
                             background: Color.theme.orange,
                             function: {  computerRetryFunc() }
                         )
-                    } else {
-                        BasicMainButton(
-                            title: "Done",
-                            icon: "xmark.circle",
-                            background: Color.theme.text.opacity(0.1),
-                            function: { secondButtonFunc() }
-                        )
+                    }
+                    if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
+                        Banner()
+                            .padding(.top)
                     }
                 }
                 .padding(.horizontal)
@@ -108,7 +109,9 @@ struct EndGameView_Previews: PreviewProvider {
             isOtherPlayerReady: true,
             buttonFunction: {},
             secondButtonFunc: {},
-            computerRetryFunc: {}
+            computerRetryFunc: {},
+            adsVM: AdsViewModel(),
+            storeManager: StoreManager()
         )
     }
 }

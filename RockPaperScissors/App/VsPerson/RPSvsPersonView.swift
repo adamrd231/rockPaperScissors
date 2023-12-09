@@ -24,10 +24,8 @@ struct RPSvsPersonView: View {
     }
     
     func resetGameToPlay() {
-        print("reset game to play")
         if vsPersonViewModel.playAgain && vsPersonViewModel.playerWantsToPlayAgain {
             // Reset game for another round
-            print("resettting!")
             vsPersonViewModel.matchesPlayed.append(vsPersonViewModel.gameMatch)
             let player1 = vsPersonViewModel.gameMatch.player1
             let player2 = vsPersonViewModel.gameMatch.player2
@@ -52,14 +50,12 @@ struct RPSvsPersonView: View {
                 rightHandFunction: { },
                 showRewardedAd: { }
             )
-
             .alert("Do you want to leave this game?", isPresented: $isBackingOut) {
                 Button { vsPersonViewModel.inGame = false } label: { Text("Im sure") }
                 Button { } label: { Text("Cancel") }
             } message: {
                 Text("You will forfeit the game, this can not be un-done")
             }
- 
             
             PlayerBioRowView(
                 player1: PlayerBio(
@@ -72,7 +68,6 @@ struct RPSvsPersonView: View {
                 )
             )
 
-            
             ZStack {
                 RockPaperScissorsView(
                     chooseWeapon: self.localPlayerChoseWOP,
@@ -103,7 +98,9 @@ struct RPSvsPersonView: View {
                                 
                             },
                             secondButtonFunc: { isBackingOut.toggle() },
-                            computerRetryFunc: {}
+                            computerRetryFunc: {},
+                            adsVM: adsVM,
+                            storeManager: storeManager
                         )
                         .onChange(of: vsPersonViewModel.playAgain) { newValue in
                             resetGameToPlay()
@@ -112,16 +109,9 @@ struct RPSvsPersonView: View {
                             resetGameToPlay()
                         }
                     }
-                   
                 }
             }
-      
-            if !storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
-                Banner()
-            }
-      
         }
- 
     }
 }
 

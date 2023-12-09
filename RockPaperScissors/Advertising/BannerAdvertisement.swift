@@ -22,16 +22,15 @@ private struct BannerVC: UIViewControllerRepresentable  {
         view.load(GADRequest())
         return viewController
     }
-
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
 struct Banner:View{
     var body: some View{
-        #if !DEBUG
+//        #if !DEBUG
         BannerVC()
             .frame(width: 320, height: 70, alignment: .center)
-        #endif
+//        #endif
     }
 }
 
