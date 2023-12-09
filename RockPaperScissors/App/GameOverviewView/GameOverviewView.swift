@@ -32,7 +32,12 @@ struct GameOverviewView: View {
                         Text(vsComputerViewModel.gameDataService.winPercentage, format: .percent.precision(.fractionLength(0)))
                     }
                     HStack {
-                        Text("Win Percentage")
+                        Text("Lose Percentage")
+                        Spacer()
+                        Text(vsComputerViewModel.gameDataService.losePercentage, format: .percent.precision(.fractionLength(0)))
+                    }
+                    HStack {
+                        Text("Tie Percentage")
                         Spacer()
 
                         Text(vsComputerViewModel.gameDataService.tiePercentage, format: .percent.precision(.fractionLength(0)))

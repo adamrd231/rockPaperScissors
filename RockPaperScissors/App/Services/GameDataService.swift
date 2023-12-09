@@ -21,16 +21,19 @@ class GameDataService {
         getGameHistory()
     }
     
+    var losePercentage: Double {
+        let loses = savedGameEntities.filter({ $0.result == GameOutcome.lose.description }).count
+        return Double(loses) / Double(savedGameEntities.count)
+    }
+    
     var winPercentage: Double {
         let wins = savedGameEntities.filter({ $0.result == GameOutcome.win.description }).count
-        let totalGames = savedGameEntities.count
-        return Double(wins) / Double(totalGames)
+        return Double(wins) / Double(savedGameEntities.count)
     }
     
     var tiePercentage: Double {
         let ties = savedGameEntities.filter({ $0.result == GameOutcome.tie.description }).count
-        let totalGames = savedGameEntities.count
-        return Double(ties) / Double(totalGames)
+        return Double(ties) / Double(savedGameEntities.count)
     }
     
     var streak: Int {
