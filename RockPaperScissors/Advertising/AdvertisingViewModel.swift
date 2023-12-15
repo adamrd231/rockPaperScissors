@@ -6,20 +6,16 @@ class AdsViewModel: ObservableObject {
     
     static let shared = AdsViewModel()
     @Published var interstitial = InterstitialAdManager.Interstitial()
-    
     @Published var showedRewarded: Bool = false
-
-
     @Published var interstitialCounter = 0 {
         
         didSet {
-            if interstitialCounter >= 5 {
+            if interstitialCounter >= 10 {
                 showInterstitial = true
                 interstitialCounter = 0
             }
         }
     }
-    
     
     @Published var showInterstitial = false {
         didSet {
@@ -31,5 +27,4 @@ class AdsViewModel: ObservableObject {
             }
         }
     }
-
 }

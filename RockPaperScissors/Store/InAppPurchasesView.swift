@@ -5,17 +5,32 @@ struct InAppPurchaseView: View {
     @ObservedObject var storeManager: StoreManager
     
     var body: some View {
-        VStack {
-            Text("In-App Purchases")
-                .font(.title3)
-                .bold()
+        NavigationView {
             List {
-                explanationSection
                 availablePurchasesSection
-                restorePurchasesSection
-                
+                explanationSection
+                Section(header: Text("Feedback").foregroundColor(.white).bold()) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("This game is in it's MVP stage. Things will change, game dynamics will get updated, if you really like or really don't like something, feel free to email the link below and I read all the feedback I get.")
+                        Link("contact@rdconcepts.design", destination: URL(string: "mailto:contact@rdconcepts.design")!)
+                    }
+                }
             }
             .scrollContentBackground(.hidden)
+            // Navigation Components
+            .navigationTitle("In-App Purchases")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Link("Privacy Policy", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Restore Purchases") {
+                        Task {
+                            try await storeManager.restorePurchases()
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -23,27 +38,25 @@ struct InAppPurchaseView: View {
 
 struct InAppPurchaseView_Previews: PreviewProvider {
     static var previews: some View {
-        InAppPurchaseView(storeManager: StoreManager())
+
+            InAppPurchaseView(storeManager: StoreManager())
+
     }
 }
 
 extension InAppPurchaseView {
     var explanationSection: some View {
         Section(header: Text("About me").foregroundColor(.white).bold()) {
-            VStack(alignment: .leading) {
-                Text("Why?")
-                    .font(.title3)
-                    .bold()
+            VStack(alignment: .leading, spacing: 10) {
                 Text(
                     """
-                    I am a software engineer working towards supporting myself with revenue from the apps I develop. I use google admob to advertise on
-                    my platforms, and by advertising and offering in-app purchases, I can afford to spend more time on new features and apps. Thank you
-                    for supporting my on my journey!
+                    I am a software engineer working towards supporting myself with revenue from the apps I develop. I try to solve a unique problem every time I launch something to the app store, and would love to do this full-time. Advertising and in-app purchases are what will get me to that goal!
                     """
                 )
+                Text("This app uses banner advertising, (the small ads at the bottom of the screen) Interstitial (video ads that interrupt you while in the app) and Rewarded (video ads you request in order to reset game details.")
+                Text("By subscribing to the app, all banner and interstitial advertising is removed.")
             }
             .padding(5)
-            .padding(.vertical, 5)
         }
     }
     
@@ -80,26 +93,6 @@ extension InAppPurchaseView {
                 }
             }
             .padding(5)
-            .padding(.vertical, 5)
-        }
-    }
-    
-    var restorePurchasesSection: some View {
-        Section(header: Text("Restore").foregroundColor(.white).bold()) {
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Missing something?")
-                    .bold()
-                Text("Already purchased these? Just click below to restore all the things.")
-                Button("Restore purchases") {
-                    Task {
-                        try await storeManager.restorePurchases()
-                    }
-                }
-                .buttonStyle(.bordered)
-                .padding(.vertical, 5)
-            }
-            .padding(5)
-            .padding(.vertical, 5)
         }
     }
 }

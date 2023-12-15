@@ -9,7 +9,7 @@ class VsComputerViewModel: ObservableObject {
     // Game
     @Published var match = RPSMatch(
         id: UUID().uuidString,
-        player1: PlayerModel(id: UUID().uuidString, name: "Player"),
+        player1: PlayerModel(id: UUID().uuidString, name: "Player 1"),
         player2: PlayerModel(id: UUID().uuidString, name: "Computer", weaponOfChoice: WeaponOfChoice.allCases[Int.random(in: 0..<3)])
     )
     @Published var matchesPlayed:[RPSMatch] = []
@@ -46,6 +46,7 @@ class VsComputerViewModel: ObservableObject {
             .sink { [weak self] savedGames in
                 var savedMatches:[RPSMatch] = []
                 for match in savedGames {
+                    print("match player1: \(String(describing: match.playerOneName))")
                     let newRPSMatch = RPSMatch(
                         id: match.id ?? "N/A",
                         player1: PlayerModel(

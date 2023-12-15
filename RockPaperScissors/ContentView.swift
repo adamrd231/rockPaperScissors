@@ -6,7 +6,6 @@ struct ContentView: View {
     @StateObject var vsComputerViewModel = VsComputerViewModel()
     @StateObject var storeManager = StoreManager()
     @StateObject var adsVM = AdsViewModel()
-
     
     init() {
         UITabBar.appearance().backgroundColor = UIColor(Color.theme.tabViewBackground)

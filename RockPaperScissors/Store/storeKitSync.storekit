@@ -4,12 +4,26 @@
 
   ],
   "products" : [
-
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "6474218750",
+      "localizations" : [
+        {
+          "description" : "Removes all advertising in game",
+          "displayName" : "Remove Advertising",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "removeAdvertisingRPS",
+      "referenceName" : "RemoveAdvertising",
+      "type" : "NonConsumable"
+    }
   ],
   "settings" : {
     "_applicationInternalID" : "6471902382",
     "_developerTeamID" : "6SFM579B5E",
-    "_lastSynchronizedDate" : 721927896.409531
+    "_lastSynchronizedDate" : 724348053.03144395
   },
   "subscriptionGroups" : [
     {
@@ -33,7 +47,7 @@
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Removes all advertising in game",
+              "description" : "One month membership, removes all advertising",
               "displayName" : "Platinum membership",
               "locale" : "en_US"
             }

@@ -1,10 +1,3 @@
-//
-//  GameOverviewView.swift
-//  RockPaperScissors
-//
-//  Created by Adam Reed on 12/9/23.
-//
-
 import SwiftUI
 
 struct GameOverviewView: View {
