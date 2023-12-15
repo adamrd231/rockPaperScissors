@@ -33,6 +33,9 @@ struct ContentView: View {
                     adsVM: adsVM,
                     storeManager: storeManager
                 )
+                .onDisappear {
+                    vsPersonViewModel.submitScoreToLeaderBoard(newHighScore: vsComputerViewModel.gameDataService.bestStreak)
+                }
             } else {
                 TabView {
                     LaunchView(

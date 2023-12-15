@@ -79,9 +79,6 @@ struct RPSvsComputerView: View {
         .onAppear {
             vsComputerViewModel.loadRewardedAd()
         }
-        .onDisappear {
-            // TODO: Update user high score if logged into GameCenter
-        }
     }
 }
 
