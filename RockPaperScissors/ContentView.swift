@@ -57,7 +57,7 @@ struct ContentView: View {
                     )
                     .tabItem {
                         VStack {
-                            Image(systemName: "house.fill")
+                            Image(systemName: "line.3.horizontal.circle")
                             Text("Scores")
                         }
                     }
