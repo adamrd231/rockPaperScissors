@@ -67,7 +67,6 @@ struct ContentView: View {
                     
                     InAppPurchaseView(storeManager: storeManager)
                         .tag(1)
-                        .background(BackgroundHelper())
                         .tabItem {
                             VStack {
                                 Image(systemName: "creditcard.fill")

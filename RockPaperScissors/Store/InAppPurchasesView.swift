@@ -8,29 +8,33 @@ struct InAppPurchaseView: View {
         NavigationView {
             List {
                 availablePurchasesSection
+                Section(header: Text("Restore")) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Already made this purchase? Press the button to restore any purchases made on this account in the past.")
+                        Button("Restore") {
+                            Task {  try await storeManager.restorePurchases() }
+                        }
+                    }
+                }
                 explanationSection
-                Section(header: Text("Feedback").foregroundColor(.white).bold()) {
+                Section(header: Text("Feedback")) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("This game is in it's MVP stage. Things will change, game dynamics will get updated, if you really like or really don't like something, feel free to email the link below and I read all the feedback I get.")
                         Link("contact@rdconcepts.design", destination: URL(string: "mailto:contact@rdconcepts.design")!)
                     }
                 }
             }
-            .scrollContentBackground(.hidden)
             // Navigation Components
             .navigationTitle("In-App Purchases")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Link("Privacy Policy", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
+                    Link("Terms & conditions", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Restore Purchases") {
-                        Task {
-                            try await storeManager.restorePurchases()
-                        }
-                    }
+                    Link("Privacy policy", destination: URL(string: "https://rdconcepts.design/privacy")!)
                 }
             }
+            .listStyle(.sidebar)
         }
     }
 }
@@ -38,15 +42,14 @@ struct InAppPurchaseView: View {
 
 struct InAppPurchaseView_Previews: PreviewProvider {
     static var previews: some View {
-
-            InAppPurchaseView(storeManager: StoreManager())
-
+        InAppPurchaseView(storeManager: StoreManager())
+//            .preferredColorScheme(.dark)
     }
 }
 
 extension InAppPurchaseView {
     var explanationSection: some View {
-        Section(header: Text("About me").foregroundColor(.white).bold()) {
+        Section(header: Text("About me")) {
             VStack(alignment: .leading, spacing: 10) {
                 Text(
                     """
@@ -61,7 +64,7 @@ extension InAppPurchaseView {
     }
     
     var availablePurchasesSection: some View {
-        Section(header: Text("Available Purchases").foregroundColor(.white).bold()) {
+        Section(header: Text("Available Purchases")) {
             VStack {
                 if AppStore.canMakePayments {
                     ForEach(storeManager.products, id: \.id) { product in
