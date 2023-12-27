@@ -31,11 +31,12 @@ struct InAppPurchaseView: View {
                     Link("Terms & conditions", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Link("Privacy policy", destination: URL(string: "https://rdconcepts.design/privacy")!)
+                    Link("Privacy policy", destination: URL(string: "https://rdconcepts.design/#/privacy")!)
                 }
             }
             .listStyle(.sidebar)
         }
+        .navigationViewStyle(.stack)
     }
 }
 
