@@ -8,12 +8,22 @@ struct InAppPurchaseView: View {
         NavigationView {
             List {
                 availablePurchasesSection
-                Section(header: Text("Restore")) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Already made this purchase? Press the button to restore any purchases made on this account in the past.")
-                        Button("Restore") {
-                            Task {  try await storeManager.restorePurchases() }
+                Section(header: Text("Restore Purchases")) {
+                    HStack(spacing: 10) {
+                        VStack(alignment: .leading) {
+                            Text("Restore")
+                                .bold()
+                            Text("Already made this purchase? Press the button to restore any purchases made on this account in the past.")
+                                .font(.caption)
                         }
+                        Spacer()
+                        Button("Restore") {
+                            Task {
+                                try await storeManager.restorePurchases()
+                                
+                            }
+                        }
+                        .buttonStyle(.bordered)
                     }
                 }
                 explanationSection
@@ -34,7 +44,6 @@ struct InAppPurchaseView: View {
                     Link("Privacy policy", destination: URL(string: "https://rdconcepts.design/#/privacy")!)
                 }
             }
-            .listStyle(.sidebar)
         }
         .navigationViewStyle(.stack)
     }
@@ -52,6 +61,8 @@ extension InAppPurchaseView {
     var explanationSection: some View {
         Section(header: Text("About me")) {
             VStack(alignment: .leading, spacing: 10) {
+                Text("Adam Reed - rdConcepts")
+                    .bold()
                 Text(
                     """
                     I am a software engineer working towards supporting myself with revenue from the apps I develop. I try to solve a unique problem every time I launch something to the app store, and would love to do this full-time. Advertising and in-app purchases are what will get me to that goal!
