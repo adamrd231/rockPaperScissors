@@ -91,16 +91,15 @@ extension InAppPurchaseView {
                             Spacer()
                             if storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember) {
                                 Image(systemName: "checkmark.circle")
-                            } else {
-                                Button("$\(product.price.description)") {
-                                    // Make purchase
-                                    Task {
-                                        try await storeManager.purchase(product)
-                                    }
-                                }
-                                .disabled(storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember))
-                                .buttonStyle(.bordered)
                             }
+                            Button("$\(product.price.description)") {
+                                // Make purchase
+                                Task {
+                                    try await storeManager.purchase(product)
+                                }
+                            }
+                            .disabled(storeManager.purchasedProductIDs.contains(StoreIDsConstant.platinumMember))
+                            .buttonStyle(.bordered)
                         }
                     }
                 } else {
